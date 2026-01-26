@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#6C63FF">
+    <title>HealthMind - Fitness Tracker</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #F5F5FA;
+            overflow-x: hidden;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* App Container */
+        .app {
+            max-width: 480px;
+            margin: 0 auto;
+            height: 100vh;
+            background: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0,0,0,0.1);
+        }
+
+        /* Screen Base */
+        .screen {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .screen.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* Splash Screen */
+        .splash-screen {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .splash-logo {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 48px;
+        }
+
+        .splash-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .splash-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Onboarding Screen */
+        .onboarding-image {
+            width: 100%;
+            height: 50vh;
+            object-fit: cover;
+            border-radius: 0 0 30px 30px;
+        }
+
+        .onboarding-content {
+            flex: 1;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .onboarding-text {
+            text-align: center;
+        }
+
+        .onboarding-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .dots {
+            display: flex;
+            gap: 8px;
+            margin: 20px 0;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ddd;
+        }
+
+        .dot.active {
+            background: #667eea;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        /* Auth Screens */
+        .auth-screen {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 30px;
+        }
+
+        .auth-header {
+            color: white;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .auth-logo {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .auth-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .auth-form {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #E8E8E8;
+            border-radius: 10px;
+            font-size: 15px;
+            background: #F9F9F9;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .auth-divider {
+            text-align: center;
+            margin: 20px 0;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #E8E8E8;
+            border-radius: 10px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .auth-footer {
+            text-align: center;
+            color: white;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        .auth-footer a {
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        /* Goal Setting Screen */
+        .goal-screen {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 30px;
+        }
+
+        .goal-header {
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .goal-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .goal-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .goal-options {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow-y: auto;
+        }
+
+        .goal-option {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .goal-option.selected {
+            background: white;
+            color: #667eea;
+            border-color: white;
+        }
+
+        .goal-radio {
+            width: 24px;
+            height: 24px;
+            border: 2px solid currentColor;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .goal-option.selected .goal-radio::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            background: #667eea;
+            border-radius: 50%;
+        }
+
+        /* Profile Screen */
+        .profile-screen {
+            padding: 40px 30px;
+            background: #F9F9FB;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 4px solid white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        /* Dashboard Screen */
+        .dashboard-screen {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .dashboard-header {
+            padding: 40px 30px 20px;
+            color: white;
+        }
+
+        .user-greeting {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            overflow: hidden;
+        }
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .greeting-text h2 {
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+
+        .greeting-text p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .dashboard-content {
+            flex: 1;
+            background: #F9F9FB;
+            border-radius: 30px 30px 0 0;
+            padding: 30px 20px 100px;
+            overflow-y: auto;
+        }
+
+        /* Progress Cards */
+        .progress-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .progress-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .progress-value {
+            font-size: 14px;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .progress-bar-container {
+            height: 8px;
+            background: #F0F0F0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .stat-unit {
+            font-size: 14px;
+            color: #999;
+        }
+
+        /* Daily Challenges */
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .see-all {
+            font-size: 14px;
+            color: #667eea;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .challenge-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .challenge-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            position: relative;
+        }
+
+        .challenge-content {
+            padding: 15px;
+        }
+
+        .challenge-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .challenge-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* Workout List */
+        .workout-list {
+            margin-top: 20px;
+        }
+
+        .workout-item {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .workout-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .workout-info {
+            flex: 1;
+        }
+
+        .workout-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .workout-details {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .workout-arrow {
+            color: #667eea;
+            font-size: 20px;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 480px;
+            width: 100%;
+            background: white;
+            border-top: 1px solid #F0F0F0;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0 25px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            color: #999;
+            font-size: 12px;
+            transition: color 0.3s;
+        }
+
+        .nav-item.active {
+            color: #667eea;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+        }
+
+        .nav-add {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            margin-top: -35px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-white {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn-back {
+            padding: 12px 20px;
+            background: white;
+            border: 1px solid #E8E8E8;
+            border-radius: 10px;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .btn-next {
+            flex: 1;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        /* Congratulations Screen */
+        .congrats-screen {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            text-align: center;
+            color: white;
+        }
+
+        .congrats-icon {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 60px;
+        }
+
+        .congrats-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .congrats-text {
+            font-size: 16px;
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        /* Loading Animation */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .mt-20 { margin-top: 20px; }
+        .mb-20 { margin-bottom: 20px; }
+
+        /* Responsive for larger phones */
+        @media (min-width: 400px) {
+            .app {
+                max-width: 420px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- 01: Splash Screen -->
+        <div class="screen splash-screen active" id="screen-splash">
+            <div class="splash-logo">💪</div>
+            <div class="splash-title">HEALTHMIND</div>
+            <div class="splash-subtitle">BE HEALTHIER EVERYDAY</div>
+        </div>
+
+        <!-- 02: Onboarding Screen -->
+        <div class="screen" id="screen-onboarding">
+            <img src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&h=600&fit=crop" alt="Running" class="onboarding-image">
+            <div class="onboarding-content">
+                <div class="onboarding-text">
+                    <p class="onboarding-title">Track your fitness journey with personalized workouts, nutrition plans, and daily motivation to reach your health goals.</p>
+                    <div class="dots">
+                        <div class="dot"></div>
+                        <div class="dot active"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="navigateTo('screen-login')">NEXT</button>
+            </div>
+        </div>
+
+        <!-- 03: Login Screen -->
+        <div class="screen auth-screen" id="screen-login">
+            <div class="auth-header">
+                <div class="auth-logo">💪</div>
+                <div class="auth-title">HEALTHMIND</div>
+                <div class="auth-subtitle">WELCOME</div>
+            </div>
+            <div class="auth-form">
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="USERNAME">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" placeholder="PASSWORD">
+                </div>
+                <label class="checkbox-label">
+                    <input type="checkbox"> Staying Password
+                </label>
+                <button class="btn btn-primary" onclick="navigateTo('screen-goals')">Login</button>
+                
+                <div class="auth-divider">— OR —</div>
+                
+                <div class="social-buttons">
+                    <button class="social-btn">🌐 GMAIL</button>
+                    <button class="social-btn">📱 SOCIAL MEDIA</button>
+                </div>
+            </div>
+            <div class="auth-footer">
+                Don't have an account? <a href="#" onclick="navigateTo('screen-signup')">Sign Up</a>
+            </div>
+        </div>
+
+        <!-- 04: Sign Up Screen -->
+        <div class="screen auth-screen" id="screen-signup">
+            <div class="auth-header">
+                <button class="btn-back" onclick="navigateTo('screen-login')" style="position: absolute; left: 20px; top: 40px;">←</button>
+                <div style="margin-top: 40px;">CREATE ACCOUNT</div>
+                <div class="auth-subtitle">LET'S START</div>
+            </div>
+            <div class="auth-form">
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="FULL NAME">
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-input" placeholder="EMAIL OR MOBILE NUMBER">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" placeholder="PASSWORD">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" placeholder="CONFIRM PASSWORD">
+                </div>
+                <p style="font-size: 12px; color: #999; margin-bottom: 20px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</p>
+                <button class="btn btn-primary" onclick="navigateTo('screen-goals')">SIGN UP</button>
+                
+                <div class="auth-divider">— OR —</div>
+                
+                <div class="social-buttons">
+                    <button class="social-btn">🌐 GMAIL</button>
+                    <button class="social-btn">📱 SOCIAL MEDIA</button>
+                </div>
+            </div>
+            <div class="auth-footer">
+                Already have an account? <a href="#" onclick="navigateTo('screen-login')">Log In</a>
+            </div>
+        </div>
+
+        <!-- 05: Goals Screen -->
+        <div class="screen goal-screen" id="screen-goals">
+            <div class="goal-header">
+                <div class="goal-title">What is your Goal?</div>
+                <div class="goal-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</div>
+            </div>
+            <div class="goal-options">
+                <div class="goal-option" onclick="selectGoal(this)">
+                    <span>Lose Weight</span>
+                    <div class="goal-radio"></div>
+                </div>
+                <div class="goal-option" onclick="selectGoal(this)">
+                    <span>Build Muscle</span>
+                    <div class="goal-radio"></div>
+                </div>
+                <div class="goal-option" onclick="selectGoal(this)">
+                    <span>Stay Fit</span>
+                    <div class="goal-radio"></div>
+                </div>
+                <div class="goal-option" onclick="selectGoal(this)">
+                    <span>Improve Endurance</span>
+                    <div class="goal-radio"></div>
+                </div>
+                <div class="goal-option" onclick="selectGoal(this)">
+                    <span>Increase Flexibility</span>
+                    <div class="goal-radio"></div>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn-back" onclick="navigateTo('screen-login')">← BACK</button>
+                <button class="btn-next" onclick="navigateTo('screen-profile')">NEXT →</button>
+            </div>
+        </div>
+
+        <!-- 06: Profile Creation Screen -->
+        <div class="screen profile-screen" id="screen-profile">
+            <div class="profile-header">
+                <div class="profile-title">Fill your Profile</div>
+                <p style="color: #999; font-size: 14px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+            </div>
+            <div class="profile-avatar">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop" alt="Profile">
+            </div>
+            <div class="auth-form">
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="FULL NAME" value="Emma Wilson">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="NICKNAME">
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-input" placeholder="EMAIL" value="emma@example.com">
+                </div>
+                <div class="form-group">
+                    <input type="tel" class="form-input" placeholder="MOBILE NUMBER">
+                </div>
+                <button class="btn btn-primary" onclick="navigateTo('screen-congrats')">CONTINUE</button>
+            </div>
+        </div>
+
+        <!-- 10: Congratulations Screen -->
+        <div class="screen congrats-screen" id="screen-congrats">
+            <div class="congrats-icon">✓</div>
+            <div class="congrats-title">CONGRATULATIONS!</div>
+            <div class="congrats-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</div>
+            <button class="btn btn-white" onclick="navigateTo('screen-dashboard')">Continue</button>
+        </div>
+
+        <!-- 07: Dashboard/Home Screen -->
+        <div class="screen dashboard-screen" id="screen-dashboard">
+            <div class="dashboard-header">
+                <div class="user-greeting">
+                    <div class="user-avatar">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" alt="User">
+                    </div>
+                    <div class="greeting-text">
+                        <h2>Hello Emma!</h2>
+                        <p>Your last text here</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-content">
+                <!-- Steps Progress -->
+                <div class="progress-card">
+                    <div class="progress-header">
+                        <span class="progress-title">Steps</span>
+                        <span class="progress-value">5.2k</span>
+                    </div>
+                    <p style="color: #999; font-size: 14px; margin-bottom: 10px;">8 000 / 15 000</p>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 53%"></div>
+                    </div>
+                </div>
+
+                <!-- Daily Activity -->
+                <div class="progress-card">
+                    <div class="progress-header">
+                        <span class="progress-title">Daily Activity</span>
+                        <span class="see-all">See all</span>
+                    </div>
+                    <div class="stats-grid" style="margin-top: 15px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 12px; color: #999;">Steps</div>
+                            <div style="font-size: 20px; font-weight: 600; margin: 5px 0;">8 000 / 15 000</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 12px; color: #999;">Calories</div>
+                            <div style="font-size: 20px; font-weight: 600; margin: 5px 0;">446 / 800</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px; text-align: center;">
+                        <div style="font-size: 12px; color: #999; margin-bottom: 5px;">Weight</div>
+                        <div style="font-size: 20px; font-weight: 600;">2.2 / 7.3 kg</div>
+                    </div>
+                    <div style="width: 120px; height: 120px; margin: 20px auto; position: relative;">
+                        <svg viewBox="0 0 120 120" style="transform: rotate(-90deg);">
+                            <circle cx="60" cy="60" r="50" fill="none" stroke="#F0F0F0" stroke-width="10"/>
+                            <circle cx="60" cy="60" r="50" fill="none" stroke="url(#gradient)" stroke-width="10" 
+                                    stroke-dasharray="314" stroke-dashoffset="147" stroke-linecap="round"/>
+                            <defs>
+                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                            <div style="font-size: 24px; font-weight: 600;">53%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">🏃</div>
+                        <div class="stat-label">Distance traveled</div>
+                        <div class="stat-value">8 000 <span class="stat-unit">/ 15 000</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⚡</div>
+                        <div class="stat-label">Steps</div>
+                        <div class="stat-value">3.2 <span class="stat-unit">/ 7.3 kg</span></div>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">🔥</div>
+                        <div class="stat-label">Calories</div>
+                        <div class="stat-value">446 <span class="stat-unit">/ 800</span></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-label">Time</div>
+                        <div class="stat-value">01:02:03</div>
+                    </div>
+                </div>
+
+                <!-- Daily Challenges -->
+                <div class="section-title">
+                    <span>Daily Challenges</span>
+                    <span class="see-all">See all</span>
+                </div>
+
+                <div class="challenge-card">
+                    <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&h=300&fit=crop" alt="Workout" class="challenge-image">
+                    <div class="challenge-content">
+                        <div class="challenge-title">Your title goes here</div>
+                        <div class="challenge-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</div>
+                    </div>
+                </div>
+
+                <div class="challenge-card">
+                    <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&h=300&fit=crop" alt="Gym" class="challenge-image">
+                    <div class="challenge-content">
+                        <div class="challenge-title">Your title goes here</div>
+                        <div class="challenge-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Navigation -->
+            <div class="bottom-nav">
+                <div class="nav-item active">
+                    <div class="nav-icon">🏠</div>
+                    <span>Home</span>
+                </div>
+                <div class="nav-item" onclick="navigateTo('screen-workouts')">
+                    <div class="nav-icon">📊</div>
+                    <span>Stats</span>
+                </div>
+                <div class="nav-add">+</div>
+                <div class="nav-item" onclick="navigateTo('screen-profile-view')">
+                    <div class="nav-icon">👤</div>
+                    <span>Profile</span>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">🏆</div>
+                    <span>Goals</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Workouts Screen -->
+        <div class="screen dashboard-screen" id="screen-workouts">
+            <div class="dashboard-header">
+                <div class="user-greeting">
+                    <button class="btn-back" onclick="navigateTo('screen-dashboard')" style="color: white; border-color: white;">← Back</button>
+                    <div class="greeting-text">
+                        <h2>Workouts</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-content">
+                <div class="section-title">
+                    <span>Today's Exercise</span>
+                    <span class="see-all">1/4/2025</span>
+                </div>
+
+                <div class="workout-list">
+                    <div class="workout-item">
+                        <div class="workout-icon">🏃</div>
+                        <div class="workout-info">
+                            <div class="workout-name">Today's Exercise 1/4/2025</div>
+                            <div class="workout-details">4.32 Km</div>
+                        </div>
+                        <div class="workout-arrow">→</div>
+                    </div>
+
+                    <div class="workout-item">
+                        <div class="workout-icon">🏋️</div>
+                        <div class="workout-info">
+                            <div class="workout-name">Yesterday's Exercise 1/3/2025</div>
+                            <div class="workout-details">2.56 Km</div>
+                        </div>
+                        <div class="workout-arrow">→</div>
+                    </div>
+
+                    <div class="workout-item">
+                        <div class="workout-icon">🚴</div>
+                        <div class="workout-info">
+                            <div class="workout-name">Cycling Workout</div>
+                            <div class="workout-details">12.4 Km • 45 min</div>
+                        </div>
+                        <div class="workout-arrow">→</div>
+                    </div>
+
+                    <div class="workout-item">
+                        <div class="workout-icon">🧘</div>
+                        <div class="workout-info">
+                            <div class="workout-name">Yoga Session</div>
+                            <div class="workout-details">30 min</div>
+                        </div>
+                        <div class="workout-arrow">→</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="navigateTo('screen-dashboard')">
+                    <div class="nav-icon">🏠</div>
+                    <span>Home</span>
+                </div>
+                <div class="nav-item active">
+                    <div class="nav-icon">📊</div>
+                    <span>Stats</span>
+                </div>
+                <div class="nav-add">+</div>
+                <div class="nav-item" onclick="navigateTo('screen-profile-view')">
+                    <div class="nav-icon">👤</div>
+                    <span>Profile</span>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">🏆</div>
+                    <span>Goals</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile View Screen -->
+        <div class="screen dashboard-screen" id="screen-profile-view">
+            <div class="dashboard-header">
+                <div class="user-greeting">
+                    <button class="btn-back" onclick="navigateTo('screen-dashboard')" style="color: white; border-color: white;">← Back</button>
+                    <div class="greeting-text">
+                        <h2>Profile</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-content">
+                <div class="profile-avatar" style="margin: 0 auto 30px;">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop" alt="Profile">
+                </div>
+                
+                <div class="text-center mb-20">
+                    <h2 style="font-size: 24px; margin-bottom: 5px;">Emma Wilson</h2>
+                    <p style="color: #999;">emma@example.com</p>
+                </div>
+
+                <div class="workout-list">
+                    <div class="workout-item">
+                        <div class="workout-icon">🎵</div>
+                        <div class="workout-info">
+                            <div class="workout-name">Sound & Music</div>
+                        </div>
+                        <div class="workout-arrow">→</div>
+                    </div>
+
+                    <div class="workout-item">
+                        <div class="workout-icon">📖</div>
+                        <div class="workout-info">
+                            <div class="workout-name">Guide</div>
+                        </div>
+                        <div class="workout-arrow">→</div>
+                    </div>
+
+                    <div class="workout-item">
+                        <div class="workout-icon">⚙️</div>
+                        <div class="workout-info">
+                            <div class="workout-name">Settings</div>
+                        </div>
+                        <div class="workout-arrow">→</div>
+                    </div>
+
+                    <div class="workout-item">
+                        <div class="workout-icon">ℹ️</div>
+                        <div class="workout-info">
+                            <div class="workout-name">About</div>
+                        </div>
+                        <div class="workout-arrow">→</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="navigateTo('screen-dashboard')">
+                    <div class="nav-icon">🏠</div>
+                    <span>Home</span>
+                </div>
+                <div class="nav-item" onclick="navigateTo('screen-workouts')">
+                    <div class="nav-icon">📊</div>
+                    <span>Stats</span>
+                </div>
+                <div class="nav-add">+</div>
+                <div class="nav-item active">
+                    <div class="nav-icon">👤</div>
+                    <span>Profile</span>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">🏆</div>
+                    <span>Goals</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation System
+        function navigateTo(screenId) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show target screen
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+            }
+        }
+
+        // Goal Selection
+        function selectGoal(element) {
+            document.querySelectorAll('.goal-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            element.classList.add('selected');
+        }
+
+        // Auto navigate from splash to onboarding after 2 seconds
+        setTimeout(() => {
+            navigateTo('screen-onboarding');
+        }, 2000);
+
+        // Save user data to localStorage for persistence
+        function saveUserData() {
+            const userData = {
+                name: 'Emma Wilson',
+                email: 'emma@example.com',
+                steps: 8000,
+                calories: 446,
+                weight: 2.2
+            };
+            localStorage.setItem('healthmind_user', JSON.stringify(userData));
+        }
+
+        // Load user data
+        function loadUserData() {
+            const saved = localStorage.getItem('healthmind_user');
+            if (saved) {
+                return JSON.parse(saved);
+            }
+            return null;
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if user is logged in
+            const userData = loadUserData();
+            if (userData) {
+                // Skip to dashboard if user data exists
+                // Uncomment this to enable auto-login:
+                // setTimeout(() => navigateTo('screen-dashboard'), 2500);
+            }
+        });
+
+        // Service Worker for PWA functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {
+                    // Service worker registration failed, app still works without it
+                });
+            });
+        }
+    </script>
+</body>
+</html>
