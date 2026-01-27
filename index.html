@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#00BFA5">
     <title>HealthMind AI</title>
     <link rel="manifest" href="manifest.json">
@@ -14,9 +15,37 @@
             --secondary: #FF6B6B; --tertiary: #4ECDC4; --accent: #FFD93D;
             --text-dark: #263238; --text-gray: #607D8B; --bg-gray: #F8F9FA;
         }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg-gray); height: 100vh; overflow: hidden; }
-        .app { max-width: 480px; margin: 0 auto; height: 100vh; background: white; position: relative; overflow: hidden; box-shadow: 0 0 30px rgba(0,0,0,0.1); }
-        .screen { position: absolute; width: 100%; height: 100%; display: none; flex-direction: column; background: var(--bg-gray); }
+
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            background: var(--bg-gray); 
+            height: 100vh; 
+            height: 100dvh; /* Dynamic viewport height for mobile */
+            overflow: hidden; 
+            position: fixed;
+            width: 100%;
+        }
+        
+        .app { 
+            max-width: 480px; 
+            margin: 0 auto; 
+            height: 100vh; 
+            height: 100dvh;
+            background: white; 
+            position: relative; 
+            overflow: hidden; 
+            box-shadow: 0 0 30px rgba(0,0,0,0.1); 
+        }
+        
+        .screen { 
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+            display: none; 
+            flex-direction: column; 
+            background: var(--bg-gray); 
+        }
+        
         .screen.active { display: flex; }
 
         /* Splash */
@@ -24,26 +53,45 @@
         .splash-title { font-size: 48px; font-weight: 800; margin-bottom: 15px; letter-spacing: -2px; }
         .splash-subtitle { font-size: 14px; opacity: 0.9; letter-spacing: 3px; font-weight: 600; }
 
-        /* Auth */
-        .auth-screen { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); padding: 60px 30px 30px; justify-content: space-between; }
-        .auth-content { background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+        /* Auth - FIXED for mobile */
+        .auth-screen { 
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); 
+            padding: 40px 30px 120px; /* Increased bottom padding for mobile */
+            justify-content: flex-start; /* Changed from space-between */
+            overflow-y: auto; /* Allow scrolling */
+        }
+        
+        .auth-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            padding-top: 20px;
+        }
+        
+        .auth-content { 
+            background: white; 
+            border-radius: 20px; 
+            padding: 30px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2); 
+            margin-bottom: 20px; /* Space for footer */
+        }
+        
         .input-group { margin-bottom: 20px; }
-        .input-group input { width: 100%; padding: 15px; border: 2px solid #E0E0E0; border-radius: 12px; font-size: 16px; transition: border 0.3s; }
+        .input-group input { width: 100%; padding: 15px; border: 2px solid #E0E0E0; border-radius: 12px; font-size: 16px; }
         .input-group input:focus { outline: none; border-color: var(--primary); }
-        .btn-primary { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,191,165,0.3); }
-        .btn-primary:active { transform: scale(0.98); }
+        .btn-primary { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(0,191,165,0.3); }
         .error { color: #E74C3C; font-size: 14px; margin-top: 5px; font-weight: 600; }
-        .auth-footer { text-align: center; color: white; font-size: 15px; margin-top: 20px; font-weight: 600; }
+        .auth-footer { text-align: center; color: white; font-size: 15px; font-weight: 600; padding: 20px; }
         .auth-footer a { color: white; text-decoration: none; border-bottom: 2px solid white; padding-bottom: 2px; }
 
         /* Header */
-        .header { background: white; padding: 15px 20px; border-bottom: 1px solid #E0E0E0; display: flex; align-items: center; justify-content: center; position: relative; }
+        .header { background: white; padding: 15px 20px; border-bottom: 1px solid #E0E0E0; display: flex; align-items: center; justify-content: center; position: relative; flex-shrink: 0; }
         .header-title { font-size: 20px; font-weight: 700; color: var(--text-dark); }
         .header-action { position: absolute; right: 20px; background: var(--primary-light); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .header-action svg { width: 20px; height: 20px; stroke: var(--primary); stroke-width: 3; fill: none; }
 
         /* Content */
-        .content { flex: 1; overflow-y: auto; padding: 20px 20px 100px; }
+        .content { flex: 1; overflow-y: auto; padding: 20px 20px 100px; -webkit-overflow-scrolling: touch; }
         .card { background: white; border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
         .card-title { font-size: 18px; font-weight: 700; margin-bottom: 15px; color: var(--text-dark); }
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
@@ -53,21 +101,65 @@
         .progress-ring-container { display: flex; justify-content: space-around; margin: 30px 0; }
 
         /* Bottom Nav */
-        .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: white; border-top: 1px solid #E0E0E0; display: flex; justify-content: space-around; align-items: center; padding: 12px 0 28px; box-shadow: 0 -4px 20px rgba(0,0,0,0.05); z-index: 100; }
+        .bottom-nav { 
+            position: fixed; 
+            bottom: 0; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 100%; 
+            max-width: 480px; 
+            background: white; 
+            border-top: 1px solid #E0E0E0; 
+            display: flex; 
+            justify-content: space-around; 
+            align-items: center; 
+            padding: 12px 0;
+            padding-bottom: max(12px, env(safe-area-inset-bottom)); /* Safe area for notched phones */
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.05); 
+            z-index: 100; 
+        }
+        
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-gray); font-size: 11px; cursor: pointer; padding: 8px 12px; transition: all 0.3s; font-weight: 600; }
         .nav-item.active { color: var(--primary); }
         .nav-item svg { width: 26px; height: 26px; stroke: currentColor; stroke-width: 2.5; fill: none; }
-        .nav-hero { width: 64px; height: 64px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-top: -32px; cursor: pointer; box-shadow: 0 8px 24px rgba(0,191,165,0.4); font-size: 28px; font-weight: 800; color: white; letter-spacing: -1px; }
+        
+        .nav-hero { 
+            width: 64px; 
+            height: 64px; 
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            margin-top: -32px; 
+            cursor: pointer; 
+            box-shadow: 0 8px 24px rgba(0,191,165,0.4); 
+            position: relative;
+        }
+        
+        .nav-hero-text { font-size: 28px; font-weight: 800; color: white; letter-spacing: -1px; }
+        .nav-hero svg { width: 32px; height: 32px; fill: white; stroke: none; }
         .nav-hero.active { box-shadow: 0 8px 24px rgba(0,191,165,0.6); }
-
-        /* Modal */
-        .modal { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; }
-        .modal.active { display: flex; }
-        .modal-content { background: white; border-radius: 24px; padding: 30px; width: 90%; max-width: 400px; max-height: 80vh; overflow-y: auto; }
-        .modal-title { font-size: 22px; font-weight: 700; margin-bottom: 20px; text-align: center; }
-        .form-input { width: 100%; padding: 12px; border: 2px solid #E0E0E0; border-radius: 10px; font-size: 15px; margin-bottom: 15px; }
-        .form-input:focus { outline: none; border-color: var(--primary); }
-        .btn-secondary { width: 100%; padding: 16px; background: white; color: var(--primary); border: 2px solid var(--primary); border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+        
+        /* Microphone Animation */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .nav-hero.listening {
+            animation: pulse 1.5s infinite;
+            background: linear-gradient(135deg, var(--secondary) 0%, #E55353 100%);
+        }
+        
+        .nav-hero.processing svg {
+            animation: spin 1s linear infinite;
+        }
 
         /* Workout Type Selection */
         .workout-types { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px; }
@@ -77,33 +169,52 @@
         .workout-type.selected svg { stroke: var(--primary); }
         .workout-type-name { font-weight: 700; color: var(--text-dark); }
 
-        /* List Items */
-        .list-item { display: flex; align-items: center; justify-content: space-between; padding: 15px; background: var(--bg-gray); border-radius: 12px; margin-bottom: 10px; }
-        .list-item-info { flex: 1; }
-        .list-item-title { font-weight: 700; margin-bottom: 4px; }
-        .list-item-subtitle { font-size: 13px; color: var(--text-gray); }
-        .list-item-value { font-size: 20px; font-weight: 800; color: var(--primary); }
-
         /* Chat */
-        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; -webkit-overflow-scrolling: touch; }
         .message { max-width: 80%; padding: 14px 18px; border-radius: 18px; line-height: 1.5; }
         .message.user { align-self: flex-end; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; border-bottom-right-radius: 4px; }
         .message.bot { align-self: flex-start; background: white; color: var(--text-dark); border-bottom-left-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 2px solid var(--primary-light); }
-        .chat-input-box { padding: 15px 20px 30px; background: white; border-top: 1px solid #E0E0E0; display: flex; gap: 10px; }
+        
+        .chat-input-box { 
+            padding: 15px 20px;
+            padding-bottom: max(15px, calc(15px + env(safe-area-inset-bottom)));
+            background: white; 
+            border-top: 1px solid #E0E0E0; 
+            display: flex; 
+            gap: 10px; 
+            flex-shrink: 0;
+        }
+        
         .chat-input { flex: 1; padding: 14px 18px; border: 2px solid #E0E0E0; border-radius: 24px; font-size: 15px; }
         .chat-input:focus { outline: none; border-color: var(--primary); }
         .send-btn { width: 50px; height: 50px; background: var(--primary); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 15px rgba(0,191,165,0.3); }
         .send-btn svg { width: 22px; height: 22px; stroke: white; fill: none; stroke-width: 2; }
 
         /* Tracking */
-        .tracking-map { width: 100%; height: 45vh; background: var(--bg-gray); display: flex; align-items: center; justify-content: center; border-radius: 0 0 20px 20px; }
-        .tracking-timer { font-size: 52px; font-weight: 800; text-align: center; margin: 25px 0; color: var(--primary); }
-        .tracking-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; padding: 0 20px 20px; }
+        .tracking-map { width: 100%; height: 35vh; background: var(--bg-gray); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .tracking-timer { font-size: 48px; font-weight: 800; text-align: center; margin: 20px 0; color: var(--primary); font-variant-numeric: tabular-nums; }
+        .tracking-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; padding: 0 20px 15px; }
         .tracking-stat { text-align: center; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .tracking-stat-value { font-size: 28px; font-weight: 800; color: var(--primary); margin-bottom: 5px; }
+        .tracking-stat-value { font-size: 24px; font-weight: 800; color: var(--primary); margin-bottom: 5px; }
         .tracking-stat-label { font-size: 11px; color: var(--text-gray); font-weight: 600; }
-        .btn-stop { margin: 20px; padding: 18px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(0,191,165,0.3); }
-        .btn-pause { margin: 20px 20px 0; padding: 18px; background: var(--accent); color: var(--text-dark); border: none; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(255,217,61,0.3); }
+        .btn-stop, .btn-pause { margin: 0 20px 15px; padding: 16px; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; width: calc(100% - 40px); }
+        .btn-stop { background: var(--secondary); box-shadow: 0 4px 15px rgba(255,107,107,0.3); }
+        .btn-pause { background: var(--accent); color: var(--text-dark); box-shadow: 0 4px 15px rgba(255,217,61,0.3); }
+
+        /* Modal */
+        .modal { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; border-radius: 24px; padding: 30px; width: 90%; max-width: 400px; max-height: 80vh; overflow-y: auto; }
+        .modal-title { font-size: 22px; font-weight: 700; margin-bottom: 20px; text-align: center; }
+        .form-input { width: 100%; padding: 12px; border: 2px solid #E0E0E0; border-radius: 10px; font-size: 15px; margin-bottom: 15px; }
+        .btn-secondary { width: 100%; padding: 16px; background: white; color: var(--primary); border: 2px solid var(--primary); border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+
+        /* List Items */
+        .list-item { display: flex; align-items: center; justify-content: space-between; padding: 15px; background: var(--bg-gray); border-radius: 12px; margin-bottom: 10px; }
+        .list-item-info { flex: 1; }
+        .list-item-title { font-weight: 700; margin-bottom: 4px; }
+        .list-item-subtitle { font-size: 13px; color: var(--text-gray); }
+        .list-item-value { font-size: 20px; font-weight: 800; color: var(--primary); }
 
         /* Bar Chart */
         .bar-chart { display: flex; align-items: flex-end; justify-content: space-between; height: 150px; gap: 8px; padding: 20px 0; }
@@ -123,7 +234,7 @@
 
         <!-- Login -->
         <div class="screen auth-screen" id="login">
-            <div style="text-align: center; color: white; margin-bottom: 40px;">
+            <div class="auth-header">
                 <h1 style="font-size: 32px; font-weight: 700;">Welcome Back</h1>
                 <p style="opacity: 0.9; margin-top: 8px;">Log in to continue your fitness journey</p>
             </div>
@@ -144,7 +255,7 @@
 
         <!-- Signup -->
         <div class="screen auth-screen" id="signup">
-            <div style="text-align: center; color: white; margin-bottom: 40px;">
+            <div class="auth-header">
                 <h1 style="font-size: 32px; font-weight: 700;">Create Account</h1>
                 <p style="opacity: 0.9; margin-top: 8px;">Start your fitness journey today</p>
             </div>
@@ -168,15 +279,12 @@
 
         <!-- Dashboard -->
         <div class="screen" id="dashboard">
-            <div class="header">
-                <div class="header-title">HealthMind AI</div>
-            </div>
+            <div class="header"><div class="header-title">HealthMind AI</div></div>
             <div class="content">
                 <div class="card" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white;">
                     <h3 style="font-size: 16px; opacity: 0.9; margin-bottom: 10px;">Welcome back,</h3>
                     <h2 style="font-size: 28px; font-weight: 800;" id="dash-name">User</h2>
                 </div>
-
                 <div class="card">
                     <div class="card-title">Today's Progress</div>
                     <div class="progress-ring-container">
@@ -198,72 +306,26 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value" id="dist-val">0.0</div>
-                        <div class="stat-label">MILES TODAY</div>
-                    </div>
-                    <div class="stat-card" style="background: linear-gradient(135deg, var(--secondary) 0%, #E55353 100%);">
-                        <div class="stat-value" id="workout-val">0</div>
-                        <div class="stat-label">WORKOUTS</div>
-                    </div>
+                    <div class="stat-card"><div class="stat-value" id="dist-val">0.0</div><div class="stat-label">MILES TODAY</div></div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, var(--secondary) 0%, #E55353 100%);"><div class="stat-value" id="workout-val">0</div><div class="stat-label">WORKOUTS</div></div>
                 </div>
-
-                <div class="card">
-                    <div class="card-title">Weekly Activity</div>
-                    <div class="bar-chart" id="weekly-bars"></div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">Nutrition Summary</div>
-                    <div class="list-item">
-                        <div class="list-item-info">
-                            <div class="list-item-title">Calories Remaining</div>
-                            <div class="list-item-subtitle">Goal: 2,000 cal</div>
-                        </div>
-                        <div class="list-item-value">1,850</div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">Active Goals</div>
-                    <div class="list-item">
-                        <div class="list-item-info">
-                            <div class="list-item-title">No goals set</div>
-                            <div class="list-item-subtitle">Tap Goals to set your first goal</div>
-                        </div>
-                    </div>
-                </div>
+                <div class="card"><div class="card-title">Weekly Activity</div><div class="bar-chart" id="weekly-bars"></div></div>
+                <div class="card"><div class="card-title">Nutrition Summary</div><div class="list-item"><div class="list-item-info"><div class="list-item-title">Calories Remaining</div><div class="list-item-subtitle">Goal: 2,000 cal</div></div><div class="list-item-value">1,850</div></div></div>
+                <div class="card"><div class="card-title">Active Goals</div><div class="list-item"><div class="list-item-info"><div class="list-item-title">No goals set</div><div class="list-item-subtitle">Tap Goals to set your first goal</div></div></div></div>
             </div>
             <div class="bottom-nav">
-                <div class="nav-item active" onclick="nav(this,'dashboard')">
-                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke-linejoin="round"/></svg>
-                    <span>Dashboard</span>
-                </div>
-                <div class="nav-item" onclick="nav(this,'workout')">
-                    <svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M15 5l-3-3-3 3M12 2v8M9 10l3 3 3-3"/></svg>
-                    <span>Workout</span>
-                </div>
-                <div class="nav-hero" onclick="nav(null,'coach')">AI</div>
-                <div class="nav-item" onclick="nav(this,'nutrition')">
-                    <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
-                    <span>Nutrition</span>
-                </div>
-                <div class="nav-item" onclick="nav(this,'goals')">
-                    <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                    <span>Goals</span>
-                </div>
+                <div class="nav-item active" onclick="nav(this,'dashboard')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke-linejoin="round"/></svg><span>Dashboard</span></div>
+                <div class="nav-item" onclick="nav(this,'workout')"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M15 5l-3-3-3 3M12 2v8M9 10l3 3 3-3"/></svg><span>Workout</span></div>
+                <div class="nav-hero" onclick="nav(null,'coach')"><div class="nav-hero-text">AI</div></div>
+                <div class="nav-item" onclick="nav(this,'nutrition')"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg><span>Nutrition</span></div>
+                <div class="nav-item" onclick="nav(this,'goals')"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>Goals</span></div>
             </div>
         </div>
 
         <!-- Workout -->
         <div class="screen" id="workout">
-            <div class="header">
-                <div class="header-title">Workout Tracking</div>
-            </div>
-            
-            <!-- Workout Type Selection (shown when not tracking) -->
+            <div class="header"><div class="header-title">Workout Tracking</div></div>
             <div id="workout-selection">
                 <div style="padding: 20px; text-align: center;">
                     <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 10px;">Choose Your Activity</h3>
@@ -271,43 +333,28 @@
                 </div>
                 <div class="workout-types">
                     <div class="workout-type selected" onclick="selectWorkoutType('Walking', this)">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M13 2v8l3 3-3 3v6"/><circle cx="13" cy="2" r="1"/>
-                        </svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2v8l3 3-3 3v6"/><circle cx="13" cy="2" r="1"/></svg>
                         <div class="workout-type-name">Walking</div>
                     </div>
                     <div class="workout-type" onclick="selectWorkoutType('Running', this)">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M13 2v6l4 4-4 4v6"/><circle cx="13" cy="2" r="1"/>
-                        </svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2v6l4 4-4 4v6"/><circle cx="13" cy="2" r="1"/></svg>
                         <div class="workout-type-name">Running</div>
                     </div>
                     <div class="workout-type" onclick="selectWorkoutType('Cycling', this)">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/>
-                            <path d="M12 17.5V14l-3-3 4-3 2 3h3"/>
-                        </svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><path d="M12 17.5V14l-3-3 4-3 2 3h3"/></svg>
                         <div class="workout-type-name">Cycling</div>
                     </div>
                     <div class="workout-type" onclick="selectWorkoutType('Hiking', this)">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M13 2v10l2 2-2 2v6"/><circle cx="13" cy="2" r="1"/>
-                            <path d="M3 20l4-8 4 8"/>
-                        </svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2v10l2 2-2 2v6"/><circle cx="13" cy="2" r="1"/><path d="M3 20l4-8 4 8"/></svg>
                         <div class="workout-type-name">Hiking</div>
                     </div>
                 </div>
-                <button class="btn-stop" style="background: var(--primary);" onclick="startWorkout()">START WORKOUT</button>
+                <button class="btn-stop" style="background: var(--primary); margin-top: 20px;" onclick="startWorkout()">START WORKOUT</button>
             </div>
-
-            <!-- Tracking View (shown when tracking) -->
-            <div id="workout-tracking" style="display: none; height: 100%;">
+            <div id="workout-tracking" style="display: none; height: 100%; flex-direction: column;">
                 <div class="tracking-map">
                     <div style="text-align: center; color: var(--text-gray);">
-                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                            <circle cx="12" cy="10" r="3"/>
-                        </svg>
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                         <p style="margin-top: 10px; font-weight: 600;">GPS Tracking Active</p>
                         <p style="font-size: 13px;" id="workout-type-label">Walking</p>
                     </div>
@@ -323,11 +370,10 @@
                     <button class="btn-stop" onclick="stopWorkout()">FINISH WORKOUT</button>
                 </div>
             </div>
-
             <div class="bottom-nav">
                 <div class="nav-item" onclick="nav(this,'dashboard')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke-linejoin="round"/></svg><span>Dashboard</span></div>
                 <div class="nav-item active"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M15 5l-3-3-3 3M12 2v8M9 10l3 3 3-3"/></svg><span>Workout</span></div>
-                <div class="nav-hero" onclick="nav(null,'coach')">AI</div>
+                <div class="nav-hero" onclick="nav(null,'coach')"><div class="nav-hero-text">AI</div></div>
                 <div class="nav-item" onclick="nav(this,'nutrition')"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg><span>Nutrition</span></div>
                 <div class="nav-item" onclick="nav(this,'goals')"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>Goals</span></div>
             </div>
@@ -335,20 +381,20 @@
 
         <!-- AI Coach -->
         <div class="screen" id="coach">
-            <div class="header">
-                <div class="header-title">AI Health Coach</div>
-            </div>
+            <div class="header"><div class="header-title">AI Health Coach</div></div>
             <div class="chat-messages" id="chat">
                 <div class="message bot">👋 Hi! I'm your AI health coach. Ask me anything about fitness, nutrition, workouts, or wellness!</div>
             </div>
-            <div class="chat-input-box">
+            <div class="chat-input-box" id="chat-input-container">
                 <input type="text" class="chat-input" id="chat-input" placeholder="Ask about fitness, nutrition..." onkeypress="if(event.key==='Enter')sendMsg()">
                 <button class="send-btn" onclick="sendMsg()"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
             </div>
             <div class="bottom-nav">
                 <div class="nav-item" onclick="nav(this,'dashboard')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke-linejoin="round"/></svg><span>Dashboard</span></div>
                 <div class="nav-item" onclick="nav(this,'workout')"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M15 5l-3-3-3 3M12 2v8M9 10l3 3 3-3"/></svg><span>Workout</span></div>
-                <div class="nav-hero active">AI</div>
+                <div class="nav-hero active" id="voice-btn" onclick="toggleVoice()">
+                    <svg id="mic-icon" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                </div>
                 <div class="nav-item" onclick="nav(this,'nutrition')"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg><span>Nutrition</span></div>
                 <div class="nav-item" onclick="nav(this,'goals')"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>Goals</span></div>
             </div>
@@ -356,33 +402,24 @@
 
         <!-- Nutrition -->
         <div class="screen" id="nutrition">
-            <div class="header">
-                <div class="header-title">Nutrition Log</div>
-                <div class="header-action" onclick="showModal('food')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-            </div>
+            <div class="header"><div class="header-title">Nutrition Log</div><div class="header-action" onclick="showModal('food')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
             <div class="content">
                 <div class="card" style="background: linear-gradient(135deg, var(--tertiary) 0%, #3DB8AF 100%); color: white;">
                     <h3 style="font-size: 16px; opacity: 0.9; margin-bottom: 5px;">Calories Remaining</h3>
                     <h2 style="font-size: 42px; font-weight: 800;">1,850</h2>
                     <p style="opacity: 0.9; margin-top: 5px;">Goal: 2,000 cal</p>
                 </div>
-                <div class="card">
-                    <div class="card-title">Today's Meals</div>
-                    <div id="food-list"><p style="text-align: center; color: var(--text-gray); padding: 20px;">No meals logged yet. Tap + to add!</p></div>
-                </div>
+                <div class="card"><div class="card-title">Today's Meals</div><div id="food-list"><p style="text-align: center; color: var(--text-gray); padding: 20px;">No meals logged yet. Tap + to add!</p></div></div>
                 <div class="stats-grid">
                     <div class="stat-card" style="background: linear-gradient(135deg, #4ECDC4 0%, #44A89F 100%);"><div class="stat-value">0</div><div class="stat-label">CUPS WATER</div></div>
                     <div class="stat-card" style="background: linear-gradient(135deg, #A8733F 0%, #8F6235 100%);"><div class="stat-value">0</div><div class="stat-label">CUPS COFFEE</div></div>
                 </div>
-                <div class="card">
-                    <div class="card-title">Weekly Comparison</div>
-                    <div class="bar-chart" id="nutr-bars"></div>
-                </div>
+                <div class="card"><div class="card-title">Weekly Comparison</div><div class="bar-chart" id="nutr-bars"></div></div>
             </div>
             <div class="bottom-nav">
                 <div class="nav-item" onclick="nav(this,'dashboard')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke-linejoin="round"/></svg><span>Dashboard</span></div>
                 <div class="nav-item" onclick="nav(this,'workout')"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M15 5l-3-3-3 3M12 2v8M9 10l3 3 3-3"/></svg><span>Workout</span></div>
-                <div class="nav-hero" onclick="nav(null,'coach')">AI</div>
+                <div class="nav-hero" onclick="nav(null,'coach')"><div class="nav-hero-text">AI</div></div>
                 <div class="nav-item active"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg><span>Nutrition</span></div>
                 <div class="nav-item" onclick="nav(this,'goals')"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>Goals</span></div>
             </div>
@@ -390,38 +427,20 @@
 
         <!-- Goals -->
         <div class="screen" id="goals">
-            <div class="header">
-                <div class="header-title">My Goals</div>
-                <div class="header-action" onclick="showModal('goal')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-            </div>
+            <div class="header"><div class="header-title">My Goals</div><div class="header-action" onclick="showModal('goal')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
             <div class="content">
                 <div class="card" style="background: linear-gradient(135deg, var(--accent) 0%, #FFC830 100%);">
                     <h3 style="font-size: 18px; margin-bottom: 8px; color: var(--text-dark);">🎯 Keep Going!</h3>
                     <p style="font-size: 15px; line-height: 1.6; color: var(--text-dark);">You're crushing it! Every step brings you closer to your goals. Stay consistent!</p>
                 </div>
-                <div class="card">
-                    <div class="card-title">Active Goal</div>
-                    <div class="list-item">
-                        <div class="list-item-info">
-                            <div class="list-item-title">No active goal</div>
-                            <div class="list-item-subtitle">Tap + to set a new goal</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-title">Progress Tracker</div>
-                    <div class="bar-chart" id="goal-bars"></div>
-                </div>
-                <div class="card">
-                    <div class="card-title">Daily Targets</div>
-                    <div class="list-item"><div class="list-item-info"><div class="list-item-title">Calorie Intake</div><div class="list-item-subtitle">Recommended daily</div></div><div class="list-item-value">2000</div></div>
-                    <div class="list-item"><div class="list-item-info"><div class="list-item-title">Calorie Burn</div><div class="list-item-subtitle">Recommended daily</div></div><div class="list-item-value">500</div></div>
-                </div>
+                <div class="card"><div class="card-title">Active Goal</div><div class="list-item"><div class="list-item-info"><div class="list-item-title">No active goal</div><div class="list-item-subtitle">Tap + to set a new goal</div></div></div></div>
+                <div class="card"><div class="card-title">Progress Tracker</div><div class="bar-chart" id="goal-bars"></div></div>
+                <div class="card"><div class="card-title">Daily Targets</div><div class="list-item"><div class="list-item-info"><div class="list-item-title">Calorie Intake</div><div class="list-item-subtitle">Recommended daily</div></div><div class="list-item-value">2000</div></div><div class="list-item"><div class="list-item-info"><div class="list-item-title">Calorie Burn</div><div class="list-item-subtitle">Recommended daily</div></div><div class="list-item-value">500</div></div></div>
             </div>
             <div class="bottom-nav">
                 <div class="nav-item" onclick="nav(this,'dashboard')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke-linejoin="round"/></svg><span>Dashboard</span></div>
                 <div class="nav-item" onclick="nav(this,'workout')"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M15 5l-3-3-3 3M12 2v8M9 10l3 3 3-3"/></svg><span>Workout</span></div>
-                <div class="nav-hero" onclick="nav(null,'coach')">AI</div>
+                <div class="nav-hero" onclick="nav(null,'coach')"><div class="nav-hero-text">AI</div></div>
                 <div class="nav-item" onclick="nav(this,'nutrition')"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg><span>Nutrition</span></div>
                 <div class="nav-item active"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>Goals</span></div>
             </div>
@@ -432,10 +451,30 @@
 
     <script>
 const STATE={user:null,workouts:[],foods:[],goals:[],selectedWorkoutType:'Walking'};
-function load(){const s=localStorage.getItem('hm_data');if(s){const d=JSON.parse(s);Object.assign(STATE,d);}}
+let isRecording=false,recognition=null,mediaRecorder=null;
+
+function load(){const s=localStorage.getItem('hm_data');if(s){try{const d=JSON.parse(s);Object.assign(STATE,d);}catch(e){}}}
 function save(){localStorage.setItem('hm_data',JSON.stringify(STATE));}
-function goTo(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(s).classList.add('active');if(s==='dashboard')updateDash();if(s==='workout'){document.getElementById('workout-selection').style.display='block';document.getElementById('workout-tracking').style.display='none';}}
-function nav(el,s){document.querySelectorAll('.nav-item, .nav-hero').forEach(x=>x.classList.remove('active'));if(el)el.classList.add('active');else document.querySelector('.nav-hero').classList.add('active');goTo(s);}
+function goTo(s){
+    document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
+    document.getElementById(s).classList.add('active');
+    if(s==='dashboard')updateDash();
+    if(s==='workout'){
+        document.getElementById('workout-selection').style.display='block';
+        document.getElementById('workout-tracking').style.display='none';
+    }
+    if(s==='coach'){
+        const voiceBtn=document.getElementById('voice-btn');
+        voiceBtn.innerHTML='<svg id="mic-icon" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>';
+        voiceBtn.classList.remove('listening','processing');
+    }
+}
+function nav(el,s){
+    document.querySelectorAll('.nav-item, .nav-hero').forEach(x=>x.classList.remove('active'));
+    if(el)el.classList.add('active');
+    else document.querySelector('.nav-hero').classList.add('active');
+    goTo(s);
+}
 
 // Auth
 function signup(){
@@ -446,8 +485,7 @@ function signup(){
     if(!name||!email||!pass){err.textContent='Please fill all fields';return;}
     if(pass.length<6){err.textContent='Password must be 6+ characters';return;}
     if(localStorage.getItem('u_'+email)){err.textContent='Email already registered';return;}
-    const user={name,email,pass};
-    localStorage.setItem('u_'+email,JSON.stringify(user));
+    localStorage.setItem('u_'+email,JSON.stringify({name,email,pass}));
     alert('Account created! Please login.');
     goTo('login');
 }
@@ -460,9 +498,7 @@ function login(){
     if(!data){err.textContent='Account not found';return;}
     const user=JSON.parse(data);
     if(user.pass!==pass){err.textContent='Incorrect password';return;}
-    STATE.user=user;
-    save();
-    goTo('dashboard');
+    STATE.user=user;save();goTo('dashboard');
 }
 
 // Dashboard
@@ -480,21 +516,20 @@ function updateDash(){
     document.getElementById('cal-txt').textContent=Math.floor(cal);
     const bars=document.getElementById('weekly-bars');
     bars.innerHTML='';
-    const days=['M','T','W','T','F','S','S'];
     [40,60,30,80,50,90,70].forEach((h,i)=>{
         const bar=document.createElement('div');
         bar.className='bar';
         bar.style.height=h+'%';
         const lbl=document.createElement('div');
         lbl.className='bar-label';
-        lbl.textContent=days[i];
+        lbl.textContent=['M','T','W','T','F','S','S'][i];
         bar.appendChild(lbl);
         bars.appendChild(bar);
     });
 }
 
-// Workout Type Selection
-function selectWorkoutType(type, el){
+// Workout Type
+function selectWorkoutType(type,el){
     STATE.selectedWorkoutType=type;
     document.querySelectorAll('.workout-type').forEach(x=>x.classList.remove('selected'));
     el.classList.add('selected');
@@ -505,50 +540,51 @@ function showModal(type){
     const modal=document.getElementById('modal');
     const body=document.getElementById('modal-body');
     if(type==='food'){
-        body.innerHTML=`<div class="modal-title">Add Food</div>
-        <input class="form-input" id="m-food-name" placeholder="Food name">
-        <input class="form-input" id="m-food-cal" type="number" placeholder="Calories">
-        <button class="btn-primary" onclick="alert('Food logged!');closeModal()">Add Food</button>
-        <button class="btn-secondary" onclick="closeModal()">Cancel</button>`;
+        body.innerHTML=`<div class="modal-title">Add Food</div><input class="form-input" id="m-food-name" placeholder="Food name"><input class="form-input" id="m-food-cal" type="number" placeholder="Calories"><button class="btn-primary" onclick="alert('Food logged!');closeModal()">Add Food</button><button class="btn-secondary" onclick="closeModal()">Cancel</button>`;
     }else if(type==='goal'){
-        body.innerHTML=`<div class="modal-title">Set Goal</div>
-        <input class="form-input" id="m-goal-title" placeholder="Goal (e.g., Lose 10 lbs)">
-        <input class="form-input" id="m-goal-days" type="number" placeholder="Days to achieve">
-        <button class="btn-primary" onclick="alert('Goal set!');closeModal()">Set Goal</button>
-        <button class="btn-secondary" onclick="closeModal()">Cancel</button>`;
+        body.innerHTML=`<div class="modal-title">Set Goal</div><input class="form-input" id="m-goal-title" placeholder="Goal (e.g., Lose 10 lbs)"><input class="form-input" id="m-goal-days" type="number" placeholder="Days to achieve"><button class="btn-primary" onclick="alert('Goal set!');closeModal()">Set Goal</button><button class="btn-secondary" onclick="closeModal()">Cancel</button>`;
     }
     modal.classList.add('active');
 }
 function closeModal(){document.getElementById('modal').classList.remove('active');}
 
-// Workout tracking
+// Workout Tracking - FIXED
 let trackTimer=null,trackStart=0,gpsWatch=null,lastPos=null,isTracking=false,isPaused=false,pausedTime=0;
+
 function startWorkout(){
     if(isTracking)return;
+    
     STATE.tracking={type:STATE.selectedWorkoutType,start:Date.now(),distance:0,steps:0,calories:0};
     isTracking=true;
     isPaused=false;
     pausedTime=0;
+    
     document.getElementById('workout-selection').style.display='none';
     document.getElementById('workout-tracking').style.display='flex';
     document.getElementById('workout-type-label').textContent=STATE.selectedWorkoutType;
+    
     trackStart=Date.now();
     trackTimer=setInterval(updateTimer,1000);
+    
     if(navigator.geolocation){
-        gpsWatch=navigator.geolocation.watchPosition(pos=>{
-            if(!isPaused){
-                const curr={lat:pos.coords.latitude,lon:pos.coords.longitude};
-                if(lastPos){
-                    const d=dist(lastPos.lat,lastPos.lon,curr.lat,curr.lon);
-                    STATE.tracking.distance+=d;
-                    if(STATE.selectedWorkoutType!=='Cycling'){
-                        STATE.tracking.steps+=Math.floor(d*1250);
+        gpsWatch=navigator.geolocation.watchPosition(
+            pos=>{
+                if(!isPaused){
+                    const curr={lat:pos.coords.latitude,lon:pos.coords.longitude};
+                    if(lastPos){
+                        const d=dist(lastPos.lat,lastPos.lon,curr.lat,curr.lon);
+                        STATE.tracking.distance+=d;
+                        if(STATE.selectedWorkoutType!=='Cycling'){
+                            STATE.tracking.steps+=Math.floor(d*1250);
+                        }
                     }
+                    lastPos=curr;
+                    updateTrackDisplay();
                 }
-                lastPos=curr;
-                updateTrackDisplay();
-            }
-        },err=>console.error(err),{enableHighAccuracy:true,timeout:5000,maximumAge:0});
+            },
+            err=>console.error('GPS Error:',err),
+            {enableHighAccuracy:true,timeout:10000,maximumAge:0}
+        );
     }
 }
 
@@ -573,24 +609,36 @@ function stopWorkout(){
     if(!isTracking)return;
     clearInterval(trackTimer);
     if(gpsWatch)navigator.geolocation.clearWatch(gpsWatch);
-    STATE.workouts.push({type:STATE.selectedWorkoutType,date:new Date().toISOString(),distance:STATE.tracking.distance,steps:STATE.tracking.steps,calories:STATE.tracking.calories});
+    
+    STATE.workouts.push({
+        type:STATE.selectedWorkoutType,
+        date:new Date().toISOString(),
+        distance:STATE.tracking.distance,
+        steps:STATE.tracking.steps,
+        calories:STATE.tracking.calories
+    });
+    
     STATE.tracking=null;
     lastPos=null;
     isTracking=false;
     isPaused=false;
+    
     document.getElementById('workout-selection').style.display='block';
     document.getElementById('workout-tracking').style.display='none';
     document.getElementById('timer').textContent='00:00:00';
     document.getElementById('t-dist').textContent='0.0';
     document.getElementById('t-steps').textContent='0';
     document.getElementById('t-cal').textContent='0';
+    
     const btn=document.getElementById('pause-btn');
     btn.textContent='PAUSE';
     btn.style.background='var(--accent)';
+    
     save();
-    alert('Workout saved!');
+    alert('Workout saved! Distance: '+STATE.workouts[STATE.workouts.length-1].distance.toFixed(2)+'km');
     nav(document.querySelector('.nav-item'),'dashboard');
 }
+
 function updateTimer(){
     const e=Math.floor((Date.now()-trackStart)/1000);
     const h=Math.floor(e/3600);
@@ -598,13 +646,15 @@ function updateTimer(){
     const s=e%60;
     document.getElementById('timer').textContent=`${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
 }
+
 function updateTrackDisplay(){
     if(!STATE.tracking)return;
     document.getElementById('t-dist').textContent=STATE.tracking.distance.toFixed(2);
     document.getElementById('t-steps').textContent=STATE.tracking.steps.toLocaleString();
-    STATE.tracking.calories=STATE.tracking.distance*60;
-    document.getElementById('t-cal').textContent=Math.floor(STATE.tracking.calories);
+    STATE.tracking.calories=Math.floor(STATE.tracking.distance*60);
+    document.getElementById('t-cal').textContent=STATE.tracking.calories;
 }
+
 function dist(lat1,lon1,lat2,lon2){
     const R=6371;
     const dLat=(lat2-lat1)*Math.PI/180;
@@ -613,123 +663,180 @@ function dist(lat1,lon1,lat2,lon2){
     return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
 }
 
-// AI Coach with Chrome AI + 52 Keywords
+// Voice Recognition - FIXED
+function toggleVoice(){
+    const voiceBtn=document.getElementById('voice-btn');
+    
+    if(isRecording){
+        stopRecording();
+        return;
+    }
+    
+    if('webkitSpeechRecognition' in window){
+        if(!recognition){
+            recognition=new webkitSpeechRecognition();
+            recognition.continuous=false;
+            recognition.interimResults=false;
+            recognition.lang='en-US';
+            
+            recognition.onresult=async e=>{
+                const transcript=e.results[0][0].transcript;
+                addUserMessage(transcript);
+                voiceBtn.classList.remove('listening');
+                voiceBtn.classList.add('processing');
+                voiceBtn.innerHTML='<svg viewBox="0 0 24 24" style="animation: spin 1s linear infinite;"><circle cx="12" cy="12" r="10" stroke="white" stroke-width="4" fill="none" stroke-dasharray="31.4 31.4"/></svg>';
+                
+                const reply=await getAIReply(transcript);
+                addBotMessage(reply);
+                speakReply(reply);
+            };
+            
+            recognition.onend=()=>{
+                isRecording=false;
+                voiceBtn.classList.remove('listening','processing');
+                voiceBtn.innerHTML='<svg id="mic-icon" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>';
+            };
+            
+            recognition.onerror=e=>{
+                console.error('Speech error:',e.error);
+                isRecording=false;
+                voiceBtn.classList.remove('listening','processing');
+                voiceBtn.innerHTML='<svg id="mic-icon" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>';
+            };
+        }
+        
+        startRecording();
+    }else{
+        alert('Voice recognition not supported in this browser. Please use Chrome or Safari.');
+    }
+}
+
+function startRecording(){
+    const voiceBtn=document.getElementById('voice-btn');
+    isRecording=true;
+    voiceBtn.classList.add('listening');
+    voiceBtn.innerHTML='<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" rx="2" fill="white"/><rect x="14" y="4" width="4" height="16" rx="2" fill="white"/></svg>';
+    recognition.start();
+}
+
+function stopRecording(){
+    const voiceBtn=document.getElementById('voice-btn');
+    isRecording=false;
+    if(recognition)recognition.stop();
+    voiceBtn.classList.remove('listening');
+}
+
+function speakReply(text){
+    const voiceBtn=document.getElementById('voice-btn');
+    if('speechSynthesis' in window){
+        const utterance=new SpeechSynthesisUtterance(text);
+        utterance.rate=1.0;
+        utterance.pitch=1.0;
+        utterance.onend=()=>{
+            voiceBtn.classList.remove('processing');
+            voiceBtn.innerHTML='<svg id="mic-icon" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>';
+        };
+        speechSynthesis.speak(utterance);
+    }else{
+        voiceBtn.classList.remove('processing');
+        voiceBtn.innerHTML='<svg id="mic-icon" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>';
+    }
+}
+
+function addUserMessage(msg){
+    const chat=document.getElementById('chat');
+    chat.innerHTML+=`<div class="message user">${msg}</div>`;
+    chat.scrollTop=chat.scrollHeight;
+}
+
+function addBotMessage(msg){
+    const chat=document.getElementById('chat');
+    chat.innerHTML+=`<div class="message bot">${msg}</div>`;
+    chat.scrollTop=chat.scrollHeight;
+}
+
+// AI with Chrome AI + Keywords - FIXED
 const AI={
-"lose weight":"Create a caloric deficit of 300-500 cal daily. Combine cardio (3-4x/week) with strength training (2-3x/week). Track food. Aim for 1-2 lbs loss per week.",
-"fast":"Intermittent fasting can work! Try 16:8 (16hr fast, 8hr eating). Start slow. Stay hydrated. Not for everyone - listen to your body.",
-"calories":"Calculate TDEE. Weight loss: TDEE-500. Maintenance: TDEE. Muscle gain: TDEE+300-500.",
-"plateau":"Hit plateau? 1) Increase intensity 2) Change routine 3) Recalculate calories 4) Check portions.",
-"build muscle":"Eat 0.8-1g protein per lb bodyweight. Lift heavy 3-4x/week. Progressive overload is key. Sleep 7-9hrs.",
-"protein":"Aim 0.8-1g per lb bodyweight. Sources: chicken, fish, eggs, Greek yogurt, beans, tofu, powder. Spread throughout day.",
-"bulk":"Lean bulk: Eat TDEE+300-500 cal. Whole foods. 40% carbs, 30% protein, 30% fat. Lift heavy 4-5x/week.",
-"supplements":"Not necessary but helpful: Protein powder, Creatine (5g daily), Vitamin D, Omega-3. Food first!",
-"diet":"Whole foods: lean proteins, fruits, vegetables, whole grains, healthy fats. 80/20 rule. No extreme restrictions.",
-"carbs":"Carbs fuel workouts! Choose complex: oats, brown rice, quinoa, sweet potato. Eat most around workouts.",
-"fat":"Healthy fats essential! Avocados, nuts, olive oil, fatty fish. 20-30% total calories. Supports hormones.",
-"meal prep":"Prep Sundays! Cook proteins bulk, chop veggies, portion meals. Use containers. Freeze extras.",
-"cheat meal":"Yes! One per week keeps you sane. Enjoy guilt-free. Back on track next meal.",
-"water":"Half bodyweight in ounces daily. +16-20oz per hour exercise. Dark urine = dehydrated.",
-"drink":"Water best! Also: green tea, black coffee, sparkling water. Limit: soda, juice, alcohol.",
-"electrolytes":"Important for 60+ min workouts or heat. Coconut water, sports drinks, or pinch salt in water.",
-"workout":"Beginners: 3-4x/week full body. Intermediate: 4-5x/week split. Include: warm-up, main workout, cool-down.",
-"cardio":"Mix steady-state (30-45min moderate) or HIIT (15-20min intervals). 3-5x/week. After weights or separate days.",
-"strength":"Compound first: squats, deadlifts, bench, rows. Then isolation. 3-4 sets, 8-12 reps. Rest 48hrs between groups.",
-"hiit":"20-30sec max effort, 60-90sec rest. Repeat 8-10x. Great for fat loss. 2-3x/week max!",
-"abs":"Abs made in kitchen! Core work 2-3x/week: planks, twists, leg raises, crunches. No daily needed.",
-"home workout":"No gym? Bodyweight: push-ups, squats, lunges, planks, burpees. Add bands, dumbbells. YouTube!",
-"rest":"Rest crucial! Muscles grow during rest. 1-2 full rest days/week. Light activity OK.",
-"sleep":"7-9hrs nightly. Muscle recovery and hormones happen here. Poor sleep = poor results!",
-"sore":"DOMS normal! Peaks 24-48hrs post-workout. Ease: light movement, stretching, foam rolling, protein.",
-"stretch":"Dynamic before workouts. Static after (hold 30sec). Improves flexibility, reduces injury.",
-"foam roll":"Helps recovery! Roll each muscle 30-60sec post-workout or rest days. Don't overdo.",
-"warm up":"Always 5-10min! Light cardio + dynamic stretching. Prepares muscles, prevents injury. Never skip!",
-"injury":"Stop if pain! RICE: Rest, Ice, Compression, Elevation. See doctor if persists. Don't train through!",
-"form":"Form over weight ALWAYS! Bad form = injury. Start light, master movement, add weight. Hire trainer.",
-"overtraining":"Signs: fatigue, decreased performance, mood changes, sleep trouble, illness. Rest week, reduce volume.",
-"motivated":"SMART goals. Track progress with photos/measurements. Workout buddy. Remember your WHY!",
-"started":"Week 1-2 tough! Push through - gets easier. Start small: 3x/week, 20-30min. Consistency > perfection.",
-"lazy":"Lay out gym clothes, pre-plan workouts, commit 10min, reward yourself, find fun activities!",
-"results":"Be patient! Visible changes 4-6 weeks. Strength first (2-3 weeks). Fat loss not linear. Trust process!",
-"give up":"Don't quit! Bad day normal. Missed workout? No big deal. Cheat day? Back tomorrow. Keep going!",
-"morning workout":"Great! Fasted or light snack. Benefits: consistency, energy all day. Eat protein after.",
-"evening workout":"Works too! May be stronger. Eat 1-2hrs before. May affect sleep - test it.",
-"age":"Never too old! Start slow, focus form, listen body. Strength training especially important for aging.",
-"woman":"Ladies lift weights! Won't get bulky (not enough testosterone). Benefits: strength, bones, metabolism!",
-"pregnant":"Congrats! Safe with doctor OK. Avoid lying on back after 1st tri, lower intensity. Listen body.",
-"myth":"Myths busted: Lifting makes women bulky ❌ Cardio best for fat loss ❌ No pain no gain ❌",
-"spot reduce":"Can't spot reduce fat! Full-body + cardio + deficit. Fat comes off everywhere gradually.",
-"toned":"Build muscle + lose fat. Lift weights + slight deficit = toned look. No 'toning exercises'.",
-"beginner":"Welcome! 3x/week full body, 20-30min cardio 2-3x/week. Learn form. Track nutrition. Be patient.",
-"gym":"First visit: Tour, start machines, learn 5-6 basic exercises, don't compare, ask staff, off-peak hours.",
-"equipment":"Minimal home: resistance bands ($20), adjustable dumbbells ($100-200), yoga mat ($20). Enough!",
-"track":"Track everything! Apps for: workouts (sets/reps/weight), food (cal/macros), measurements. Data = progress.",
-"weigh":"1-2x/week, same time (morning, after bathroom, before eating). Weight fluctuates. Weekly averages.",
-"measure":"Beyond scale: measurements (waist, hips, arms), progress photos (every 2-4 weeks), how clothes fit.",
-"stress":"Exercise reduces stress! Also: meditation, yoga, breathing, nature, sleep, talk to someone.",
-"mental health":"Exercise boosts mood! Releases endorphins. Find fun activities. Therapy great too!",
-"consistency":"Consistency EVERYTHING! Better 30min 4x/week than 2hr once. Build habits. Small actions = big results."
+"lose weight":"Create a caloric deficit of 300-500 cal daily. Combine cardio 3-4 times per week with strength training 2-3 times per week. Track your food. Aim for 1-2 pounds loss per week for sustainable results.",
+"build muscle":"Eat 0.8-1 gram of protein per pound of bodyweight. Lift heavy weights 3-4 times per week using progressive overload. Sleep 7-9 hours for recovery.",
+"protein":"Aim for 0.8-1 gram per pound bodyweight. Good sources include chicken, fish, eggs, Greek yogurt, beans, tofu, and protein powder. Spread intake throughout the day.",
+"water":"Drink half your bodyweight in ounces daily. Add 16-20 ounces per hour of exercise. Dark urine means you need more water.",
+"workout":"Beginners should do 3-4 times per week full body workouts. Intermediate level should do 4-5 times per week split routines. Always include warm-up, main workout, and cool-down.",
+"cardio":"Mix steady-state cardio for 30-45 minutes at moderate intensity or HIIT for 15-20 minutes with intervals. Do this 3-5 times per week, either after weights or on separate days.",
+"rest":"Rest is crucial! Muscles grow during rest, not during workouts. Take 1-2 full rest days per week. Light activity like walking is fine.",
+"motivated":"Set SMART goals. Track progress with photos and measurements. Find a workout buddy. Remember your WHY and your reasons for starting!",
+"diet":"Focus on whole foods including lean proteins, fruits, vegetables, whole grains, and healthy fats. Follow the 80/20 rule and avoid extreme restrictions.",
+"sleep":"Get 7-9 hours nightly. Muscle recovery and hormone regulation happen during sleep. Poor sleep equals poor results!",
+"beginner":"Welcome! Start with 3 times per week full body workouts and 20-30 minutes cardio 2-3 times per week. Learn proper form. Track your nutrition. Be patient with yourself.",
+"abs":"Abs are made in the kitchen! Do core work 2-3 times per week with planks, twists, leg raises, and crunches. Daily ab work is not needed.",
+"stretch":"Do dynamic stretching before workouts. Do static stretching after workouts and hold for 30 seconds. This improves flexibility and reduces injury risk."
 };
 
-async function sendMsg(){
-    const input=document.getElementById('chat-input');
-    const msg=input.value.trim();
-    if(!msg)return;
-    const chat=document.getElementById('chat');
-    chat.innerHTML+=`<div class="message user">${input.value}</div>`;
-    input.value='';
-    chat.scrollTop=chat.scrollHeight;
+async function getAIReply(msg){
     let reply='';
     if('ai' in self && 'languageModel' in self.ai){
         try{
             const session=await self.ai.languageModel.create();
             reply=await session.prompt(`You are a fitness coach. Answer briefly in 2-3 sentences: ${msg}`);
-        }catch(e){}
+        }catch(e){console.log('Chrome AI not available');}
     }
     if(!reply){
         const m=msg.toLowerCase();
-        for(let key in AI){if(m.includes(key)){reply=AI[key];break;}}
-        if(!reply)reply="Great question! Ask me about: weight loss, muscle building, nutrition, workouts, recovery, or motivation!";
+        for(let key in AI){
+            if(m.includes(key)){reply=AI[key];break;}
+        }
+        if(!reply)reply="Great question! I can help with weight loss, muscle building, nutrition, workouts, recovery, and motivation. What specifically would you like to know?";
     }
-    setTimeout(()=>{chat.innerHTML+=`<div class="message bot">${reply}</div>`;chat.scrollTop=chat.scrollHeight;},500);
+    return reply;
+}
+
+async function sendMsg(){
+    const input=document.getElementById('chat-input');
+    const msg=input.value.trim();
+    if(!msg)return;
+    addUserMessage(msg);
+    input.value='';
+    const reply=await getAIReply(msg);
+    addBotMessage(reply);
 }
 
 // Init
 document.addEventListener('DOMContentLoaded',()=>{
     load();
     setTimeout(()=>{goTo(STATE.user?'dashboard':'login');},2000);
+    
+    // Create charts
+    setTimeout(()=>{
+        const nutrBars=document.getElementById('nutr-bars');
+        if(nutrBars){
+            [50,70,40,85,60,75,80].forEach((h,i)=>{
+                const bar=document.createElement('div');
+                bar.className='bar';
+                bar.style.height=h+'%';
+                bar.style.background='linear-gradient(180deg, #4ECDC4 0%, #44A89F 100%)';
+                const lbl=document.createElement('div');
+                lbl.className='bar-label';
+                lbl.textContent=['M','T','W','T','F','S','S'][i];
+                bar.appendChild(lbl);
+                nutrBars.appendChild(bar);
+            });
+        }
+        const goalBars=document.getElementById('goal-bars');
+        if(goalBars){
+            [45,65,55,75,85,95,70].forEach((h,i)=>{
+                const bar=document.createElement('div');
+                bar.className='bar';
+                bar.style.height=h+'%';
+                bar.style.background='linear-gradient(180deg, #FFD93D 0%, #FFC830 100%)';
+                const lbl=document.createElement('div');
+                lbl.className='bar-label';
+                lbl.textContent=['M','T','W','T','F','S','S'][i];
+                bar.appendChild(lbl);
+                goalBars.appendChild(bar);
+            });
+        }
+    },3000);
 });
-
-// Create charts
-setTimeout(()=>{
-    const nutrBars=document.getElementById('nutr-bars');
-    if(nutrBars){
-        [50,70,40,85,60,75,80].forEach((h,i)=>{
-            const bar=document.createElement('div');
-            bar.className='bar';
-            bar.style.height=h+'%';
-            bar.style.background='linear-gradient(180deg, #4ECDC4 0%, #44A89F 100%)';
-            const lbl=document.createElement('div');
-            lbl.className='bar-label';
-            lbl.textContent=['M','T','W','T','F','S','S'][i];
-            bar.appendChild(lbl);
-            nutrBars.appendChild(bar);
-        });
-    }
-    const goalBars=document.getElementById('goal-bars');
-    if(goalBars){
-        [45,65,55,75,85,95,70].forEach((h,i)=>{
-            const bar=document.createElement('div');
-            bar.className='bar';
-            bar.style.height=h+'%';
-            bar.style.background='linear-gradient(180deg, #FFD93D 0%, #FFC830 100%)';
-            const lbl=document.createElement('div');
-            lbl.className='bar-label';
-            lbl.textContent=['M','T','W','T','F','S','S'][i];
-            bar.appendChild(lbl);
-            goalBars.appendChild(bar);
-        });
-    }
-},3000);
     </script>
 </body>
 </html>
