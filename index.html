@@ -275,6 +275,51 @@
             stroke: var(--primary);
         }
 
+        /* Chat Overlay */
+        .chat-overlay {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: 100%;
+            max-width: 480px;
+            height: 70vh;
+            background: white;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+            z-index: 999;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-overlay.active {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .chat-overlay-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         /* Tracking */
         .map-container {
             width: 100%;
@@ -575,6 +620,35 @@
             </div>
             <div class="content">
                 <div class="card">
+                    <h3 style="margin-bottom: 15px;">Today's Progress</h3>
+                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 20px 0;">
+                        <div style="text-align: center;">
+                            <svg width="120" height="120" viewBox="0 0 120 120">
+                                <circle cx="60" cy="60" r="54" fill="none" stroke="#E0E0E0" stroke-width="8"/>
+                                <circle id="steps-circle" cx="60" cy="60" r="54" fill="none" stroke="#00BFA5" stroke-width="8" 
+                                    stroke-dasharray="339.292" stroke-dashoffset="339.292" 
+                                    transform="rotate(-90 60 60)" stroke-linecap="round"
+                                    style="transition: stroke-dashoffset 0.5s ease;"/>
+                                <text x="60" y="55" text-anchor="middle" font-size="20" font-weight="bold" fill="#263238" id="steps-circle-value">0</text>
+                                <text x="60" y="72" text-anchor="middle" font-size="12" fill="#607D8B">steps</text>
+                            </svg>
+                            <p style="margin-top: 10px; font-size: 14px; color: #607D8B;">Goal: 10,000</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <svg width="120" height="120" viewBox="0 0 120 120">
+                                <circle cx="60" cy="60" r="54" fill="none" stroke="#E0E0E0" stroke-width="8"/>
+                                <circle id="calories-circle" cx="60" cy="60" r="54" fill="none" stroke="#FF6B6B" stroke-width="8" 
+                                    stroke-dasharray="339.292" stroke-dashoffset="339.292" 
+                                    transform="rotate(-90 60 60)" stroke-linecap="round"
+                                    style="transition: stroke-dashoffset 0.5s ease;"/>
+                                <text x="60" y="55" text-anchor="middle" font-size="20" font-weight="bold" fill="#263238" id="calories-circle-value">0</text>
+                                <text x="60" y="72" text-anchor="middle" font-size="12" fill="#607D8B">kcal</text>
+                            </svg>
+                            <p style="margin-top: 10px; font-size: 14px; color: #607D8B;">Goal: 500</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
                     <h3 style="margin-bottom: 15px;">Weekly Activity</h3>
                     <div class="stats-grid">
                         <div class="stat-card">
@@ -597,20 +671,20 @@
                     <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
                     <span>Home</span>
                 </div>
-                <div class="nav-item" onclick="setNav(this, 'nutrition')">
-                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    <span>Nutrition</span>
+                <div class="nav-item" onclick="toggleChat()">
+                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>AI Coach</span>
                 </div>
                 <div class="nav-add" onclick="showModal()">
                     <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 </div>
+                <div class="nav-item" onclick="setNav(this, 'nutrition')">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>Nutrition</span>
+                </div>
                 <div class="nav-item" onclick="setNav(this, 'goals')">
                     <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                     <span>Goals</span>
-                </div>
-                <div class="nav-item" onclick="setNav(this, 'coach')">
-                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                    <span>AI Coach</span>
                 </div>
             </div>
         </div>
@@ -641,20 +715,20 @@
                     <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
                     <span>Home</span>
                 </div>
-                <div class="nav-item active">
-                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    <span>Nutrition</span>
+                <div class="nav-item" onclick="toggleChat()">
+                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>AI Coach</span>
                 </div>
                 <div class="nav-add" onclick="showModal()">
                     <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 </div>
+                <div class="nav-item active">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>Nutrition</span>
+                </div>
                 <div class="nav-item" onclick="setNav(this, 'goals')">
                     <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                     <span>Goals</span>
-                </div>
-                <div class="nav-item" onclick="setNav(this, 'coach')">
-                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                    <span>AI Coach</span>
                 </div>
             </div>
         </div>
@@ -696,31 +770,29 @@
                     <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
                     <span>Home</span>
                 </div>
-                <div class="nav-item" onclick="setNav(this, 'nutrition')">
-                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    <span>Nutrition</span>
+                <div class="nav-item" onclick="toggleChat()">
+                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>AI Coach</span>
                 </div>
                 <div class="nav-add" onclick="showModal()">
                     <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </div>
+                <div class="nav-item" onclick="setNav(this, 'nutrition')">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>Nutrition</span>
                 </div>
                 <div class="nav-item active">
                     <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                     <span>Goals</span>
                 </div>
-                <div class="nav-item" onclick="setNav(this, 'coach')">
-                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                    <span>AI Coach</span>
-                </div>
             </div>
         </div>
 
-        <!-- AI Coach -->
-        <div class="screen" id="coach">
-            <div class="header">
+        <!-- AI Coach Overlay -->
+        <div class="chat-overlay" id="chat-overlay">
+            <div class="chat-overlay-header">
                 <h2>AI Health Coach</h2>
-                <div class="avatar" onclick="goTo('settings')">
-                    <img id="coach-avatar" src="">
-                </div>
+                <button class="chat-close" onclick="toggleChat()">✕</button>
             </div>
             <div class="chat-messages" id="chat">
                 <div class="message bot">Hi! I'm your AI health coach. Ask me anything about fitness, nutrition, or wellness!</div>
@@ -740,7 +812,7 @@
                     <img id="settings-avatar" src="">
                 </div>
                 <h2 id="settings-name">User</h2>
-                <p id="settings-email">user@email.com</p>
+                <p id="settings-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="780d0b1d0a381d15191114561b1715">[email&#160;protected]</a></p>
             </div>
             <div class="content">
                 <div class="card">
@@ -763,20 +835,20 @@
                     <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
                     <span>Home</span>
                 </div>
-                <div class="nav-item" onclick="setNav(this, 'nutrition')">
-                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    <span>Nutrition</span>
+                <div class="nav-item" onclick="toggleChat()">
+                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>AI Coach</span>
                 </div>
                 <div class="nav-add" onclick="showModal()">
                     <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 </div>
+                <div class="nav-item" onclick="setNav(this, 'nutrition')">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>Nutrition</span>
+                </div>
                 <div class="nav-item" onclick="setNav(this, 'goals')">
                     <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                     <span>Goals</span>
-                </div>
-                <div class="nav-item" onclick="setNav(this, 'coach')">
-                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                    <span>AI Coach</span>
                 </div>
             </div>
         </div>
@@ -819,19 +891,39 @@
                 <h2 style="text-align: center; margin-bottom: 20px;">Choose Activity</h2>
                 <div class="modal-grid">
                     <button class="modal-btn" onclick="startActivity('walking')">
-                        <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M13 2v8l3 3-3 3v6"/>
+                            <path d="M18 9l-5 5"/>
+                            <circle cx="13" cy="2" r="1"/>
+                        </svg>
                         <span>Walk</span>
                     </button>
                     <button class="modal-btn" onclick="startActivity('running')">
-                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M13 2v6l4 4-4 4v6"/>
+                            <path d="M17 8l-4 4"/>
+                            <path d="M9 14l-2 2"/>
+                            <circle cx="13" cy="2" r="1"/>
+                        </svg>
                         <span>Run</span>
                     </button>
                     <button class="modal-btn" onclick="startActivity('cycling')">
-                        <svg viewBox="0 0 24 24"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="18.5" cy="17.5" r="3.5"/>
+                            <circle cx="5.5" cy="17.5" r="3.5"/>
+                            <path d="M12 17.5V14l-3-3 4-3 2 3h3"/>
+                            <circle cx="17" cy="5" r="1"/>
+                        </svg>
                         <span>Bike</span>
                     </button>
                     <button class="modal-btn" onclick="addMeal()">
-                        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+                            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+                            <line x1="6" y1="1" x2="6" y2="4"/>
+                            <line x1="10" y1="1" x2="10" y2="4"/>
+                            <line x1="14" y1="1" x2="14" y2="4"/>
+                        </svg>
                         <span>Nutrition</span>
                     </button>
                 </div>
@@ -842,7 +934,7 @@
         <input type="file" id="fileInput" accept="image/*" onchange="handlePhoto(event)">
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         const STATE = { user: null, workouts: [], useKM: false, tracking: null };
 
         function load() {
@@ -922,18 +1014,37 @@
             document.getElementById('dash-avatar').src = STATE.user.avatar;
             document.getElementById('nutrition-avatar').src = STATE.user.avatar;
             document.getElementById('goals-avatar').src = STATE.user.avatar;
-            document.getElementById('coach-avatar').src = STATE.user.avatar;
             
-            let steps = 0, dist = 0;
+            let steps = 0, dist = 0, calories = 0;
             STATE.workouts.forEach(w => {
                 steps += w.steps || 0;
                 dist += w.distance || 0;
+                calories += w.calories || 0;
             });
             
             document.getElementById('steps-value').textContent = steps.toLocaleString();
             const d = STATE.useKM ? dist : dist * 0.621371;
             document.getElementById('distance-value').textContent = d.toFixed(1);
             document.getElementById('distance-label').textContent = STATE.useKM ? 'Kilometers' : 'Miles';
+            
+            // Update progress circles
+            const stepsProgress = Math.min((steps / 10000), 1);
+            const stepsCircle = document.getElementById('steps-circle');
+            if (stepsCircle) {
+                const circumference = 339.292;
+                const offset = circumference - (stepsProgress * circumference);
+                stepsCircle.style.strokeDashoffset = offset;
+                document.getElementById('steps-circle-value').textContent = steps.toLocaleString();
+            }
+            
+            const caloriesProgress = Math.min((calories / 500), 1);
+            const caloriesCircle = document.getElementById('calories-circle');
+            if (caloriesCircle) {
+                const circumference = 339.292;
+                const offset = circumference - (caloriesProgress * circumference);
+                caloriesCircle.style.strokeDashoffset = offset;
+                document.getElementById('calories-circle-value').textContent = Math.floor(calories);
+            }
             
             const recent = document.getElementById('recent-workouts');
             if (STATE.workouts.length === 0) {
@@ -942,7 +1053,7 @@
                 recent.innerHTML = STATE.workouts.slice(-3).reverse().map(w => {
                     const wd = STATE.useKM ? w.distance : w.distance * 0.621371;
                     return `<div class="workout-item">
-                        <div class="workout-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+                        <div class="workout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
                         <div class="workout-info">
                             <div class="workout-name">${w.type}</div>
                             <div class="workout-details">${wd.toFixed(2)} ${STATE.useKM?'km':'mi'} • ${w.steps} steps</div>
@@ -950,6 +1061,11 @@
                     </div>`;
                 }).join('');
             }
+        }
+
+        function toggleChat() {
+            const overlay = document.getElementById('chat-overlay');
+            overlay.classList.toggle('active');
         }
 
         function updateGoals() {
@@ -1170,13 +1286,4 @@
             setTimeout(() => {
                 chat.innerHTML += `<div class="message bot">${reply}</div>`;
                 chat.scrollTop = chat.scrollHeight;
-            }, 500);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            load();
-            setTimeout(() => goTo(STATE.user ? 'dashboard' : 'login'), 2000);
-        });
-    </script>
-</body>
-</html>
+        
