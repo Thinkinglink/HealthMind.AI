@@ -20,7 +20,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
             background: var(--bg-gray); 
             height: 100vh; 
-            height: 100dvh; /* Dynamic viewport height for mobile */
+            height: 100dvh;
             overflow: hidden; 
             position: fixed;
             width: 100%;
@@ -34,7 +34,6 @@
             background: white; 
             position: relative; 
             overflow: hidden; 
-            box-shadow: 0 0 30px rgba(0,0,0,0.1); 
         }
         
         .screen { 
@@ -53,12 +52,13 @@
         .splash-title { font-size: 48px; font-weight: 800; margin-bottom: 15px; letter-spacing: -2px; }
         .splash-subtitle { font-size: 14px; opacity: 0.9; letter-spacing: 3px; font-weight: 600; }
 
-        /* Auth - FIXED for mobile */
+        /* Auth */
         .auth-screen { 
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); 
-            padding: 40px 30px 120px; /* Increased bottom padding for mobile */
-            justify-content: flex-start; /* Changed from space-between */
-            overflow-y: auto; /* Allow scrolling */
+            padding: 40px 30px 120px;
+            justify-content: flex-start;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         
         .auth-header {
@@ -73,7 +73,7 @@
             border-radius: 20px; 
             padding: 30px; 
             box-shadow: 0 10px 40px rgba(0,0,0,0.2); 
-            margin-bottom: 20px; /* Space for footer */
+            margin-bottom: 20px;
         }
         
         .input-group { margin-bottom: 20px; }
@@ -114,7 +114,7 @@
             justify-content: space-around; 
             align-items: center; 
             padding: 12px 0;
-            padding-bottom: max(12px, env(safe-area-inset-bottom)); /* Safe area for notched phones */
+            padding-bottom: max(12px, env(safe-area-inset-bottom));
             box-shadow: 0 -4px 20px rgba(0,0,0,0.05); 
             z-index: 100; 
         }
@@ -138,10 +138,9 @@
         }
         
         .nav-hero-text { font-size: 28px; font-weight: 800; color: white; letter-spacing: -1px; }
-        .nav-hero svg { width: 32px; height: 32px; fill: white; stroke: none; }
+        .nav-hero svg { width: 32px; height: 32px; fill: white; stroke: white; stroke-width: 2; }
         .nav-hero.active { box-shadow: 0 8px 24px rgba(0,191,165,0.6); }
         
-        /* Microphone Animation */
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.1); }
@@ -157,6 +156,10 @@
             background: linear-gradient(135deg, var(--secondary) 0%, #E55353 100%);
         }
         
+        .nav-hero.processing {
+            background: linear-gradient(135deg, var(--accent) 0%, #FFC830 100%);
+        }
+        
         .nav-hero.processing svg {
             animation: spin 1s linear infinite;
         }
@@ -169,29 +172,85 @@
         .workout-type.selected svg { stroke: var(--primary); }
         .workout-type-name { font-weight: 700; color: var(--text-dark); }
 
-        /* Chat */
-        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; -webkit-overflow-scrolling: touch; }
-        .message { max-width: 80%; padding: 14px 18px; border-radius: 18px; line-height: 1.5; }
+        /* Chat - FIXED INPUT BOX */
+        .chat-messages { 
+            flex: 1; 
+            overflow-y: auto; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            -webkit-overflow-scrolling: touch; 
+            margin-bottom: 80px; /* Space for input box */
+        }
+        
+        .message { max-width: 80%; padding: 14px 18px; border-radius: 18px; line-height: 1.5; word-wrap: break-word; }
         .message.user { align-self: flex-end; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; border-bottom-right-radius: 4px; }
         .message.bot { align-self: flex-start; background: white; color: var(--text-dark); border-bottom-left-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 2px solid var(--primary-light); }
         
         .chat-input-box { 
+            position: fixed;
+            bottom: 70px; /* Above bottom nav */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
             padding: 15px 20px;
-            padding-bottom: max(15px, calc(15px + env(safe-area-inset-bottom)));
             background: white; 
             border-top: 1px solid #E0E0E0; 
-            display: flex; 
+            display: flex !important; /* Force visible */
             gap: 10px; 
-            flex-shrink: 0;
+            z-index: 99;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
         }
         
-        .chat-input { flex: 1; padding: 14px 18px; border: 2px solid #E0E0E0; border-radius: 24px; font-size: 15px; }
+        .chat-input { 
+            flex: 1; 
+            padding: 14px 18px; 
+            border: 2px solid #E0E0E0; 
+            border-radius: 24px; 
+            font-size: 15px; 
+            background: white;
+        }
+        
         .chat-input:focus { outline: none; border-color: var(--primary); }
-        .send-btn { width: 50px; height: 50px; background: var(--primary); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 15px rgba(0,191,165,0.3); }
+        .send-btn { 
+            width: 50px; 
+            height: 50px; 
+            background: var(--primary); 
+            border: none; 
+            border-radius: 50%; 
+            display: flex !important;
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(0,191,165,0.3); 
+        }
+        
         .send-btn svg { width: 22px; height: 22px; stroke: white; fill: none; stroke-width: 2; }
 
         /* Tracking */
-        .tracking-map { width: 100%; height: 35vh; background: var(--bg-gray); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .tracking-map { 
+            width: 100%; 
+            height: 35vh; 
+            background: var(--bg-gray); 
+            position: relative;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        
+        #map-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
+        }
+        
+        #map-frame.visible {
+            display: block;
+        }
+        
         .tracking-timer { font-size: 48px; font-weight: 800; text-align: center; margin: 20px 0; color: var(--primary); font-variant-numeric: tabular-nums; }
         .tracking-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; padding: 0 20px 15px; }
         .tracking-stat { text-align: center; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
@@ -220,6 +279,22 @@
         .bar-chart { display: flex; align-items: flex-end; justify-content: space-between; height: 150px; gap: 8px; padding: 20px 0; }
         .bar { flex: 1; background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 8px 8px 0 0; position: relative; min-height: 20px; }
         .bar-label { position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); font-size: 11px; color: var(--text-gray); font-weight: 600; }
+        
+        .goal-progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #E0E0E0;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .goal-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
     </style>
 </head>
 <body>
@@ -312,10 +387,27 @@
                 </div>
                 <div class="card"><div class="card-title">Weekly Activity</div><div class="bar-chart" id="weekly-bars"></div></div>
                 <div class="card"><div class="card-title">Nutrition Summary</div><div class="list-item"><div class="list-item-info"><div class="list-item-title">Calories Remaining</div><div class="list-item-subtitle">Goal: 2,000 cal</div></div><div class="list-item-value">1,850</div></div></div>
-                <div class="card"><div class="card-title">Active Goals</div><div class="list-item"><div class="list-item-info"><div class="list-item-title">No goals set</div><div class="list-item-subtitle">Tap Goals to set your first goal</div></div></div></div>
+                <div class="card">
+                    <div class="card-title">Active Goals</div>
+                    <div id="dash-goal-display">
+                        <div class="list-item">
+                            <div class="list-item-info">
+                                <div class="list-item-title">No goals set</div>
+                                <div class="list-item-subtitle">Tap Goals to set your first goal</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="bottom-nav">
-                <div class="nav-item active" onclick="nav(this,'dashboard')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke-linejoin="round"/></svg><span>Dashboard</span></div>
+                <div class="nav-item active" onclick="nav(this,'dashboard')">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" fill="none"/>
+                        <path d="M12 2 L12 12 L17 7" fill="none"/>
+                        <path d="M12 12 L6 15" fill="none"/>
+                    </svg>
+                    <span>Dashboard</span>
+                </div>
                 <div class="nav-item" onclick="nav(this,'workout')"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M15 5l-3-3-3 3M12 2v8M9 10l3 3 3-3"/></svg><span>Workout</span></div>
                 <div class="nav-hero" onclick="nav(null,'coach')"><div class="nav-hero-text">AI</div></div>
                 <div class="nav-item" onclick="nav(this,'nutrition')"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg><span>Nutrition</span></div>
@@ -353,10 +445,13 @@
             </div>
             <div id="workout-tracking" style="display: none; height: 100%; flex-direction: column;">
                 <div class="tracking-map">
-                    <div style="text-align: center; color: var(--text-gray);">
-                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                        <p style="margin-top: 10px; font-weight: 600;">GPS Tracking Active</p>
-                        <p style="font-size: 13px;" id="workout-type-label">Walking</p>
+                    <iframe id="map-frame" allow="geolocation"></iframe>
+                    <div id="map-placeholder" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--text-gray);">
+                        <div>
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <p style="margin-top: 10px; font-weight: 600;">Requesting GPS...</p>
+                            <p style="font-size: 13px;" id="workout-type-label">Walking</p>
+                        </div>
                     </div>
                 </div>
                 <div style="flex: 1; overflow-y: auto;">
@@ -371,7 +466,7 @@
                 </div>
             </div>
             <div class="bottom-nav">
-                <div class="nav-item" onclick="nav(this,'dashboard')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke-linejoin="round"/></svg><span>Dashboard</span></div>
+                <div class="nav-item" onclick="nav(this,'dashboard')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none"/><path d="M12 2 L12 12 L17 7" fill="none"/><path d="M12 12 L6 15" fill="none"/></svg><span>Dashboard</span></div>
                 <div class="nav-item active"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M15 5l-3-3-3 3M12 2v8M9 10l3 3 3-3"/></svg><span>Workout</span></div>
                 <div class="nav-hero" onclick="nav(null,'coach')"><div class="nav-hero-text">AI</div></div>
                 <div class="nav-item" onclick="nav(this,'nutrition')"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg><span>Nutrition</span></div>
@@ -379,21 +474,30 @@
             </div>
         </div>
 
-        <!-- AI Coach -->
+        <!-- AI Coach - FIXED INPUT BOX -->
         <div class="screen" id="coach">
             <div class="header"><div class="header-title">AI Health Coach</div></div>
             <div class="chat-messages" id="chat">
-                <div class="message bot">👋 Hi! I'm your AI health coach. Ask me anything about fitness, nutrition, workouts, or wellness!</div>
+                <div class="message bot">👋 Hi! I'm your AI health coach powered by Chrome AI. Ask me anything about fitness, nutrition, or wellness - either by typing below or using voice!</div>
             </div>
-            <div class="chat-input-box" id="chat-input-container">
-                <input type="text" class="chat-input" id="chat-input" placeholder="Ask about fitness, nutrition..." onkeypress="if(event.key==='Enter')sendMsg()">
-                <button class="send-btn" onclick="sendMsg()"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+            <!-- INPUT BOX ALWAYS VISIBLE -->
+            <div class="chat-input-box">
+                <input type="text" class="chat-input" id="chat-input" placeholder="Type your question here..." onkeypress="if(event.key==='Enter')sendMsg()">
+                <button class="send-btn" onclick="sendMsg()">
+                    <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
             </div>
             <div class="bottom-nav">
-                <div class="nav-item" onclick="nav(this,'dashboard')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke-linejoin="round"/></svg><span>Dashboard</span></div>
+                <div class="nav-item" onclick="nav(this,'dashboard')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none"/><path d="M12 2 L12 12 L17 7" fill="none"/><path d="M12 12 L6 15" fill="none"/></svg><span>Dashboard</span></div>
                 <div class="nav-item" onclick="nav(this,'workout')"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M15 5l-3-3-3 3M12 2v8M9 10l3 3 3-3"/></svg><span>Workout</span></div>
+                <!-- PROPER MICROPHONE ICON -->
                 <div class="nav-hero active" id="voice-btn" onclick="toggleVoice()">
-                    <svg id="mic-icon" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                    <svg id="voice-icon" viewBox="0 0 24 24">
+                        <rect x="9" y="2" width="6" height="12" rx="3" fill="white"/>
+                        <path d="M5 10v2a7 7 0 0 0 14 0v-2" stroke="white" stroke-width="2" fill="none"/>
+                        <line x1="12" y1="19" x2="12" y2="23" stroke="white" stroke-width="2"/>
+                        <line x1="8" y1="23" x2="16" y2="23" stroke="white" stroke-width="2"/>
+                    </svg>
                 </div>
                 <div class="nav-item" onclick="nav(this,'nutrition')"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg><span>Nutrition</span></div>
                 <div class="nav-item" onclick="nav(this,'goals')"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>Goals</span></div>
@@ -417,7 +521,7 @@
                 <div class="card"><div class="card-title">Weekly Comparison</div><div class="bar-chart" id="nutr-bars"></div></div>
             </div>
             <div class="bottom-nav">
-                <div class="nav-item" onclick="nav(this,'dashboard')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke-linejoin="round"/></svg><span>Dashboard</span></div>
+                <div class="nav-item" onclick="nav(this,'dashboard')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none"/><path d="M12 2 L12 12 L17 7" fill="none"/><path d="M12 12 L6 15" fill="none"/></svg><span>Dashboard</span></div>
                 <div class="nav-item" onclick="nav(this,'workout')"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M15 5l-3-3-3 3M12 2v8M9 10l3 3 3-3"/></svg><span>Workout</span></div>
                 <div class="nav-hero" onclick="nav(null,'coach')"><div class="nav-hero-text">AI</div></div>
                 <div class="nav-item active"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg><span>Nutrition</span></div>
@@ -425,20 +529,30 @@
             </div>
         </div>
 
-        <!-- Goals -->
+        <!-- Goals - FIXED UPDATE -->
         <div class="screen" id="goals">
             <div class="header"><div class="header-title">My Goals</div><div class="header-action" onclick="showModal('goal')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
             <div class="content">
                 <div class="card" style="background: linear-gradient(135deg, var(--accent) 0%, #FFC830 100%);">
                     <h3 style="font-size: 18px; margin-bottom: 8px; color: var(--text-dark);">🎯 Keep Going!</h3>
-                    <p style="font-size: 15px; line-height: 1.6; color: var(--text-dark);">You're crushing it! Every step brings you closer to your goals. Stay consistent!</p>
+                    <p style="font-size: 15px; line-height: 1.6; color: var(--text-dark);" id="goal-motivation">You're crushing it! Every step brings you closer to your goals. Stay consistent!</p>
                 </div>
-                <div class="card"><div class="card-title">Active Goal</div><div class="list-item"><div class="list-item-info"><div class="list-item-title">No active goal</div><div class="list-item-subtitle">Tap + to set a new goal</div></div></div></div>
+                <div class="card">
+                    <div class="card-title">Active Goal</div>
+                    <div id="active-goal-view">
+                        <div class="list-item">
+                            <div class="list-item-info">
+                                <div class="list-item-title">No active goal</div>
+                                <div class="list-item-subtitle">Tap + to set a new goal</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="card"><div class="card-title">Progress Tracker</div><div class="bar-chart" id="goal-bars"></div></div>
-                <div class="card"><div class="card-title">Daily Targets</div><div class="list-item"><div class="list-item-info"><div class="list-item-title">Calorie Intake</div><div class="list-item-subtitle">Recommended daily</div></div><div class="list-item-value">2000</div></div><div class="list-item"><div class="list-item-info"><div class="list-item-title">Calorie Burn</div><div class="list-item-subtitle">Recommended daily</div></div><div class="list-item-value">500</div></div></div>
+                <div class="card"><div class="card-title">Daily Targets</div><div class="list-item"><div class="list-item-info"><div class="list-item-title">Calorie Intake</div><div class="list-item-subtitle">Recommended daily</div></div><div class="list-item-value" id="target-intake">2000</div></div><div class="list-item"><div class="list-item-info"><div class="list-item-title">Calorie Burn</div><div class="list-item-subtitle">Recommended daily</div></div><div class="list-item-value" id="target-burn">500</div></div></div>
             </div>
             <div class="bottom-nav">
-                <div class="nav-item" onclick="nav(this,'dashboard')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke-linejoin="round"/></svg><span>Dashboard</span></div>
+                <div class="nav-item" onclick="nav(this,'dashboard')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none"/><path d="M12 2 L12 12 L17 7" fill="none"/><path d="M12 12 L6 15" fill="none"/></svg><span>Dashboard</span></div>
                 <div class="nav-item" onclick="nav(this,'workout')"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M15 5l-3-3-3 3M12 2v8M9 10l3 3 3-3"/></svg><span>Workout</span></div>
                 <div class="nav-hero" onclick="nav(null,'coach')"><div class="nav-hero-text">AI</div></div>
                 <div class="nav-item" onclick="nav(this,'nutrition')"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg><span>Nutrition</span></div>
@@ -451,10 +565,28 @@
 
     <script>
 const STATE={user:null,workouts:[],foods:[],goals:[],selectedWorkoutType:'Walking'};
-let isRecording=false,recognition=null,mediaRecorder=null;
+let isRecording=false,recognition=null,currentLat=null,currentLon=null;
 
-function load(){const s=localStorage.getItem('hm_data');if(s){try{const d=JSON.parse(s);Object.assign(STATE,d);}catch(e){}}}
-function save(){localStorage.setItem('hm_data',JSON.stringify(STATE));}
+function load(){
+    const s=localStorage.getItem('hm_data');
+    if(s){
+        try{
+            const d=JSON.parse(s);
+            Object.assign(STATE,d);
+        }catch(e){
+            console.error('Load error:',e);
+        }
+    }
+}
+
+function save(){
+    try{
+        localStorage.setItem('hm_data',JSON.stringify(STATE));
+    }catch(e){
+        console.error('Save error:',e);
+    }
+}
+
 function goTo(s){
     document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
     document.getElementById(s).classList.add('active');
@@ -465,10 +597,12 @@ function goTo(s){
     }
     if(s==='coach'){
         const voiceBtn=document.getElementById('voice-btn');
-        voiceBtn.innerHTML='<svg id="mic-icon" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>';
+        voiceBtn.innerHTML='<svg id="voice-icon" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3" fill="white"/><path d="M5 10v2a7 7 0 0 0 14 0v-2" stroke="white" stroke-width="2" fill="none"/><line x1="12" y1="19" x2="12" y2="23" stroke="white" stroke-width="2"/><line x1="8" y1="23" x2="16" y2="23" stroke="white" stroke-width="2"/></svg>';
         voiceBtn.classList.remove('listening','processing');
     }
+    if(s==='goals')updateGoals();
 }
+
 function nav(el,s){
     document.querySelectorAll('.nav-item, .nav-hero').forEach(x=>x.classList.remove('active'));
     if(el)el.classList.add('active');
@@ -489,6 +623,7 @@ function signup(){
     alert('Account created! Please login.');
     goTo('login');
 }
+
 function login(){
     const email=document.getElementById('login-email').value.trim();
     const pass=document.getElementById('login-password').value;
@@ -514,6 +649,7 @@ function updateDash(){
     document.getElementById('steps-txt').textContent=steps.toLocaleString();
     document.getElementById('cal-ring').style.strokeDashoffset=circ-(Math.min(cal/500,1)*circ);
     document.getElementById('cal-txt').textContent=Math.floor(cal);
+    
     const bars=document.getElementById('weekly-bars');
     bars.innerHTML='';
     [40,60,30,80,50,90,70].forEach((h,i)=>{
@@ -526,6 +662,16 @@ function updateDash(){
         bar.appendChild(lbl);
         bars.appendChild(bar);
     });
+    
+    // Update goal display on dashboard
+    const goalDisplay=document.getElementById('dash-goal-display');
+    if(STATE.goals && STATE.goals.length>0){
+        const g=STATE.goals[0];
+        const progress=Math.min(100, (g.current/(g.current+g.target))*100);
+        goalDisplay.innerHTML=`<div class="list-item"><div class="list-item-info"><div class="list-item-title">${g.title}</div><div class="list-item-subtitle">${g.days} days • ${Math.round(progress)}% complete</div></div><div class="list-item-value">${Math.round(progress)}%</div></div>`;
+    }else{
+        goalDisplay.innerHTML='<div class="list-item"><div class="list-item-info"><div class="list-item-title">No goals set</div><div class="list-item-subtitle">Tap Goals to set your first goal</div></div></div>';
+    }
 }
 
 // Workout Type
@@ -535,20 +681,92 @@ function selectWorkoutType(type,el){
     el.classList.add('selected');
 }
 
-// Modal
+// Modal - FIXED GOALS
 function showModal(type){
     const modal=document.getElementById('modal');
     const body=document.getElementById('modal-body');
     if(type==='food'){
-        body.innerHTML=`<div class="modal-title">Add Food</div><input class="form-input" id="m-food-name" placeholder="Food name"><input class="form-input" id="m-food-cal" type="number" placeholder="Calories"><button class="btn-primary" onclick="alert('Food logged!');closeModal()">Add Food</button><button class="btn-secondary" onclick="closeModal()">Cancel</button>`;
+        body.innerHTML=`<div class="modal-title">Add Food</div><input class="form-input" id="m-food-name" placeholder="Food name"><input class="form-input" id="m-food-cal" type="number" placeholder="Calories"><button class="btn-primary" onclick="addFood()">Add Food</button><button class="btn-secondary" onclick="closeModal()">Cancel</button>`;
     }else if(type==='goal'){
-        body.innerHTML=`<div class="modal-title">Set Goal</div><input class="form-input" id="m-goal-title" placeholder="Goal (e.g., Lose 10 lbs)"><input class="form-input" id="m-goal-days" type="number" placeholder="Days to achieve"><button class="btn-primary" onclick="alert('Goal set!');closeModal()">Set Goal</button><button class="btn-secondary" onclick="closeModal()">Cancel</button>`;
+        body.innerHTML=`<div class="modal-title">Set Weight Loss Goal</div><input class="form-input" id="m-goal-current" type="number" placeholder="Current weight (lbs)"><input class="form-input" id="m-goal-target" type="number" placeholder="Goal weight (lbs)"><input class="form-input" id="m-goal-days" type="number" placeholder="Days to achieve"><button class="btn-primary" onclick="addGoal()">Set Goal</button><button class="btn-secondary" onclick="closeModal()">Cancel</button>`;
     }
     modal.classList.add('active');
 }
-function closeModal(){document.getElementById('modal').classList.remove('active');}
 
-// Workout Tracking - FIXED
+function closeModal(){
+    document.getElementById('modal').classList.remove('active');
+}
+
+function addFood(){
+    const name=document.getElementById('m-food-name').value;
+    const cal=document.getElementById('m-food-cal').value;
+    if(!name||!cal){alert('Please fill all fields');return;}
+    STATE.foods.push({name,calories:parseInt(cal),time:new Date().toLocaleTimeString()});
+    save();
+    closeModal();
+    alert('Food logged!');
+}
+
+function addGoal(){
+    const current=parseFloat(document.getElementById('m-goal-current').value);
+    const target=parseFloat(document.getElementById('m-goal-target').value);
+    const days=parseInt(document.getElementById('m-goal-days').value);
+    
+    if(!current||!target||!days){
+        alert('Please fill all fields');
+        return;
+    }
+    
+    const diff=Math.abs(current-target);
+    const dailyCal=Math.ceil((diff*3500)/days);
+    
+    STATE.goals=[{
+        title:`Lose ${diff.toFixed(1)} lbs`,
+        current:current,
+        target:target,
+        days:days,
+        dailyCalDeficit:dailyCal
+    }];
+    
+    document.getElementById('target-intake').textContent=Math.max(1200,2000-dailyCal);
+    document.getElementById('target-burn').textContent=dailyCal;
+    
+    save();
+    closeModal();
+    updateGoals();
+    updateDash();
+    alert('Goal set successfully!');
+}
+
+function updateGoals(){
+    const msgs=['Amazing progress! You got this!','Keep pushing! You\'re doing great!','Every day you\'re getting stronger!','You\'ve got this! Stay focused!','Incredible dedication! Keep it up!'];
+    document.getElementById('goal-motivation').textContent=msgs[Math.floor(Math.random()*msgs.length)];
+    
+    const goalView=document.getElementById('active-goal-view');
+    if(STATE.goals && STATE.goals.length>0){
+        const g=STATE.goals[0];
+        const progress=Math.min(100, (g.current/(g.current+g.target))*100);
+        goalView.innerHTML=`<div class="list-item"><div class="list-item-info"><div class="list-item-title">${g.title}</div><div class="list-item-subtitle">${g.days} days to go</div></div><div class="list-item-value">${Math.round(progress)}%</div></div><div class="goal-progress-bar"><div class="goal-progress-fill" style="width: ${progress}%"></div></div>`;
+    }else{
+        goalView.innerHTML='<div class="list-item"><div class="list-item-info"><div class="list-item-title">No active goal</div><div class="list-item-subtitle">Tap + to set a new goal</div></div></div>';
+    }
+    
+    const bars=document.getElementById('goal-bars');
+    bars.innerHTML='';
+    [45,65,55,75,85,95,70].forEach((h,i)=>{
+        const bar=document.createElement('div');
+        bar.className='bar';
+        bar.style.height=h+'%';
+        bar.style.background='linear-gradient(180deg, #FFD93D 0%, #FFC830 100%)';
+        const lbl=document.createElement('div');
+        lbl.className='bar-label';
+        lbl.textContent=['M','T','W','T','F','S','S'][i];
+        bar.appendChild(lbl);
+        bars.appendChild(bar);
+    });
+}
+
+// Workout Tracking - WITH MAP
 let trackTimer=null,trackStart=0,gpsWatch=null,lastPos=null,isTracking=false,isPaused=false,pausedTime=0;
 
 function startWorkout(){
@@ -567,23 +785,49 @@ function startWorkout(){
     trackTimer=setInterval(updateTimer,1000);
     
     if(navigator.geolocation){
-        gpsWatch=navigator.geolocation.watchPosition(
+        navigator.geolocation.getCurrentPosition(
             pos=>{
-                if(!isPaused){
-                    const curr={lat:pos.coords.latitude,lon:pos.coords.longitude};
-                    if(lastPos){
-                        const d=dist(lastPos.lat,lastPos.lon,curr.lat,curr.lon);
-                        STATE.tracking.distance+=d;
-                        if(STATE.selectedWorkoutType!=='Cycling'){
-                            STATE.tracking.steps+=Math.floor(d*1250);
+                currentLat=pos.coords.latitude;
+                currentLon=pos.coords.longitude;
+                lastPos={lat:currentLat,lon:currentLon};
+                
+                // Show map with current location
+                const mapFrame=document.getElementById('map-frame');
+                const mapPlaceholder=document.getElementById('map-placeholder');
+                mapFrame.src=`https://www.openstreetmap.org/export/embed.html?bbox=${currentLon-0.01},${currentLat-0.01},${currentLon+0.01},${currentLat+0.01}&layer=mapnik&marker=${currentLat},${currentLon}`;
+                mapFrame.classList.add('visible');
+                mapPlaceholder.style.display='none';
+                
+                gpsWatch=navigator.geolocation.watchPosition(
+                    pos=>{
+                        if(!isPaused){
+                            const curr={lat:pos.coords.latitude,lon:pos.coords.longitude};
+                            if(lastPos){
+                                const d=dist(lastPos.lat,lastPos.lon,curr.lat,curr.lon);
+                                STATE.tracking.distance+=d;
+                                if(STATE.selectedWorkoutType!=='Cycling'){
+                                    STATE.tracking.steps+=Math.floor(d*1250);
+                                }
+                            }
+                            lastPos=curr;
+                            currentLat=curr.lat;
+                            currentLon=curr.lon;
+                            
+                            // Update map
+                            const mapFrame=document.getElementById('map-frame');
+                            mapFrame.src=`https://www.openstreetmap.org/export/embed.html?bbox=${currentLon-0.01},${currentLat-0.01},${currentLon+0.01},${currentLat+0.01}&layer=mapnik&marker=${currentLat},${currentLon}`;
+                            
+                            updateTrackDisplay();
                         }
-                    }
-                    lastPos=curr;
-                    updateTrackDisplay();
-                }
+                    },
+                    err=>console.error('GPS Error:',err),
+                    {enableHighAccuracy:true,timeout:10000,maximumAge:0}
+                );
             },
-            err=>console.error('GPS Error:',err),
-            {enableHighAccuracy:true,timeout:10000,maximumAge:0}
+            err=>{
+                console.error('Initial GPS error:',err);
+                alert('Please enable location services and try again.');
+            }
         );
     }
 }
@@ -630,6 +874,12 @@ function stopWorkout(){
     document.getElementById('t-steps').textContent='0';
     document.getElementById('t-cal').textContent='0';
     
+    const mapFrame=document.getElementById('map-frame');
+    const mapPlaceholder=document.getElementById('map-placeholder');
+    mapFrame.classList.remove('visible');
+    mapPlaceholder.style.display='flex';
+    mapFrame.src='';
+    
     const btn=document.getElementById('pause-btn');
     btn.textContent='PAUSE';
     btn.style.background='var(--accent)';
@@ -663,7 +913,7 @@ function dist(lat1,lon1,lat2,lon2){
     return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
 }
 
-// Voice Recognition - FIXED
+// Voice - FIXED ICONS
 function toggleVoice(){
     const voiceBtn=document.getElementById('voice-btn');
     
@@ -672,9 +922,9 @@ function toggleVoice(){
         return;
     }
     
-    if('webkitSpeechRecognition' in window){
+    if('webkitSpeechRecognition' in window || 'SpeechRecognition' in window){
         if(!recognition){
-            recognition=new webkitSpeechRecognition();
+            recognition=new (window.SpeechRecognition || window.webkitSpeechRecognition)();
             recognition.continuous=false;
             recognition.interimResults=false;
             recognition.lang='en-US';
@@ -684,7 +934,7 @@ function toggleVoice(){
                 addUserMessage(transcript);
                 voiceBtn.classList.remove('listening');
                 voiceBtn.classList.add('processing');
-                voiceBtn.innerHTML='<svg viewBox="0 0 24 24" style="animation: spin 1s linear infinite;"><circle cx="12" cy="12" r="10" stroke="white" stroke-width="4" fill="none" stroke-dasharray="31.4 31.4"/></svg>';
+                voiceBtn.innerHTML='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="white" stroke-width="4" fill="none" stroke-dasharray="31.4 31.4" style="animation: spin 1s linear infinite;"/></svg>';
                 
                 const reply=await getAIReply(transcript);
                 addBotMessage(reply);
@@ -694,20 +944,21 @@ function toggleVoice(){
             recognition.onend=()=>{
                 isRecording=false;
                 voiceBtn.classList.remove('listening','processing');
-                voiceBtn.innerHTML='<svg id="mic-icon" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>';
+                voiceBtn.innerHTML='<svg id="voice-icon" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3" fill="white"/><path d="M5 10v2a7 7 0 0 0 14 0v-2" stroke="white" stroke-width="2" fill="none"/><line x1="12" y1="19" x2="12" y2="23" stroke="white" stroke-width="2"/><line x1="8" y1="23" x2="16" y2="23" stroke="white" stroke-width="2"/></svg>';
             };
             
             recognition.onerror=e=>{
                 console.error('Speech error:',e.error);
                 isRecording=false;
                 voiceBtn.classList.remove('listening','processing');
-                voiceBtn.innerHTML='<svg id="mic-icon" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>';
+                voiceBtn.innerHTML='<svg id="voice-icon" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3" fill="white"/><path d="M5 10v2a7 7 0 0 0 14 0v-2" stroke="white" stroke-width="2" fill="none"/><line x1="12" y1="19" x2="12" y2="23" stroke="white" stroke-width="2"/><line x1="8" y1="23" x2="16" y2="23" stroke="white" stroke-width="2"/></svg>';
+                addBotMessage("Sorry, I couldn't hear that. Please try again or type your question!");
             };
         }
         
         startRecording();
     }else{
-        alert('Voice recognition not supported in this browser. Please use Chrome or Safari.');
+        alert('Voice recognition not supported in this browser. Please use Chrome or Safari, or type your question below!');
     }
 }
 
@@ -715,7 +966,8 @@ function startRecording(){
     const voiceBtn=document.getElementById('voice-btn');
     isRecording=true;
     voiceBtn.classList.add('listening');
-    voiceBtn.innerHTML='<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" rx="2" fill="white"/><rect x="14" y="4" width="4" height="16" rx="2" fill="white"/></svg>';
+    // STOP icon (square)
+    voiceBtn.innerHTML='<svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="white"/></svg>';
     recognition.start();
 }
 
@@ -734,12 +986,12 @@ function speakReply(text){
         utterance.pitch=1.0;
         utterance.onend=()=>{
             voiceBtn.classList.remove('processing');
-            voiceBtn.innerHTML='<svg id="mic-icon" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>';
+            voiceBtn.innerHTML='<svg id="voice-icon" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3" fill="white"/><path d="M5 10v2a7 7 0 0 0 14 0v-2" stroke="white" stroke-width="2" fill="none"/><line x1="12" y1="19" x2="12" y2="23" stroke="white" stroke-width="2"/><line x1="8" y1="23" x2="16" y2="23" stroke="white" stroke-width="2"/></svg>';
         };
         speechSynthesis.speak(utterance);
     }else{
         voiceBtn.classList.remove('processing');
-        voiceBtn.innerHTML='<svg id="mic-icon" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>';
+        voiceBtn.innerHTML='<svg id="voice-icon" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3" fill="white"/><path d="M5 10v2a7 7 0 0 0 14 0v-2" stroke="white" stroke-width="2" fill="none"/><line x1="12" y1="19" x2="12" y2="23" stroke="white" stroke-width="2"/><line x1="8" y1="23" x2="16" y2="23" stroke="white" stroke-width="2"/></svg>';
     }
 }
 
@@ -755,38 +1007,65 @@ function addBotMessage(msg){
     chat.scrollTop=chat.scrollHeight;
 }
 
-// AI with Chrome AI + Keywords - FIXED
+// AI - FIXED CHROME AI
 const AI={
-"lose weight":"Create a caloric deficit of 300-500 cal daily. Combine cardio 3-4 times per week with strength training 2-3 times per week. Track your food. Aim for 1-2 pounds loss per week for sustainable results.",
-"build muscle":"Eat 0.8-1 gram of protein per pound of bodyweight. Lift heavy weights 3-4 times per week using progressive overload. Sleep 7-9 hours for recovery.",
-"protein":"Aim for 0.8-1 gram per pound bodyweight. Good sources include chicken, fish, eggs, Greek yogurt, beans, tofu, and protein powder. Spread intake throughout the day.",
-"water":"Drink half your bodyweight in ounces daily. Add 16-20 ounces per hour of exercise. Dark urine means you need more water.",
-"workout":"Beginners should do 3-4 times per week full body workouts. Intermediate level should do 4-5 times per week split routines. Always include warm-up, main workout, and cool-down.",
-"cardio":"Mix steady-state cardio for 30-45 minutes at moderate intensity or HIIT for 15-20 minutes with intervals. Do this 3-5 times per week, either after weights or on separate days.",
-"rest":"Rest is crucial! Muscles grow during rest, not during workouts. Take 1-2 full rest days per week. Light activity like walking is fine.",
-"motivated":"Set SMART goals. Track progress with photos and measurements. Find a workout buddy. Remember your WHY and your reasons for starting!",
-"diet":"Focus on whole foods including lean proteins, fruits, vegetables, whole grains, and healthy fats. Follow the 80/20 rule and avoid extreme restrictions.",
-"sleep":"Get 7-9 hours nightly. Muscle recovery and hormone regulation happen during sleep. Poor sleep equals poor results!",
-"beginner":"Welcome! Start with 3 times per week full body workouts and 20-30 minutes cardio 2-3 times per week. Learn proper form. Track your nutrition. Be patient with yourself.",
-"abs":"Abs are made in the kitchen! Do core work 2-3 times per week with planks, twists, leg raises, and crunches. Daily ab work is not needed.",
-"stretch":"Do dynamic stretching before workouts. Do static stretching after workouts and hold for 30 seconds. This improves flexibility and reduces injury risk."
+"lose weight":"To lose weight effectively, create a caloric deficit of 300-500 calories daily by combining cardio workouts 3-4 times per week with strength training 2-3 times per week. Track your food intake and aim for a sustainable 1-2 pounds loss per week.",
+"build muscle":"For muscle building, consume 0.8-1 gram of protein per pound of body weight daily. Lift heavy weights 3-4 times per week using progressive overload principles, and ensure you're getting 7-9 hours of quality sleep for optimal recovery.",
+"protein":"Aim for 0.8-1 gram of protein per pound of bodyweight. Excellent sources include chicken breast, fish, eggs, Greek yogurt, beans, tofu, and protein powder. Distribute your protein intake evenly throughout the day for best results.",
+"water":"You should drink approximately half your body weight in ounces of water daily. Add an extra 16-20 ounces for each hour of exercise. Dark yellow urine is a sign you need more water.",
+"workout":"Beginners should start with 3-4 full body workouts per week. Intermediate trainees can do 4-5 times per week with split routines. Always include a proper warm-up, your main workout, and a cool-down period.",
+"cardio":"Mix steady-state cardio for 30-45 minutes at moderate intensity with HIIT sessions of 15-20 minutes with intervals. Aim for 3-5 cardio sessions per week, either after weight training or on separate days.",
+"rest":"Rest is crucial for muscle growth and recovery! Muscles actually grow during rest periods, not during workouts. Take 1-2 complete rest days per week. Light activity like walking is perfectly fine on rest days.",
+"motivated":"Stay motivated by setting SMART goals that are specific and measurable. Track your progress with photos and measurements. Find a workout buddy for accountability. Most importantly, always remember your WHY - your personal reasons for starting this journey.",
+"diet":"Focus on whole, unprocessed foods including lean proteins, fruits, vegetables, whole grains, and healthy fats. Follow the 80/20 rule where you eat clean 80% of the time. Avoid extreme restrictions that you can't sustain long-term.",
+"sleep":"Get 7-9 hours of quality sleep every night. This is when muscle recovery and hormone regulation occur. Poor sleep equals poor results in both fat loss and muscle gain.",
+"beginner":"Welcome to your fitness journey! Start with 3 full body workouts per week and 20-30 minutes of cardio 2-3 times per week. Focus on learning proper form first. Track your nutrition and be patient with yourself - results take time!",
+"abs":"Remember, abs are made in the kitchen! Do targeted core work 2-3 times per week including planks, Russian twists, leg raises, and bicycle crunches. Daily ab training is not necessary and can lead to overtraining.",
+"stretch":"Perform dynamic stretching before workouts to warm up muscles. After workouts, do static stretching and hold each stretch for 30 seconds. Regular stretching improves flexibility and significantly reduces injury risk."
 };
 
 async function getAIReply(msg){
     let reply='';
+    
+    // Try Chrome AI first
     if('ai' in self && 'languageModel' in self.ai){
         try{
-            const session=await self.ai.languageModel.create();
-            reply=await session.prompt(`You are a fitness coach. Answer briefly in 2-3 sentences: ${msg}`);
-        }catch(e){console.log('Chrome AI not available');}
+            const capabilities=await self.ai.languageModel.capabilities();
+            if(capabilities && capabilities.available==='readily'){
+                const session=await self.ai.languageModel.create({
+                    systemPrompt:"You are an enthusiastic, knowledgeable fitness coach. Give practical, actionable advice in 2-3 sentences. Be encouraging and positive."
+                });
+                reply=await session.prompt(msg);
+                session.destroy();
+                console.log('Chrome AI responded');
+            }
+        }catch(e){
+            console.log('Chrome AI not available:',e);
+        }
     }
+    
+    // Fallback to keyword matching
     if(!reply){
         const m=msg.toLowerCase();
         for(let key in AI){
-            if(m.includes(key)){reply=AI[key];break;}
+            if(m.includes(key)){
+                reply=AI[key];
+                break;
+            }
         }
-        if(!reply)reply="Great question! I can help with weight loss, muscle building, nutrition, workouts, recovery, and motivation. What specifically would you like to know?";
+        if(!reply){
+            if(m.includes('workout')||m.includes('exercise')||m.includes('train')){
+                reply="For workouts, I recommend mixing strength training and cardio. Start with 3-4 sessions per week. What specific aspect of training would you like to know more about?";
+            }else if(m.includes('food')||m.includes('eat')||m.includes('nutrition')){
+                reply="Nutrition is absolutely key to reaching your goals! Focus on whole foods, lean proteins, fruits, and vegetables. What specific nutrition topic interests you?";
+            }else if(m.includes('weight')){
+                reply="I can help with both weight loss and muscle gain strategies. Which are you more interested in learning about?";
+            }else{
+                reply="Great question! I can help with weight loss, muscle building, nutrition, workouts, recovery, motivation, and much more. What specific fitness topic would you like to discuss?";
+            }
+        }
     }
+    
     return reply;
 }
 
@@ -805,7 +1084,6 @@ document.addEventListener('DOMContentLoaded',()=>{
     load();
     setTimeout(()=>{goTo(STATE.user?'dashboard':'login');},2000);
     
-    // Create charts
     setTimeout(()=>{
         const nutrBars=document.getElementById('nutr-bars');
         if(nutrBars){
@@ -819,20 +1097,6 @@ document.addEventListener('DOMContentLoaded',()=>{
                 lbl.textContent=['M','T','W','T','F','S','S'][i];
                 bar.appendChild(lbl);
                 nutrBars.appendChild(bar);
-            });
-        }
-        const goalBars=document.getElementById('goal-bars');
-        if(goalBars){
-            [45,65,55,75,85,95,70].forEach((h,i)=>{
-                const bar=document.createElement('div');
-                bar.className='bar';
-                bar.style.height=h+'%';
-                bar.style.background='linear-gradient(180deg, #FFD93D 0%, #FFC830 100%)';
-                const lbl=document.createElement('div');
-                lbl.className='bar-label';
-                lbl.textContent=['M','T','W','T','F','S','S'][i];
-                bar.appendChild(lbl);
-                goalBars.appendChild(bar);
             });
         }
     },3000);
