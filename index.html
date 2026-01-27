@@ -4,760 +4,1238 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#00BFA5">
-    <title>HealthMind AI - Your Intelligent Fitness Companion</title>
+    <title>HealthMind AI</title>
     <link rel="manifest" href="manifest.json">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         :root {
-            --primary: #00BFA5; --primary-dark: #00897B; --primary-light: #B2DFDB;
-            --secondary: #FF6B6B; --tertiary: #4ECDC4; --accent: #FFD93D;
-            --text-dark: #263238; --text-gray: #607D8B; --bg-gray: #F8F9FA;
+            --primary: #00BFA5;
+            --primary-dark: #00897B;
+            --primary-light: #B2DFDB;
+            --text-dark: #263238;
+            --text-gray: #607D8B;
+            --bg-gray: #FAFAFA;
         }
 
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg-gray); height: 100vh; overflow: hidden; }
-        .app { max-width: 480px; margin: 0 auto; height: 100vh; background: white; position: relative; overflow: hidden; box-shadow: 0 0 30px rgba(0,0,0,0.1); }
-        .screen { position: absolute; width: 100%; height: 100%; display: none; flex-direction: column; background: var(--bg-gray); }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-gray);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .app {
+            max-width: 480px;
+            margin: 0 auto;
+            height: 100vh;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .screen {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            background: var(--bg-gray);
+        }
+
         .screen.active { display: flex; }
 
-        /* Logo */
-        .logo-mark { width: 80px; height: 80px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0,191,165,0.3); }
-        .logo-mark svg { width: 50px; height: 50px; fill: var(--primary); }
-        .logo-lockup { display: flex; align-items: center; gap: 12px; justify-content: center; }
-        .logo-lockup .logo-mark { width: 40px; height: 40px; }
-        .logo-lockup .logo-mark svg { width: 25px; height: 25px; }
-        .logo-text { font-size: 20px; font-weight: 700; color: var(--text-dark); letter-spacing: -0.5px; }
-
         /* Splash */
-        .splash { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); justify-content: center; align-items: center; color: white; }
-        .splash-title { font-size: 32px; font-weight: 700; margin-top: 30px; letter-spacing: -1px; }
-        .splash-subtitle { font-size: 14px; opacity: 0.9; margin-top: 10px; letter-spacing: 2px; }
+        .splash {
+            background: var(--primary);
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .splash h1 { font-size: 36px; margin-top: 20px; }
 
         /* Auth */
-        .auth-screen { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); padding: 60px 30px 30px; justify-content: space-between; }
-        .auth-content { background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+        .auth-screen {
+            background: var(--primary);
+            padding: 60px 30px 30px;
+            justify-content: space-between;
+        }
+
+        .auth-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+        }
+
         .input-group { margin-bottom: 20px; }
-        .input-group input { width: 100%; padding: 15px; border: 2px solid #E0E0E0; border-radius: 12px; font-size: 16px; transition: border 0.3s; }
-        .input-group input:focus { outline: none; border-color: var(--primary); }
-        .btn-primary { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,191,165,0.3); }
-        .btn-primary:active { transform: scale(0.98); }
-        .error { color: #E74C3C; font-size: 14px; margin-top: 5px; font-weight: 600; }
-        .auth-footer { text-align: center; color: white; font-size: 15px; margin-top: 20px; font-weight: 600; }
-        .auth-footer a { color: white; text-decoration: none; border-bottom: 2px solid white; padding-bottom: 2px; }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #E0E0E0;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .error { color: #F44336; font-size: 14px; margin-top: 5px; }
 
         /* Header */
-        .header { background: white; padding: 15px 20px; border-bottom: 1px solid #E0E0E0; display: flex; align-items: center; justify-content: center; position: relative; }
-        .header-action { position: absolute; right: 20px; background: var(--primary-light); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; }
-        .header-action:active { transform: scale(0.9); }
-        .header-action svg { width: 20px; height: 20px; stroke: var(--primary); stroke-width: 3; }
+        .header {
+            background: var(--primary);
+            padding: 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h2 { font-size: 20px; }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
         /* Content */
-        .content { flex: 1; overflow-y: auto; padding: 20px 20px 100px; }
-        .card { background: white; border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-        .card-title { font-size: 18px; font-weight: 700; margin-bottom: 15px; color: var(--text-dark); }
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .stat-card { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); padding: 20px; border-radius: 15px; text-align: center; color: white; box-shadow: 0 4px 15px rgba(0,191,165,0.2); }
-        .stat-value { font-size: 32px; font-weight: 800; margin-bottom: 5px; }
-        .stat-label { font-size: 12px; opacity: 0.9; font-weight: 600; }
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 20px 100px;
+        }
 
-        /* Progress Rings */
-        .progress-ring-container { display: flex; justify-content: space-around; margin: 30px 0; }
-        .progress-ring { text-align: center; }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-top: 5px;
+        }
 
         /* Bottom Nav */
-        .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: white; border-top: 1px solid #E0E0E0; display: flex; justify-content: space-around; align-items: center; padding: 12px 0 28px; box-shadow: 0 -4px 20px rgba(0,0,0,0.05); z-index: 100; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-gray); font-size: 11px; cursor: pointer; padding: 8px 12px; transition: all 0.3s; font-weight: 600; }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: white;
+            border-top: 1px solid #E0E0E0;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0 25px;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-gray);
+            font-size: 12px;
+            cursor: pointer;
+            padding: 5px 15px;
+        }
+
         .nav-item.active { color: var(--primary); }
-        .nav-item svg { width: 26px; height: 26px; stroke: currentColor; stroke-width: 2.5; fill: none; }
-        .nav-hero { width: 64px; height: 64px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-top: -32px; cursor: pointer; box-shadow: 0 8px 24px rgba(0,191,165,0.4); transition: all 0.3s; }
-        .nav-hero:active { transform: scale(0.95); }
-        .nav-hero svg { width: 36px; height: 36px; fill: white; }
-        .nav-hero.active { box-shadow: 0 8px 24px rgba(0,191,165,0.6); }
+
+        .nav-item svg {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        .nav-add {
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: -28px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,191,165,0.3);
+        }
+
+        .nav-add svg {
+            width: 28px;
+            height: 28px;
+            stroke: white;
+        }
 
         /* Modal */
-        .modal { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(4px); }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
         .modal.active { display: flex; }
-        .modal-content { background: white; border-radius: 24px; padding: 30px; width: 90%; max-width: 400px; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-        .modal-title { font-size: 22px; font-weight: 700; margin-bottom: 20px; text-align: center; color: var(--text-dark); }
 
-        /* Form Inputs */
-        .form-input, .form-select { width: 100%; padding: 12px; border: 2px solid #E0E0E0; border-radius: 10px; font-size: 15px; margin-bottom: 15px; }
-        .form-input:focus, .form-select:focus { outline: none; border-color: var(--primary); }
-        .form-select { background: white; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+        }
 
-        /* List Items */
-        .list-item { display: flex; align-items: center; justify-content: space-between; padding: 15px; background: var(--bg-gray); border-radius: 12px; margin-bottom: 10px; }
-        .list-item-info { flex: 1; }
-        .list-item-title { font-weight: 700; margin-bottom: 4px; color: var(--text-dark); }
-        .list-item-subtitle { font-size: 13px; color: var(--text-gray); }
-        .list-item-value { font-size: 20px; font-weight: 800; color: var(--primary); }
+        .modal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
 
-        /* Chat */
-        .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
-        .message { max-width: 80%; padding: 14px 18px; border-radius: 18px; line-height: 1.5; animation: slideIn 0.3s ease; }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .message.user { align-self: flex-end; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; border-bottom-right-radius: 4px; box-shadow: 0 4px 15px rgba(0,191,165,0.3); }
-        .message.bot { align-self: flex-start; background: white; color: var(--text-dark); border-bottom-left-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 2px solid var(--primary-light); }
-        .chat-input-box { padding: 15px 20px 30px; background: white; border-top: 1px solid #E0E0E0; display: flex; gap: 10px; }
-        .chat-input { flex: 1; padding: 14px 18px; border: 2px solid #E0E0E0; border-radius: 24px; font-size: 15px; }
-        .chat-input:focus { outline: none; border-color: var(--primary); }
-        .send-btn { width: 50px; height: 50px; background: var(--primary); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 15px rgba(0,191,165,0.3); transition: all 0.3s; }
-        .send-btn:active { transform: scale(0.9); }
-        .send-btn svg { width: 22px; height: 22px; stroke: white; fill: none; stroke-width: 2; }
+        .modal-btn {
+            aspect-ratio: 1;
+            background: var(--primary-light);
+            border: none;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
 
-        /* Tracking */
-        .tracking-map { width: 100%; height: 45vh; background: var(--bg-gray); position: relative; border-radius: 0 0 20px 20px; }
-        .map-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; color: var(--text-gray); }
-        .tracking-timer { font-size: 52px; font-weight: 800; text-align: center; margin: 25px 0; color: var(--primary); font-variant-numeric: tabular-nums; }
-        .tracking-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; padding: 0 20px 20px; }
-        .tracking-stat { text-align: center; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .tracking-stat-value { font-size: 28px; font-weight: 800; color: var(--primary); margin-bottom: 5px; }
-        .tracking-stat-label { font-size: 11px; color: var(--text-gray); font-weight: 600; }
-        .btn-stop { margin: 20px; padding: 18px; background: var(--secondary); color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(255,107,107,0.3); }
+        .modal-btn svg {
+            width: 40px;
+            height: 40px;
+            stroke: var(--primary);
+        }
 
-        /* Bar Chart */
-        .bar-chart { display: flex; align-items: flex-end; justify-content: space-between; height: 150px; gap: 8px; padding: 20px 0; }
-        .bar { flex: 1; background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 8px 8px 0 0; position: relative; transition: all 0.3s; min-height: 20px; }
-        .bar-label { position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); font-size: 11px; color: var(--text-gray); font-weight: 600; }
+        /* Chat Overlay */
+        .chat-overlay {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: 100%;
+            max-width: 480px;
+            height: 70vh;
+            background: white;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+            z-index: 999;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-overlay.active {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .chat-overlay-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background: var(--primary);
+            color: white;
+        }
+
+        .message.bot {
+            align-self: flex-start;
+            background: var(--primary-light);
+            color: var(--text-dark);
+        }
+
+        .chat-input-box {
+            padding: 15px 20px 30px;
+            background: white;
+            border-top: 1px solid #E0E0E0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input-box input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #E0E0E0;
+            border-radius: 25px;
+            font-size: 15px;
+        }
+
+        .send-btn {
+            width: 44px;
+            height: 44px;
+            background: var(--primary);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .send-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: white;
+        }
+
+        /* Settings */
+        .settings-header {
+            background: var(--primary);
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .settings-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            background: white;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .settings-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #E0E0E0;
+        }
+
+        .toggle {
+            width: 50px;
+            height: 28px;
+            background: #ccc;
+            border-radius: 14px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .toggle.active { background: var(--primary); }
+
+        .toggle::after {
+            content: '';
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: left 0.3s;
+        }
+
+        .toggle.active::after { left: 24px; }
+
+        .btn-danger { background: #F44336; }
+
+        .workout-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .workout-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .workout-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--primary);
+        }
+
+        .workout-info { flex: 1; }
+
+        .workout-name {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .workout-details {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
 
         #fileInput { display: none; }
-        .loading { display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: white; animation: spin 0.8s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
 
-        .btn-secondary { width: 100%; padding: 16px; background: white; color: var(--primary); border: 2px solid var(--primary); border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; margin-top: 10px; }
-        .btn-danger { background: var(--secondary); border: none; color: white; }
+        .goal-card {
+            background: white;
+            border: 2px solid #E0E0E0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        /* Tracking */
+        .map-container {
+            width: 100%;
+            height: 50vh;
+            background: var(--bg-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tracking-timer {
+            font-size: 48px;
+            font-weight: 700;
+            text-align: center;
+            margin: 20px 0;
+            color: var(--text-dark);
+        }
+
+        .tracking-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 20px;
+        }
+
+        .tracking-stat { text-align: center; }
+
+        .tracking-stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .tracking-stat-label {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        .btn-stop {
+            margin: 20px;
+            padding: 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div class="app">
         <!-- Splash -->
         <div class="screen splash active" id="splash">
-            <div style="text-align: center;">
-                <div class="logo-mark">
-                    <svg viewBox="0 0 50 50">
-                        <path d="M25 5C16 5 10 11 10 18c0 4 2 7 5 9v4c0 1 1 2 2 2h12c1 0 2-1 2-2v-4c3-2 5-5 5-9 0-7-6-13-15-13zm2 23h-4v-2h4v2zm3-7l-2 1v2h-8v-3l-2-1C16 19 15 17 15 18c0-5 4-9 10-9s10 4 10 9c0 3-1 5-5 7z"/>
-                        <line x1="25" y1="17" x2="25" y2="22" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-                        <line x1="22" y1="20" x2="28" y2="20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-                    </svg>
-                </div>
-                <div class="splash-title">HealthMind AI</div>
-                <div class="splash-subtitle">YOUR INTELLIGENT FITNESS COMPANION</div>
-            </div>
+            <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            <h1>HealthMind AI</h1>
         </div>
 
         <!-- Login -->
         <div class="screen auth-screen" id="login">
             <div style="text-align: center; color: white; margin-bottom: 40px;">
-                <h1 style="font-size: 32px; font-weight: 700;">Welcome Back</h1>
-                <p style="opacity: 0.9; margin-top: 8px;">Log in to continue your fitness journey</p>
+                <h1 style="font-size: 32px;">Welcome Back</h1>
             </div>
             <div class="auth-content">
                 <div class="input-group">
-                    <input type="email" id="login-email" placeholder="Email Address" autocomplete="email">
+                    <input type="email" id="login-email" placeholder="Email">
                     <div class="error" id="login-error"></div>
                 </div>
                 <div class="input-group">
-                    <input type="password" id="login-password" placeholder="Password" autocomplete="current-password">
+                    <input type="password" id="login-password" placeholder="Password">
                 </div>
                 <button class="btn-primary" onclick="login()">Login</button>
             </div>
-            <div class="auth-footer">
-                Don't have an account? <a href="#" onclick="goTo('signup')">Sign Up</a>
+            <div style="text-align: center; color: white; margin-top: 20px;">
+                <a href="#" onclick="goTo('signup')" style="color: white;">Create Account</a>
             </div>
         </div>
 
         <!-- Signup -->
         <div class="screen auth-screen" id="signup">
             <div style="text-align: center; color: white; margin-bottom: 40px;">
-                <h1 style="font-size: 32px; font-weight: 700;">Create Account</h1>
-                <p style="opacity: 0.9; margin-top: 8px;">Join thousands achieving their fitness goals</p>
+                <h1 style="font-size: 32px;">Create Account</h1>
             </div>
             <div class="auth-content">
                 <div class="input-group">
-                    <input type="text" id="signup-name" placeholder="Full Name" autocomplete="name">
+                    <input type="text" id="signup-name" placeholder="Full Name">
                 </div>
                 <div class="input-group">
-                    <input type="email" id="signup-email" placeholder="Email Address" autocomplete="email">
+                    <input type="email" id="signup-email" placeholder="Email">
                     <div class="error" id="signup-error"></div>
                 </div>
                 <div class="input-group">
-                    <input type="password" id="signup-password" placeholder="Password (6+ characters)" autocomplete="new-password">
+                    <input type="password" id="signup-password" placeholder="Password">
                 </div>
-                <button class="btn-primary" onclick="signup()">Create Account</button>
+                <button class="btn-primary" onclick="signup()">Sign Up</button>
             </div>
-            <div class="auth-footer">
-                Already have an account? <a href="#" onclick="goTo('login')">Log In</a>
+            <div style="text-align: center; color: white; margin-top: 20px;">
+                <a href="#" onclick="goTo('login')" style="color: white;">Already have an account?</a>
             </div>
         </div>
 
         <!-- Dashboard -->
         <div class="screen" id="dashboard">
             <div class="header">
-                <div class="logo-lockup">
-                    <div class="logo-mark">
-                        <svg viewBox="0 0 50 50">
-                            <path d="M25 5C16 5 10 11 10 18c0 4 2 7 5 9v4c0 1 1 2 2 2h12c1 0 2-1 2-2v-4c3-2 5-5 5-9 0-7-6-13-15-13zm2 23h-4v-2h4v2zm3-7l-2 1v2h-8v-3l-2-1C16 19 15 17 15 18c0-5 4-9 10-9s10 4 10 9c0 3-1 5-5 7z"/>
-                            <line x1="25" y1="17" x2="25" y2="22" stroke="currentColor" stroke-width="3"/>
-                        </svg>
-                    </div>
-                    <div class="logo-text">HealthMind AI</div>
+                <div>
+                    <h2>Dashboard</h2>
+                    <p style="opacity: 0.9; font-size: 14px;" id="greeting">Hi User!</p>
+                </div>
+                <div class="avatar" onclick="goTo('settings')">
+                    <img id="dash-avatar" src="">
                 </div>
             </div>
             <div class="content">
-                <div class="card" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white;">
-                    <h3 style="font-size: 16px; opacity: 0.9; margin-bottom: 10px;">Welcome back,</h3>
-                    <h2 style="font-size: 28px; font-weight: 800;" id="dash-name">User</h2>
-                </div>
-
                 <div class="card">
-                    <div class="card-title">Today's Progress</div>
-                    <div class="progress-ring-container">
-                        <div class="progress-ring">
-                            <svg width="110" height="110">
-                                <circle cx="55" cy="55" r="48" fill="none" stroke="#E0E0E0" stroke-width="10"/>
-                                <circle id="steps-ring" cx="55" cy="55" r="48" fill="none" stroke="#00BFA5" stroke-width="10" 
-                                    stroke-dasharray="301.6" stroke-dashoffset="301.6" transform="rotate(-90 55 55)" stroke-linecap="round"/>
-                                <text x="55" y="50" text-anchor="middle" font-size="20" font-weight="800" fill="#263238" id="steps-txt">0</text>
-                                <text x="55" y="65" text-anchor="middle" font-size="11" fill="#607D8B">steps</text>
+                    <h3 style="margin-bottom: 15px;">Today's Progress</h3>
+                    <div style="display: flex; justify-content: space-around; margin: 20px 0;">
+                        <div style="text-align: center;">
+                            <svg width="120" height="120" viewBox="0 0 120 120">
+                                <circle cx="60" cy="60" r="54" fill="none" stroke="#E0E0E0" stroke-width="8"/>
+                                <circle id="steps-circle" cx="60" cy="60" r="54" fill="none" stroke="#00BFA5" stroke-width="8" 
+                                    stroke-dasharray="339.292" stroke-dashoffset="339.292" 
+                                    transform="rotate(-90 60 60)" stroke-linecap="round"
+                                    style="transition: stroke-dashoffset 0.5s ease;"/>
+                                <text x="60" y="55" text-anchor="middle" font-size="20" font-weight="bold" fill="#263238" id="steps-circle-value">0</text>
+                                <text x="60" y="72" text-anchor="middle" font-size="12" fill="#607D8B">steps</text>
                             </svg>
+                            <p style="margin-top: 10px; font-size: 14px; color: #607D8B;">Goal: 10,000</p>
                         </div>
-                        <div class="progress-ring">
-                            <svg width="110" height="110">
-                                <circle cx="55" cy="55" r="48" fill="none" stroke="#E0E0E0" stroke-width="10"/>
-                                <circle id="cal-ring" cx="55" cy="55" r="48" fill="none" stroke="#FF6B6B" stroke-width="10" 
-                                    stroke-dasharray="301.6" stroke-dashoffset="301.6" transform="rotate(-90 55 55)" stroke-linecap="round"/>
-                                <text x="55" y="50" text-anchor="middle" font-size="20" font-weight="800" fill="#263238" id="cal-txt">0</text>
-                                <text x="55" y="65" text-anchor="middle" font-size="11" fill="#607D8B">kcal</text>
+                        <div style="text-align: center;">
+                            <svg width="120" height="120" viewBox="0 0 120 120">
+                                <circle cx="60" cy="60" r="54" fill="none" stroke="#E0E0E0" stroke-width="8"/>
+                                <circle id="calories-circle" cx="60" cy="60" r="54" fill="none" stroke="#FF6B6B" stroke-width="8" 
+                                    stroke-dasharray="339.292" stroke-dashoffset="339.292" 
+                                    transform="rotate(-90 60 60)" stroke-linecap="round"
+                                    style="transition: stroke-dashoffset 0.5s ease;"/>
+                                <text x="60" y="55" text-anchor="middle" font-size="20" font-weight="bold" fill="#263238" id="calories-circle-value">0</text>
+                                <text x="60" y="72" text-anchor="middle" font-size="12" fill="#607D8B">kcal</text>
                             </svg>
+                            <p style="margin-top: 10px; font-size: 14px; color: #607D8B;">Goal: 500</p>
                         </div>
                     </div>
                 </div>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value" id="dist-val">0.0</div>
-                        <div class="stat-label" id="dist-unit">MILES TODAY</div>
-                    </div>
-                    <div class="stat-card" style="background: linear-gradient(135deg, var(--secondary) 0%, #E55353 100%);">
-                        <div class="stat-value" id="workout-val">0</div>
-                        <div class="stat-label">WORKOUTS</div>
-                    </div>
-                </div>
-
                 <div class="card">
-                    <div class="card-title">Weekly Activity</div>
-                    <div class="bar-chart" id="weekly-bars"></div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">Nutrition Summary</div>
-                    <div class="list-item">
-                        <div class="list-item-info">
-                            <div class="list-item-title">Calories Remaining</div>
-                            <div class="list-item-subtitle">Goal: 2,000 cal</div>
+                    <h3 style="margin-bottom: 15px;">Weekly Stats</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="distance-value">0</div>
+                            <div class="stat-label" id="distance-label">Miles</div>
                         </div>
-                        <div class="list-item-value" id="dash-cal-remain">1,850</div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="workouts-value">0</div>
+                            <div class="stat-label">Workouts</div>
+                        </div>
                     </div>
                 </div>
-
                 <div class="card">
-                    <div class="card-title">Active Goals</div>
-                    <div id="dash-goals"></div>
+                    <h3 style="margin-bottom: 15px;">Recent Workouts</h3>
+                    <div id="recent-workouts">
+                        <p style="color: var(--text-gray); text-align: center; padding: 20px;">No workouts yet</p>
+                    </div>
                 </div>
             </div>
             <div class="bottom-nav">
-                <div class="nav-item active" onclick="nav(this,'dashboard')">
-                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke-linejoin="round"/></svg>
-                    <span>Dashboard</span>
+                <div class="nav-item active" onclick="navClick(this, 'dashboard')">
+                    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                    <span>Home</span>
                 </div>
-                <div class="nav-item" onclick="nav(this,'workout')">
-                    <svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M15 5l-3-3-3 3M12 2v8M9 10l3 3 3-3"/></svg>
-                    <span>Workout</span>
+                <div class="nav-item" onclick="toggleChat()">
+                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>AI Coach</span>
                 </div>
-                <div class="nav-hero" onclick="nav(null,'coach')">
-                    <svg viewBox="0 0 24 24"><path d="M16 14c0-2-1-3-3-3s-3 1-3 3M12 3C7 3 3 7 3 12s2 7 5 9c1 1 2 1 4 1s3 0 4-1c3-2 5-5 5-9s-4-9-9-9z"/><circle cx="9" cy="10" r="1" fill="white"/><circle cx="15" cy="10" r="1" fill="white"/></svg>
+                <div class="nav-add" onclick="showModal()">
+                    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 </div>
-                <div class="nav-item" onclick="nav(this,'nutrition')">
-                    <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                <div class="nav-item" onclick="navClick(this, 'nutrition')">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                     <span>Nutrition</span>
                 </div>
-                <div class="nav-item" onclick="nav(this,'goals')">
-                    <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                <div class="nav-item" onclick="navClick(this, 'goals')">
+                    <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                     <span>Goals</span>
                 </div>
-            </div>
-        </div>
-
-        <!-- Workout -->
-        <div class="screen" id="workout">
-            <div class="header">
-                <div class="logo-lockup">
-                    <div class="logo-mark"><svg viewBox="0 0 50 50"><path d="M25 5C16 5 10 11 10 18c0 4 2 7 5 9v4c0 1 1 2 2 2h12c1 0 2-1 2-2v-4c3-2 5-5 5-9 0-7-6-13-15-13zm2 23h-4v-2h4v2zm3-7l-2 1v2h-8v-3l-2-1C16 19 15 17 15 18c0-5 4-9 10-9s10 4 10 9c0 3-1 5-5 7z"/><line x1="25" y1="17" x2="25" y2="22" stroke="currentColor" stroke-width="3"/></svg></div>
-                    <div class="logo-text">HealthMind AI</div>
-                </div>
-            </div>
-            <div class="tracking-map" id="map-view">
-                <div class="map-placeholder">
-                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                        <circle cx="12" cy="10" r="3"/>
-                    </svg>
-                    <p style="margin-top: 10px; font-weight: 600;">GPS Tracking</p>
-                    <p style="font-size: 13px;">Click START to begin</p>
-                </div>
-            </div>
-            <div style="flex: 1; overflow-y: auto;">
-                <div class="tracking-timer" id="timer">00:00:00</div>
-                <div class="tracking-stats">
-                    <div class="tracking-stat"><div class="tracking-stat-value" id="t-dist">0.0</div><div class="tracking-stat-label" id="t-unit">mi</div></div>
-                    <div class="tracking-stat" id="t-special-box"><div class="tracking-stat-value" id="t-special">0</div><div class="tracking-stat-label" id="t-special-lbl">Steps</div></div>
-                    <div class="tracking-stat"><div class="tracking-stat-value" id="t-cal">0</div><div class="tracking-stat-label">kcal</div></div>
-                </div>
-                <button class="btn-stop" id="workout-btn" onclick="startWorkout()">START WORKOUT</button>
-            </div>
-            <div class="bottom-nav">
-                <div class="nav-item" onclick="nav(this,'dashboard')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke-linejoin="round"/></svg><span>Dashboard</span></div>
-                <div class="nav-item active"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M15 5l-3-3-3 3M12 2v8M9 10l3 3 3-3"/></svg><span>Workout</span></div>
-                <div class="nav-hero" onclick="nav(null,'coach')"><svg viewBox="0 0 24 24"><path d="M16 14c0-2-1-3-3-3s-3 1-3 3M12 3C7 3 3 7 3 12s2 7 5 9c1 1 2 1 4 1s3 0 4-1c3-2 5-5 5-9s-4-9-9-9z"/><circle cx="9" cy="10" r="1" fill="white"/><circle cx="15" cy="10" r="1" fill="white"/></svg></div>
-                <div class="nav-item" onclick="nav(this,'nutrition')"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg><span>Nutrition</span></div>
-                <div class="nav-item" onclick="nav(this,'goals')"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>Goals</span></div>
-            </div>
-        </div>
-
-        <!-- AI Coach -->
-        <div class="screen" id="coach">
-            <div class="header">
-                <div class="logo-lockup">
-                    <div class="logo-mark"><svg viewBox="0 0 50 50"><path d="M25 5C16 5 10 11 10 18c0 4 2 7 5 9v4c0 1 1 2 2 2h12c1 0 2-1 2-2v-4c3-2 5-5 5-9 0-7-6-13-15-13zm2 23h-4v-2h4v2zm3-7l-2 1v2h-8v-3l-2-1C16 19 15 17 15 18c0-5 4-9 10-9s10 4 10 9c0 3-1 5-5 7z"/><line x1="25" y1="17" x2="25" y2="22" stroke="currentColor" stroke-width="3"/></svg></div>
-                    <div class="logo-text">HealthMind AI</div>
-                </div>
-            </div>
-            <div class="chat-messages" id="chat">
-                <div class="message bot">👋 Hi! I'm your AI health coach powered by advanced AI. Ask me anything about fitness, nutrition, workouts, or wellness!</div>
-            </div>
-            <div class="chat-input-box">
-                <input type="text" class="chat-input" id="chat-input" placeholder="Ask about fitness, nutrition, workouts..." onkeypress="if(event.key==='Enter')sendMsg()">
-                <button class="send-btn" onclick="sendMsg()"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
-            </div>
-            <div class="bottom-nav">
-                <div class="nav-item" onclick="nav(this,'dashboard')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke-linejoin="round"/></svg><span>Dashboard</span></div>
-                <div class="nav-item" onclick="nav(this,'workout')"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M15 5l-3-3-3 3M12 2v8M9 10l3 3 3-3"/></svg><span>Workout</span></div>
-                <div class="nav-hero active"><svg viewBox="0 0 24 24"><path d="M16 14c0-2-1-3-3-3s-3 1-3 3M12 3C7 3 3 7 3 12s2 7 5 9c1 1 2 1 4 1s3 0 4-1c3-2 5-5 5-9s-4-9-9-9z"/><circle cx="9" cy="10" r="1" fill="white"/><circle cx="15" cy="10" r="1" fill="white"/></svg></div>
-                <div class="nav-item" onclick="nav(this,'nutrition')"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg><span>Nutrition</span></div>
-                <div class="nav-item" onclick="nav(this,'goals')"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>Goals</span></div>
             </div>
         </div>
 
         <!-- Nutrition -->
         <div class="screen" id="nutrition">
             <div class="header">
-                <div class="logo-lockup">
-                    <div class="logo-mark"><svg viewBox="0 0 50 50"><path d="M25 5C16 5 10 11 10 18c0 4 2 7 5 9v4c0 1 1 2 2 2h12c1 0 2-1 2-2v-4c3-2 5-5 5-9 0-7-6-13-15-13zm2 23h-4v-2h4v2zm3-7l-2 1v2h-8v-3l-2-1C16 19 15 17 15 18c0-5 4-9 10-9s10 4 10 9c0 3-1 5-5 7z"/><line x1="25" y1="17" x2="25" y2="22" stroke="currentColor" stroke-width="3"/></svg></div>
-                    <div class="logo-text">HealthMind AI</div>
+                <h2>Nutrition Log</h2>
+                <div class="avatar" onclick="goTo('settings')">
+                    <img id="nutrition-avatar" src="">
                 </div>
-                <div class="header-action" onclick="showModal('food')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
             </div>
             <div class="content">
-                <div class="card" style="background: linear-gradient(135deg, var(--tertiary) 0%, #3DB8AF 100%); color: white;">
-                    <h3 style="font-size: 16px; opacity: 0.9; margin-bottom: 5px;">Calories Remaining</h3>
-                    <h2 style="font-size: 42px; font-weight: 800;" id="nutr-remain">1,850</h2>
-                    <p style="opacity: 0.9; margin-top: 5px;">Goal: 2,000 cal</p>
-                </div>
                 <div class="card">
-                    <div class="card-title">Today's Meals</div>
-                    <div id="food-list"><p style="text-align: center; color: var(--text-gray); padding: 20px;">No meals logged yet. Tap + to add!</p></div>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card" style="background: linear-gradient(135deg, #4ECDC4 0%, #44A89F 100%);"><div class="stat-value" id="water-val">0</div><div class="stat-label">CUPS WATER</div></div>
-                    <div class="stat-card" style="background: linear-gradient(135deg, #A8733F 0%, #8F6235 100%);"><div class="stat-value" id="coffee-val">0</div><div class="stat-label">CUPS COFFEE</div></div>
-                </div>
-                <div class="card">
-                    <div class="card-title">Weekly Comparison</div>
-                    <div class="bar-chart" id="nutr-bars"></div>
+                    <h3>Calories Remaining</h3>
+                    <div class="stat-value" style="color: var(--primary); margin: 20px 0;">1,850</div>
+                    <p style="color: var(--text-gray);">Goal: 2,000 calories</p>
                 </div>
             </div>
             <div class="bottom-nav">
-                <div class="nav-item" onclick="nav(this,'dashboard')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke-linejoin="round"/></svg><span>Dashboard</span></div>
-                <div class="nav-item" onclick="nav(this,'workout')"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M15 5l-3-3-3 3M12 2v8M9 10l3 3 3-3"/></svg><span>Workout</span></div>
-                <div class="nav-hero" onclick="nav(null,'coach')"><svg viewBox="0 0 24 24"><path d="M16 14c0-2-1-3-3-3s-3 1-3 3M12 3C7 3 3 7 3 12s2 7 5 9c1 1 2 1 4 1s3 0 4-1c3-2 5-5 5-9s-4-9-9-9z"/><circle cx="9" cy="10" r="1" fill="white"/><circle cx="15" cy="10" r="1" fill="white"/></svg></div>
-                <div class="nav-item active"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg><span>Nutrition</span></div>
-                <div class="nav-item" onclick="nav(this,'goals')"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>Goals</span></div>
+                <div class="nav-item" onclick="navClick(this, 'dashboard')">
+                    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                    <span>Home</span>
+                </div>
+                <div class="nav-item" onclick="toggleChat()">
+                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>AI Coach</span>
+                </div>
+                <div class="nav-add" onclick="showModal()">
+                    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </div>
+                <div class="nav-item active">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>Nutrition</span>
+                </div>
+                <div class="nav-item" onclick="navClick(this, 'goals')">
+                    <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    <span>Goals</span>
+                </div>
             </div>
         </div>
 
         <!-- Goals -->
         <div class="screen" id="goals">
             <div class="header">
-                <div class="logo-lockup">
-                    <div class="logo-mark"><svg viewBox="0 0 50 50"><path d="M25 5C16 5 10 11 10 18c0 4 2 7 5 9v4c0 1 1 2 2 2h12c1 0 2-1 2-2v-4c3-2 5-5 5-9 0-7-6-13-15-13zm2 23h-4v-2h4v2zm3-7l-2 1v2h-8v-3l-2-1C16 19 15 17 15 18c0-5 4-9 10-9s10 4 10 9c0 3-1 5-5 7z"/><line x1="25" y1="17" x2="25" y2="22" stroke="currentColor" stroke-width="3"/></svg></div>
-                    <div class="logo-text">HealthMind AI</div>
+                <h2>My Goals</h2>
+                <div class="avatar" onclick="goTo('settings')">
+                    <img id="goals-avatar" src="">
                 </div>
-                <div class="header-action" onclick="showModal('goal')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
             </div>
             <div class="content">
-                <div class="card" style="background: linear-gradient(135deg, var(--accent) 0%, #FFC830 100%);">
-                    <h3 style="font-size: 18px; margin-bottom: 8px; color: var(--text-dark);">🎯 Keep Going!</h3>
-                    <p style="font-size: 15px; line-height: 1.6; color: var(--text-dark);" id="goal-msg">You're crushing it! Every step brings you closer to your goals. Stay consistent!</p>
+                <div class="card" style="background: var(--primary); color: white; text-align: center;">
+                    <h3>Great Progress!</h3>
+                    <div class="stat-value" style="color: white; margin: 15px 0;" id="goal-calories">0</div>
+                    <p>Calories burned! Keep it up! 🔥</p>
                 </div>
                 <div class="card">
-                    <div class="card-title">Active Goal</div>
-                    <div id="active-goal-view"></div>
-                </div>
-                <div class="card">
-                    <div class="card-title">Progress Tracker</div>
-                    <div class="bar-chart" id="goal-bars"></div>
-                </div>
-                <div class="card">
-                    <div class="card-title">Daily Targets</div>
-                    <div class="list-item"><div class="list-item-info"><div class="list-item-title">Calorie Intake</div><div class="list-item-subtitle">Recommended daily</div></div><div class="list-item-value" id="target-in">2000</div></div>
-                    <div class="list-item"><div class="list-item-info"><div class="list-item-title">Calorie Burn</div><div class="list-item-subtitle">Recommended daily</div></div><div class="list-item-value" id="target-out">500</div></div>
+                    <h3 style="margin-bottom: 15px;">Current Goals</h3>
+                    <div class="goal-card">
+                        <h4>Daily Steps</h4>
+                        <div class="stat-value" style="font-size: 24px; margin: 10px 0;">10,000</div>
+                        <div style="background: #E0E0E0; height: 8px; border-radius: 4px; overflow: hidden;">
+                            <div id="steps-progress" style="background: var(--primary); height: 100%; width: 0%;"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="bottom-nav">
-                <div class="nav-item" onclick="nav(this,'dashboard')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke-linejoin="round"/></svg><span>Dashboard</span></div>
-                <div class="nav-item" onclick="nav(this,'workout')"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M15 5l-3-3-3 3M12 2v8M9 10l3 3 3-3"/></svg><span>Workout</span></div>
-                <div class="nav-hero" onclick="nav(null,'coach')"><svg viewBox="0 0 24 24"><path d="M16 14c0-2-1-3-3-3s-3 1-3 3M12 3C7 3 3 7 3 12s2 7 5 9c1 1 2 1 4 1s3 0 4-1c3-2 5-5 5-9s-4-9-9-9z"/><circle cx="9" cy="10" r="1" fill="white"/><circle cx="15" cy="10" r="1" fill="white"/></svg></div>
-                <div class="nav-item" onclick="nav(this,'nutrition')"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg><span>Nutrition</span></div>
-                <div class="nav-item active"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>Goals</span></div>
+                <div class="nav-item" onclick="navClick(this, 'dashboard')">
+                    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                    <span>Home</span>
+                </div>
+                <div class="nav-item" onclick="toggleChat()">
+                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>AI Coach</span>
+                </div>
+                <div class="nav-add" onclick="showModal()">
+                    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </div>
+                <div class="nav-item" onclick="navClick(this, 'nutrition')">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>Nutrition</span>
+                </div>
+                <div class="nav-item active">
+                    <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    <span>Goals</span>
+                </div>
             </div>
         </div>
 
-        <div class="modal" id="modal"><div class="modal-content" id="modal-body"></div></div>
+        <!-- Settings -->
+        <div class="screen" id="settings">
+            <div class="settings-header">
+                <div class="settings-avatar" onclick="selectPhoto()">
+                    <img id="settings-avatar" src="">
+                </div>
+                <h2 id="settings-name">User</h2>
+                <p id="settings-email">user@email.com</p>
+            </div>
+            <div class="content">
+                <div class="card">
+                    <h3 style="margin-bottom: 15px;">Preferences</h3>
+                    <div class="settings-item">
+                        <span>Units: <span id="unit-label">MILES</span></span>
+                        <div class="toggle" id="unit-toggle" onclick="toggleUnits()"></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <button class="btn-primary btn-danger" onclick="resetData()">Reset All Data</button>
+                </div>
+                <div class="card">
+                    <button class="btn-primary" onclick="logout()">Log Out</button>
+                </div>
+            </div>
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="navClick(this, 'dashboard')">
+                    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                    <span>Home</span>
+                </div>
+                <div class="nav-item" onclick="toggleChat()">
+                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>AI Coach</span>
+                </div>
+                <div class="nav-add" onclick="showModal()">
+                    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </div>
+                <div class="nav-item" onclick="navClick(this, 'nutrition')">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>Nutrition</span>
+                </div>
+                <div class="nav-item" onclick="navClick(this, 'goals')">
+                    <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    <span>Goals</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tracking -->
+        <div class="screen" id="tracking">
+            <div class="map-container">
+                <div style="text-align: center; color: var(--text-gray);">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    <p>GPS Map Loading...</p>
+                </div>
+            </div>
+            <div style="flex: 1; overflow-y: auto;">
+                <div class="tracking-timer" id="timer">00:00:00</div>
+                <div class="tracking-stats">
+                    <div class="tracking-stat">
+                        <div class="tracking-stat-value" id="track-distance">0.0</div>
+                        <div class="tracking-stat-label" id="track-unit">mi</div>
+                    </div>
+                    <div class="tracking-stat" id="track-steps-container">
+                        <div class="tracking-stat-value" id="track-steps">0</div>
+                        <div class="tracking-stat-label">Steps</div>
+                    </div>
+                    <div class="tracking-stat">
+                        <div class="tracking-stat-value" id="track-calories">0</div>
+                        <div class="tracking-stat-label">Calories</div>
+                    </div>
+                </div>
+                <button class="btn-stop" onclick="stopWorkout()">STOP</button>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal" id="modal">
+            <div class="modal-content">
+                <h2 style="text-align: center; margin-bottom: 20px;">Choose Activity</h2>
+                <div class="modal-grid">
+                    <button class="modal-btn" onclick="startActivity('Walking')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M13 2v8l3 3-3 3v6"/>
+                            <circle cx="13" cy="2" r="1"/>
+                        </svg>
+                        <span>Walk</span>
+                    </button>
+                    <button class="modal-btn" onclick="startActivity('Running')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M13 2v6l4 4-4 4v6"/>
+                            <circle cx="13" cy="2" r="1"/>
+                        </svg>
+                        <span>Run</span>
+                    </button>
+                    <button class="modal-btn" onclick="startActivity('Cycling')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="18.5" cy="17.5" r="3.5"/>
+                            <circle cx="5.5" cy="17.5" r="3.5"/>
+                            <path d="M12 17.5V14l-3-3 4-3 2 3h3"/>
+                        </svg>
+                        <span>Bike</span>
+                    </button>
+                    <button class="modal-btn" onclick="addMeal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+                            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+                            <line x1="6" y1="1" x2="6" y2="4"/>
+                            <line x1="10" y1="1" x2="10" y2="4"/>
+                            <line x1="14" y1="1" x2="14" y2="4"/>
+                        </svg>
+                        <span>Nutrition</span>
+                    </button>
+                </div>
+                <button class="btn-primary" style="margin-top: 20px;" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Chat Overlay -->
+        <div class="chat-overlay" id="chat-overlay">
+            <div class="chat-overlay-header">
+                <h2>AI Health Coach</h2>
+                <button class="chat-close" onclick="toggleChat()">✕</button>
+            </div>
+            <div class="chat-messages" id="chat">
+                <div class="message bot">Hi! I'm your AI health coach. Ask me anything about fitness, nutrition, or wellness!</div>
+            </div>
+            <div class="chat-input-box">
+                <input type="text" id="chat-input" placeholder="Type a message..." onkeypress="if(event.key==='Enter') sendMessage()">
+                <button class="send-btn" onclick="sendMessage()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <input type="file" id="fileInput" accept="image/*" onchange="handlePhoto(event)">
     </div>
 
     <script>
-// Due to file size limits, I need to split this. The JavaScript is too long. 
-// Let me create it as a separate section in the next response.
-// Say "continue" and I'll add the complete JavaScript with:
-// - Chrome AI integration
-// - All navigation
-// - Food/goal logging
-// - GPS tracking
-// - Charts
-    </script>
-</body>
-</html>
-const STATE={user:null,workouts:[],foods:[],goals:[],useKM:false,tracking:null,water:0,coffee:0};
-function load(){const s=localStorage.getItem('hm_data');if(s){const d=JSON.parse(s);Object.assign(STATE,d);}}
-function save(){localStorage.setItem('hm_data',JSON.stringify(STATE));}
-function goTo(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(s).classList.add('active');if(s==='dashboard')updateDash();if(s==='nutrition')updateNutr();if(s==='goals')updateGoals();}
-function nav(el,s){document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav-hero').forEach(x=>x.classList.remove('active'));if(el)el.classList.add('active');else document.querySelectorAll('.nav-hero').forEach(x=>x.classList.add('active'));goTo(s);}
+        const STATE = { user: null, workouts: [], useKM: false, tracking: null };
 
-// Auth
-function signup(){
-    const name=document.getElementById('signup-name').value.trim();
-    const email=document.getElementById('signup-email').value.trim();
-    const pass=document.getElementById('signup-password').value;
-    const err=document.getElementById('signup-error');
-    if(!name||!email||!pass){err.textContent='Please fill all fields';return;}
-    if(pass.length<6){err.textContent='Password must be 6+ characters';return;}
-    if(localStorage.getItem('u_'+email)){err.textContent='Email already registered';return;}
-    const user={name,email,pass,avatar:`https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=00BFA5&color=fff`};
-    localStorage.setItem('u_'+email,JSON.stringify(user));
-    alert('Account created! Please login.');
-    goTo('login');
-}
-function login(){
-    const email=document.getElementById('login-email').value.trim();
-    const pass=document.getElementById('login-password').value;
-    const err=document.getElementById('login-error');
-    if(!email||!pass){err.textContent='Please enter email and password';return;}
-    const data=localStorage.getItem('u_'+email);
-    if(!data){err.textContent='Account not found';return;}
-    const user=JSON.parse(data);
-    if(user.pass!==pass){err.textContent='Incorrect password';return;}
-    STATE.user=user;
-    save();
-    goTo('dashboard');
-}
-
-// Dashboard
-function updateDash(){
-    if(!STATE.user)return;
-    document.getElementById('dash-name').textContent=STATE.user.name.split(' ')[0];
-    let steps=0,dist=0,cal=0;
-    STATE.workouts.forEach(w=>{steps+=w.steps||0;dist+=w.distance||0;cal+=w.calories||0;});
-    const d=STATE.useKM?dist:dist*0.621371;
-    document.getElementById('dist-val').textContent=d.toFixed(1);
-    document.getElementById('dist-unit').textContent=STATE.useKM?'KM TODAY':'MILES TODAY';
-    document.getElementById('workout-val').textContent=STATE.workouts.length;
-    const circ=301.6;
-    document.getElementById('steps-ring').style.strokeDashoffset=circ-(Math.min(steps/10000,1)*circ);
-    document.getElementById('steps-txt').textContent=steps.toLocaleString();
-    document.getElementById('cal-ring').style.strokeDashoffset=circ-(Math.min(cal/500,1)*circ);
-    document.getElementById('cal-txt').textContent=Math.floor(cal);
-    
-    // Weekly bars
-    const bars=document.getElementById('weekly-bars');
-    bars.innerHTML='';
-    const days=['M','T','W','T','F','S','S'];
-    const heights=[40,60,30,80,50,90,70];
-    heights.forEach((h,i)=>{
-        const bar=document.createElement('div');
-        bar.className='bar';
-        bar.style.height=h+'%';
-        const lbl=document.createElement('div');
-        lbl.className='bar-label';
-        lbl.textContent=days[i];
-        bar.appendChild(lbl);
-        bars.appendChild(bar);
-    });
-    
-    // Goals summary
-    const goalDiv=document.getElementById('dash-goals');
-    if(STATE.goals.length===0){
-        goalDiv.innerHTML='<div class="list-item"><div class="list-item-info"><div class="list-item-title">No goals set</div><div class="list-item-subtitle">Tap Goals to set your first goal</div></div></div>';
-    }else{
-        const g=STATE.goals[0];
-        goalDiv.innerHTML=`<div class="list-item"><div class="list-item-info"><div class="list-item-title">${g.title}</div><div class="list-item-subtitle">${g.subtitle}</div></div></div>`;
-    }
-}
-
-// Nutrition
-function updateNutr(){
-    const foodList=document.getElementById('food-list');
-    if(STATE.foods.length===0){
-        foodList.innerHTML='<p style="text-align: center; color: var(--text-gray); padding: 20px;">No meals logged yet. Tap + to add!</p>';
-    }else{
-        foodList.innerHTML=STATE.foods.map(f=>`<div class="list-item"><div class="list-item-info"><div class="list-item-title">${f.name}</div><div class="list-item-subtitle">${f.time} • ${f.amount}</div></div><div class="list-item-value">${f.calories}</div></div>`).join('');
-    }
-    document.getElementById('water-val').textContent=STATE.water||0;
-    document.getElementById('coffee-val').textContent=STATE.coffee||0;
-    
-    const bars=document.getElementById('nutr-bars');
-    bars.innerHTML='';
-    const days=['M','T','W','T','F','S','S'];
-    const heights=[50,70,40,85,60,75,80];
-    heights.forEach((h,i)=>{
-        const bar=document.createElement('div');
-        bar.className='bar';
-        bar.style.height=h+'%';
-        bar.style.background='linear-gradient(180deg, #4ECDC4 0%, #44A89F 100%)';
-        const lbl=document.createElement('div');
-        lbl.className='bar-label';
-        lbl.textContent=days[i];
-        bar.appendChild(lbl);
-        bars.appendChild(bar);
-    });
-}
-
-// Goals
-function updateGoals(){
-    const msgs=['Amazing progress! Keep it up!','You\'re doing fantastic!','Every day you\'re getting stronger!','You\'ve got this!','Incredible dedication!'];
-    document.getElementById('goal-msg').textContent=msgs[Math.floor(Math.random()*msgs.length)];
-    
-    const goalView=document.getElementById('active-goal-view');
-    if(STATE.goals.length===0){
-        goalView.innerHTML='<div class="list-item"><div class="list-item-info"><div class="list-item-title">No active goal</div><div class="list-item-subtitle">Tap + to set a new goal</div></div></div>';
-    }else{
-        const g=STATE.goals[0];
-        const progress=(g.current/g.target)*100;
-        goalView.innerHTML=`<div class="list-item"><div class="list-item-info"><div class="list-item-title">${g.title}</div><div class="list-item-subtitle">${g.current} / ${g.target} ${g.unit}</div></div><div class="list-item-value">${Math.floor(progress)}%</div></div><div style="background: #E0E0E0; height: 12px; border-radius: 6px; overflow: hidden; margin-top: 10px;"><div style="background: var(--primary); height: 100%; width: ${progress}%;"></div></div>`;
-    }
-    
-    const bars=document.getElementById('goal-bars');
-    bars.innerHTML='';
-    const days=['M','T','W','T','F','S','S'];
-    const heights=[45,65,55,75,85,95,70];
-    heights.forEach((h,i)=>{
-        const bar=document.createElement('div');
-        bar.className='bar';
-        bar.style.height=h+'%';
-        bar.style.background='linear-gradient(180deg, #FFD93D 0%, #FFC830 100%)';
-        const lbl=document.createElement('div');
-        lbl.className='bar-label';
-        lbl.textContent=days[i];
-        bar.appendChild(lbl);
-        bars.appendChild(bar);
-    });
-}
-
-// Modal
-function showModal(type){
-    const modal=document.getElementById('modal');
-    const body=document.getElementById('modal-body');
-    if(type==='food'){
-        body.innerHTML=`<div class="modal-title">Add Food</div>
-        <input class="form-input" id="m-food-name" placeholder="Food name">
-        <div class="form-row">
-            <input class="form-input" id="m-food-cal" type="number" placeholder="Calories">
-            <input class="form-input" id="m-food-amt" placeholder="Amount (e.g., 1 cup)">
-        </div>
-        <input class="form-input" id="m-food-time" type="time">
-        <button class="btn-primary" onclick="addFood()">Add Food</button>
-        <button class="btn-secondary" onclick="closeModal()">Cancel</button>`;
-    }else if(type==='goal'){
-        body.innerHTML=`<div class="modal-title">Set Goal</div>
-        <input class="form-input" id="m-goal-title" placeholder="Goal (e.g., Lose 10 lbs)">
-        <div class="form-row">
-            <input class="form-input" id="m-goal-current" type="number" placeholder="Current weight">
-            <input class="form-input" id="m-goal-target" type="number" placeholder="Target weight">
-        </div>
-        <input class="form-input" id="m-goal-days" type="number" placeholder="Days to achieve">
-        <button class="btn-primary" onclick="addGoal()">Set Goal</button>
-        <button class="btn-secondary" onclick="closeModal()">Cancel</button>`;
-    }
-    modal.classList.add('active');
-}
-function closeModal(){document.getElementById('modal').classList.remove('active');}
-function addFood(){
-    const name=document.getElementById('m-food-name').value;
-    const cal=document.getElementById('m-food-cal').value;
-    const amt=document.getElementById('m-food-amt').value;
-    const time=document.getElementById('m-food-time').value||'12:00';
-    if(!name||!cal){alert('Please fill required fields');return;}
-    STATE.foods.push({name,calories:cal,amount:amt,time});
-    save();
-    closeModal();
-    updateNutr();
-}
-function addGoal(){
-    const title=document.getElementById('m-goal-title').value;
-    const current=document.getElementById('m-goal-current').value;
-    const target=document.getElementById('m-goal-target').value;
-    const days=document.getElementById('m-goal-days').value;
-    if(!title||!current||!target||!days){alert('Please fill all fields');return;}
-    const diff=Math.abs(current-target);
-    const dailyCal=Math.ceil((diff*3500)/days);
-    STATE.goals=[{title,current,target,days,unit:'lbs',subtitle:`${days} days • ${dailyCal} cal/day`}];
-    document.getElementById('target-in').textContent=Math.max(1200,2000-dailyCal);
-    document.getElementById('target-out').textContent=dailyCal;
-    save();
-    closeModal();
-    updateGoals();
-}
-
-// Workout tracking
-let trackTimer=null,trackStart=0,gpsWatch=null,lastPos=null,isTracking=false;
-function startWorkout(){
-    if(isTracking){stopWorkout();return;}
-    if(!confirm('Start workout tracking?'))return;
-    STATE.tracking={type:'Walking',start:Date.now(),distance:0,steps:0,calories:0};
-    isTracking=true;
-    document.getElementById('workout-btn').textContent='STOP WORKOUT';
-    document.getElementById('workout-btn').style.background='var(--secondary)';
-    trackStart=Date.now();
-    trackTimer=setInterval(updateTimer,1000);
-    if(navigator.geolocation){
-        gpsWatch=navigator.geolocation.watchPosition(pos=>{
-            const curr={lat:pos.coords.latitude,lon:pos.coords.longitude};
-            if(lastPos){
-                const d=dist(lastPos.lat,lastPos.lon,curr.lat,curr.lon);
-                STATE.tracking.distance+=d;
-                STATE.tracking.steps+=Math.floor(d*1250);
+        function load() {
+            const s = localStorage.getItem('hm_state');
+            if (s) {
+                const d = JSON.parse(s);
+                STATE.user = d.user;
+                STATE.workouts = d.workouts || [];
+                STATE.useKM = d.useKM || false;
             }
-            lastPos=curr;
-            updateTrackDisplay();
-        },err=>console.error(err),{enableHighAccuracy:true,timeout:5000,maximumAge:0});
-    }
-}
-function stopWorkout(){
-    if(!isTracking)return;
-    clearInterval(trackTimer);
-    if(gpsWatch)navigator.geolocation.clearWatch(gpsWatch);
-    STATE.workouts.push({type:STATE.tracking.type,date:new Date().toISOString(),distance:STATE.tracking.distance,steps:STATE.tracking.steps,calories:STATE.tracking.calories});
-    STATE.tracking=null;
-    lastPos=null;
-    isTracking=false;
-    document.getElementById('workout-btn').textContent='START WORKOUT';
-    document.getElementById('workout-btn').style.background='var(--primary)';
-    document.getElementById('timer').textContent='00:00:00';
-    document.getElementById('t-dist').textContent='0.0';
-    document.getElementById('t-special').textContent='0';
-    document.getElementById('t-cal').textContent='0';
-    save();
-    alert('Workout saved!');
-    nav(document.querySelectorAll('.nav-item')[0],'dashboard');
-}
-function updateTimer(){
-    const e=Math.floor((Date.now()-trackStart)/1000);
-    const h=Math.floor(e/3600);
-    const m=Math.floor((e%3600)/60);
-    const s=e%60;
-    document.getElementById('timer').textContent=`${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-}
-function updateTrackDisplay(){
-    if(!STATE.tracking)return;
-    const d=STATE.useKM?STATE.tracking.distance:STATE.tracking.distance*0.621371;
-    document.getElementById('t-dist').textContent=d.toFixed(2);
-    document.getElementById('t-unit').textContent=STATE.useKM?'km':'mi';
-    document.getElementById('t-special').textContent=STATE.tracking.steps.toLocaleString();
-    STATE.tracking.calories=STATE.tracking.distance*60;
-    document.getElementById('t-cal').textContent=Math.floor(STATE.tracking.calories);
-}
-function dist(lat1,lon1,lat2,lon2){
-    const R=6371;
-    const dLat=(lat2-lat1)*Math.PI/180;
-    const dLon=(lon2-lon1)*Math.PI/180;
-    const a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
-    return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
-}
-
-// AI Coach - Chrome AI + Fallback
-const AI={
-"lose weight":"Create a caloric deficit of 300-500 cal daily. Combine cardio (3-4x/week) with strength training (2-3x/week). Track food. Aim for 1-2 lbs loss per week.",
-"build muscle":"Eat 0.8-1g protein per lb bodyweight. Lift heavy 3-4x/week. Progressive overload is key. Sleep 7-9hrs.",
-"protein":"Aim 0.8-1g per lb bodyweight. Sources: chicken, fish, eggs, Greek yogurt, beans, tofu, powder. Spread throughout day.",
-"water":"Half bodyweight in ounces daily. +16-20oz per hour exercise. Dark urine = dehydrated.",
-"workout":"Beginners: 3-4x/week full body. Intermediate: 4-5x/week split. Include: warm-up, main workout, cool-down.",
-"cardio":"Mix steady-state (30-45min moderate) or HIIT (15-20min intervals). 3-5x/week. After weights or separate days.",
-"rest":"Rest crucial! Muscles grow during rest. 1-2 full rest days/week. Light activity OK.",
-"motivated":"SMART goals. Track progress with photos/measurements. Workout buddy. Remember your WHY!",
-"diet":"Whole foods: lean proteins, fruits, vegetables, whole grains, healthy fats. 80/20 rule. No extreme restrictions.",
-"sleep":"7-9hrs nightly. Muscle recovery and hormones happen here. Poor sleep = poor results!"
-};
-
-async function sendMsg(){
-    const input=document.getElementById('chat-input');
-    const msg=input.value.trim();
-    if(!msg)return;
-    const chat=document.getElementById('chat');
-    chat.innerHTML+=`<div class="message user">${input.value}</div>`;
-    input.value='';
-    chat.scrollTop=chat.scrollHeight;
-    
-    let reply='';
-    // Try Chrome AI first
-    if('ai' in self && 'languageModel' in self.ai){
-        try{
-            const session=await self.ai.languageModel.create();
-            const prompt=`You are a fitness coach. Answer briefly in 2-3 sentences: ${msg}`;
-            reply=await session.prompt(prompt);
-        }catch(e){
-            console.log('Chrome AI unavailable, using keyword matching');
         }
-    }
-    
-    // Fallback to keyword matching
-    if(!reply){
-        const m=msg.toLowerCase();
-        for(let key in AI){
-            if(m.includes(key)){reply=AI[key];break;}
-        }
-        if(!reply){
-            if(m.includes('workout')||m.includes('exercise'))reply="I recommend 3-4 workouts/week mixing cardio and strength. What specific training are you curious about?";
-            else if(m.includes('food')||m.includes('eat')||m.includes('nutrition'))reply="Nutrition is key! Whole foods, lean proteins, fruits, veggies. What specifically?";
-            else if(m.includes('weight'))reply="Looking to lose weight or build muscle? I can help! Try: 'how to lose weight' or 'how to build muscle'";
-            else if(m.includes('thanks'))reply="You're welcome! Keep crushing it! 💪";
-            else if(m.includes('hello')||m.includes('hi'))reply="Hey! 👋 Ready to crush fitness goals? Ask me anything!";
-            else reply="Great question! I know about: weight loss, muscle building, nutrition, workouts, recovery, motivation, and more. Ask something specific!";
-        }
-    }
-    
-    setTimeout(()=>{
-        chat.innerHTML+=`<div class="message bot">${reply}</div>`;
-        chat.scrollTop=chat.scrollHeight;
-    },500);
-}
 
-// Init
-document.addEventListener('DOMContentLoaded',()=>{
-    load();
-    setTimeout(()=>{goTo(STATE.user?'dashboard':'login');},2000);
-});
-</script>
+        function save() {
+            localStorage.setItem('hm_state', JSON.stringify(STATE));
+        }
+
+        function goTo(screen) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screen).classList.add('active');
+            if (screen === 'dashboard') updateDashboard();
+            if (screen === 'goals') updateGoals();
+            if (screen === 'settings') updateSettings();
+            if (screen === 'nutrition') {
+                if (STATE.user && STATE.user.avatar) {
+                    document.getElementById('nutrition-avatar').src = STATE.user.avatar;
+                }
+            }
+        }
+
+        function navClick(el, screen) {
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            el.classList.add('active');
+            goTo(screen);
+        }
+
+        function signup() {
+            const name = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const pass = document.getElementById('signup-password').value;
+            const err = document.getElementById('signup-error');
+            
+            if (!name || !email || !pass) { err.textContent = 'Please fill all fields'; return; }
+            if (pass.length < 6) { err.textContent = 'Password must be 6+ characters'; return; }
+            if (localStorage.getItem('u_' + email)) { err.textContent = 'Email already registered'; return; }
+            
+            const user = { name, email, pass, avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=00BFA5&color=fff` };
+            localStorage.setItem('u_' + email, JSON.stringify(user));
+            alert('Account created! Please login.');
+            goTo('login');
+        }
+
+        function login() {
+            const email = document.getElementById('login-email').value.trim();
+            const pass = document.getElementById('login-password').value;
+            const err = document.getElementById('login-error');
+            
+            if (!email || !pass) { err.textContent = 'Please enter email and password'; return; }
+            
+            const data = localStorage.getItem('u_' + email);
+            if (!data) { err.textContent = 'Account not found'; return; }
+            
+            const user = JSON.parse(data);
+            if (user.pass !== pass) { err.textContent = 'Incorrect password'; return; }
+            
+            STATE.user = user;
+            save();
+            goTo('dashboard');
+        }
+
+        function logout() {
+            if (confirm('Logout?')) {
+                STATE.user = null;
+                save();
+                goTo('login');
+            }
+        }
+
+        function updateDashboard() {
+            if (!STATE.user) return;
+            
+            document.getElementById('greeting').textContent = `Hi ${STATE.user.name.split(' ')[0]}!`;
+            document.getElementById('dash-avatar').src = STATE.user.avatar;
+            document.getElementById('goals-avatar').src = STATE.user.avatar;
+            
+            let steps = 0, dist = 0, calories = 0;
+            STATE.workouts.forEach(w => {
+                steps += w.steps || 0;
+                dist += w.distance || 0;
+                calories += w.calories || 0;
+            });
+            
+            const d = STATE.useKM ? dist : dist * 0.621371;
+            document.getElementById('distance-value').textContent = d.toFixed(1);
+            document.getElementById('distance-label').textContent = STATE.useKM ? 'Kilometers' : 'Miles';
+            document.getElementById('workouts-value').textContent = STATE.workouts.length;
+            
+            // Update progress circles
+            const stepsProgress = Math.min((steps / 10000), 1);
+            const circumference = 339.292;
+            document.getElementById('steps-circle').style.strokeDashoffset = circumference - (stepsProgress * circumference);
+            document.getElementById('steps-circle-value').textContent = steps.toLocaleString();
+            
+            const caloriesProgress = Math.min((calories / 500), 1);
+            document.getElementById('calories-circle').style.strokeDashoffset = circumference - (caloriesProgress * circumference);
+            document.getElementById('calories-circle-value').textContent = Math.floor(calories);
+            
+            const recent = document.getElementById('recent-workouts');
+            if (STATE.workouts.length === 0) {
+                recent.innerHTML = '<p style="color: var(--text-gray); text-align: center; padding: 20px;">No workouts yet</p>';
+            } else {
+                recent.innerHTML = STATE.workouts.slice(-3).reverse().map(w => {
+                    const wd = STATE.useKM ? w.distance : w.distance * 0.621371;
+                    return `<div class="workout-item">
+                        <div class="workout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2v8l3 3-3 3v6"/></svg></div>
+                        <div class="workout-info">
+                            <div class="workout-name">${w.type}</div>
+                            <div class="workout-details">${wd.toFixed(2)} ${STATE.useKM?'km':'mi'} • ${w.steps.toLocaleString()} steps</div>
+                        </div>
+                    </div>`;
+                }).join('');
+            }
+        }
+
+        function updateGoals() {
+            let cal = 0, steps = 0;
+            STATE.workouts.forEach(w => {
+                cal += w.calories || 0;
+                steps += w.steps || 0;
+            });
+            document.getElementById('goal-calories').textContent = Math.floor(cal);
+            
+            const stepsProg = Math.min((steps / 10000) * 100, 100);
+            document.getElementById('steps-progress').style.width = stepsProg + '%';
+        }
+
+        function updateSettings() {
+            if (!STATE.user) return;
+            document.getElementById('settings-name').textContent = STATE.user.name;
+            document.getElementById('settings-email').textContent = STATE.user.email;
+            document.getElementById('settings-avatar').src = STATE.user.avatar;
+            
+            const toggle = document.getElementById('unit-toggle');
+            const label = document.getElementById('unit-label');
+            if (STATE.useKM) {
+                toggle.classList.add('active');
+                label.textContent = 'KM';
+            } else {
+                toggle.classList.remove('active');
+                label.textContent = 'MILES';
+            }
+        }
+
+        function toggleUnits() {
+            STATE.useKM = !STATE.useKM;
+            save();
+            updateSettings();
+            updateDashboard();
+        }
+
+        function resetData() {
+            if (confirm('Delete all workout data?')) {
+                STATE.workouts = [];
+                save();
+                alert('Data reset!');
+                updateDashboard();
+            }
+        }
+
+        function selectPhoto() {
+            document.getElementById('fileInput').click();
+        }
+
+        function handlePhoto(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                STATE.user.avatar = ev.target.result;
+                localStorage.setItem('u_' + STATE.user.email, JSON.stringify(STATE.user));
+                save();
+                updateSettings();
+                updateDashboard();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function showModal() {
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        function addMeal() {
+            closeModal();
+            navClick(document.querySelectorAll('.nav-item')[3], 'nutrition');
+            alert('Nutrition logging - coming soon!');
+        }
+
+        function toggleChat() {
+            document.getElementById('chat-overlay').classList.toggle('active');
+        }
+
+        let trackTimer = null, trackStart = 0, gpsWatch = null, lastPos = null;
+
+        function startActivity(type) {
+            closeModal();
+            STATE.tracking = { type, start: Date.now(), distance: 0, steps: 0, calories: 0 };
+            
+            if (type === 'Cycling') {
+                document.getElementById('track-steps-container').innerHTML = '<div class="tracking-stat-value" id="track-speed">0.0</div><div class="tracking-stat-label">mph</div>';
+            }
+            
+            document.getElementById('track-unit').textContent = STATE.useKM ? 'km' : 'mi';
+            goTo('tracking');
+            
+            trackStart = Date.now();
+            trackTimer = setInterval(updateTimer, 1000);
+            
+            if (navigator.geolocation) {
+                gpsWatch = navigator.geolocation.watchPosition(
+                    pos => {
+                        const curr = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+                        if (lastPos) {
+                            const d = distance(lastPos.lat, lastPos.lon, curr.lat, curr.lon);
+                            STATE.tracking.distance += d;
+                            if (type !== 'Cycling') STATE.tracking.steps += Math.floor(d * 1250);
+                        }
+                        lastPos = curr;
+                        updateTrackDisplay();
+                    },
+                    err => console.error(err),
+                    { enableHighAccuracy: true }
+                );
+            }
+        }
+
+        function updateTimer() {
+            const elapsed = Math.floor((Date.now() - trackStart) / 1000);
+            const h = Math.floor(elapsed / 3600);
+            const m = Math.floor((elapsed % 3600) / 60);
+            const s = elapsed % 60;
+            document.getElementById('timer').textContent = 
+                `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+        }
+
+        function updateTrackDisplay() {
+            if (!STATE.tracking) return;
+            const d = STATE.useKM ? STATE.tracking.distance : STATE.tracking.distance * 0.621371;
+            document.getElementById('track-distance').textContent = d.toFixed(2);
+            
+            if (STATE.tracking.type !== 'Cycling') {
+                document.getElementById('track-steps').textContent = STATE.tracking.steps.toLocaleString();
+            }
+            
+            STATE.tracking.calories = STATE.tracking.distance * 60;
+            document.getElementById('track-calories').textContent = Math.floor(STATE.tracking.calories);
+        }
+
+        function stopWorkout() {
+            if (!STATE.tracking) return;
+            
+            clearInterval(trackTimer);
+            if (gpsWatch) navigator.geolocation.clearWatch(gpsWatch);
+            
+            STATE.workouts.push({
+                type: STATE.tracking.type,
+                date: new Date().toISOString(),
+                distance: STATE.tracking.distance,
+                steps: STATE.tracking.steps,
+                calories: STATE.tracking.calories
+            });
+            
+            STATE.tracking = null;
+            lastPos = null;
+            save();
+            
+            alert('Workout saved!');
+            goTo('dashboard');
+        }
+
+        function distance(lat1, lon1, lat2, lon2) {
+            const R = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                     Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                     Math.sin(dLon/2) * Math.sin(dLon/2);
+            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        }
+
+        const AI = {
+            "lose weight": "Focus on caloric deficit: eat 300-500 calories below maintenance. Combine cardio with strength training!",
+            "build muscle": "Eat 0.8-1g protein per lb bodyweight. Strength train 3-4x/week with progressive overload!",
+            "motivated": "Set small goals! Track progress. Find a buddy. Remember why you started!",
+            "water": "Aim for half your bodyweight in ounces daily. More if exercising!",
+            "warm up": "Always warm up 5-10 min. Light cardio + dynamic stretching prevents injury!",
+            "rest": "Rest is crucial! Muscles grow during rest. Take 1-2 rest days per week."
+        };
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const msg = input.value.trim().toLowerCase();
+            if (!msg) return;
+            
+            const chat = document.getElementById('chat');
+            chat.innerHTML += `<div class="message user">${input.value}</div>`;
+            input.value = '';
+            
+            let reply = "That's a great question! ";
+            let found = false;
+            
+            for (let key in AI) {
+                if (msg.includes(key)) {
+                    reply += AI[key];
+                    found = true;
+                    break;
+                }
+            }
+            
+            if (!found) {
+                if (msg.includes('workout') || msg.includes('exercise')) {
+                    reply += "I recommend 3-4 workouts per week. Mix cardio and strength training!";
+                } else if (msg.includes('diet') || msg.includes('eat')) {
+                    reply += "Focus on whole foods, lean proteins, fruits, vegetables. Avoid processed foods!";
+                } else {
+                    reply = "I'm here to help with fitness, nutrition, and wellness! Ask me about workouts, diet, or motivation!";
+                }
+            }
+            
+            setTimeout(() => {
+                chat.innerHTML += `<div class="message bot">${reply}</div>`;
+                chat.scrollTop = chat.scrollHeight;
+            }, 500);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            load();
+            setTimeout(() => goTo(STATE.user ? 'dashboard' : 'login'), 2000);
+        });
+    </script>
 </body>
 </html>
