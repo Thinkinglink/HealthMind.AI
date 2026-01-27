@@ -24,7 +24,6 @@
             position: relative;
         }
 
-        /* App Container */
         .app {
             max-width: 480px;
             margin: 0 auto;
@@ -35,7 +34,6 @@
             box-shadow: 0 0 50px rgba(0,0,0,0.1);
         }
 
-        /* Screen Base */
         .screen {
             position: absolute;
             width: 100%;
@@ -51,7 +49,6 @@
             opacity: 1;
         }
 
-        /* Splash Screen */
         .splash-screen {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             justify-content: center;
@@ -82,7 +79,6 @@
             opacity: 0.9;
         }
 
-        /* Onboarding Screen */
         .onboarding-image {
             width: 100%;
             height: 50vh;
@@ -129,7 +125,6 @@
             border-radius: 4px;
         }
 
-        /* Auth Screens */
         .auth-screen {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 40px 30px;
@@ -184,6 +179,18 @@
             background: white;
         }
 
+        .error-message {
+            color: #ff4444;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .success-message {
+            color: #00C851;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
         .checkbox-label {
             display: flex;
             align-items: center;
@@ -232,7 +239,6 @@
             text-decoration: none;
         }
 
-        /* Goal Setting Screen */
         .goal-screen {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 40px 30px;
@@ -303,7 +309,6 @@
             border-radius: 50%;
         }
 
-        /* Profile Screen */
         .profile-screen {
             padding: 40px 30px;
             background: #F9F9FB;
@@ -323,6 +328,8 @@
             border: 4px solid white;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             overflow: hidden;
+            cursor: pointer;
+            position: relative;
         }
 
         .profile-avatar img {
@@ -331,13 +338,24 @@
             object-fit: cover;
         }
 
+        .profile-avatar-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            padding: 8px;
+            font-size: 12px;
+            text-align: center;
+        }
+
         .profile-title {
             font-size: 20px;
             font-weight: 600;
             margin-bottom: 10px;
         }
 
-        /* Dashboard Screen */
         .dashboard-screen {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
@@ -386,7 +404,6 @@
             overflow-y: auto;
         }
 
-        /* Progress Cards */
         .progress-card {
             background: white;
             border-radius: 20px;
@@ -472,7 +489,6 @@
             color: #999;
         }
 
-        /* Daily Challenges */
         .section-title {
             font-size: 18px;
             font-weight: 600;
@@ -501,7 +517,6 @@
             width: 100%;
             height: 150px;
             object-fit: cover;
-            position: relative;
         }
 
         .challenge-content {
@@ -520,7 +535,6 @@
             line-height: 1.5;
         }
 
-        /* Workout List */
         .workout-list {
             margin-top: 20px;
         }
@@ -534,6 +548,7 @@
             align-items: center;
             gap: 15px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            cursor: pointer;
         }
 
         .workout-icon {
@@ -568,7 +583,6 @@
             font-size: 20px;
         }
 
-        /* Bottom Navigation */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -616,9 +630,9 @@
             font-size: 32px;
             margin-top: -35px;
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            cursor: pointer;
         }
 
-        /* Buttons */
         .btn {
             width: 100%;
             padding: 16px;
@@ -663,6 +677,7 @@
             border-radius: 10px;
             font-weight: 600;
             color: #667eea;
+            cursor: pointer;
         }
 
         .btn-next {
@@ -672,9 +687,10 @@
             color: white;
             border-radius: 10px;
             font-weight: 600;
+            border: none;
+            cursor: pointer;
         }
 
-        /* Congratulations Screen */
         .congrats-screen {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             justify-content: center;
@@ -709,27 +725,87 @@
             margin-bottom: 40px;
         }
 
-        /* Loading Animation */
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        /* Workout Tracking Screen */
+        .tracking-screen {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
-        .loading {
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 0.8s linear infinite;
+        .tracking-header {
+            padding: 40px 30px 20px;
+            color: white;
+            text-align: center;
         }
 
-        /* Utility Classes */
+        .tracking-timer {
+            font-size: 48px;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+
+        .tracking-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .tracking-stat {
+            text-align: center;
+            color: white;
+        }
+
+        .tracking-stat-value {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .tracking-stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .tracking-controls {
+            padding: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .control-btn {
+            flex: 1;
+            padding: 20px;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-start {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-stop {
+            background: #ff4444;
+            color: white;
+        }
+
+        .btn-pause {
+            background: #ffaa00;
+            color: white;
+        }
+
         .text-center { text-align: center; }
         .mt-20 { margin-top: 20px; }
         .mb-20 { margin-bottom: 20px; }
+        .hidden { display: none; }
 
-        /* Responsive for larger phones */
+        #fileInput {
+            display: none;
+        }
+
         @media (min-width: 400px) {
             .app {
                 max-width: 420px;
@@ -739,14 +815,14 @@
 </head>
 <body>
     <div class="app">
-        <!-- 01: Splash Screen -->
+        <!-- Splash Screen -->
         <div class="screen splash-screen active" id="screen-splash">
             <div class="splash-logo">💪</div>
             <div class="splash-title">HEALTHMIND</div>
             <div class="splash-subtitle">BE HEALTHIER EVERYDAY</div>
         </div>
 
-        <!-- 02: Onboarding Screen -->
+        <!-- Onboarding Screen -->
         <div class="screen" id="screen-onboarding">
             <img src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&h=600&fit=crop" alt="Running" class="onboarding-image">
             <div class="onboarding-content">
@@ -762,7 +838,7 @@
             </div>
         </div>
 
-        <!-- 03: Login Screen -->
+        <!-- Login Screen -->
         <div class="screen auth-screen" id="screen-login">
             <div class="auth-header">
                 <div class="auth-logo">💪</div>
@@ -771,21 +847,22 @@
             </div>
             <div class="auth-form">
                 <div class="form-group">
-                    <input type="text" class="form-input" placeholder="USERNAME">
+                    <input type="email" class="form-input" id="login-email" placeholder="EMAIL">
+                    <div class="error-message" id="login-error"></div>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-input" placeholder="PASSWORD">
+                    <input type="password" class="form-input" id="login-password" placeholder="PASSWORD">
                 </div>
                 <label class="checkbox-label">
-                    <input type="checkbox"> Staying Password
+                    <input type="checkbox" id="remember-me"> Remember Me
                 </label>
-                <button class="btn btn-primary" onclick="navigateTo('screen-goals')">Login</button>
+                <button class="btn btn-primary" onclick="handleLogin()">Login</button>
                 
                 <div class="auth-divider">— OR —</div>
                 
                 <div class="social-buttons">
-                    <button class="social-btn">🌐 GMAIL</button>
-                    <button class="social-btn">📱 SOCIAL MEDIA</button>
+                    <button class="social-btn" onclick="alert('Social login demo - in real app, would use OAuth')">🌐 GMAIL</button>
+                    <button class="social-btn" onclick="alert('Social login demo - in real app, would use OAuth')">📱 SOCIAL</button>
                 </div>
             </div>
             <div class="auth-footer">
@@ -793,7 +870,7 @@
             </div>
         </div>
 
-        <!-- 04: Sign Up Screen -->
+        <!-- Sign Up Screen -->
         <div class="screen auth-screen" id="screen-signup">
             <div class="auth-header">
                 <button class="btn-back" onclick="navigateTo('screen-login')" style="position: absolute; left: 20px; top: 40px;">←</button>
@@ -802,25 +879,26 @@
             </div>
             <div class="auth-form">
                 <div class="form-group">
-                    <input type="text" class="form-input" placeholder="FULL NAME">
+                    <input type="text" class="form-input" id="signup-name" placeholder="FULL NAME">
                 </div>
                 <div class="form-group">
-                    <input type="email" class="form-input" placeholder="EMAIL OR MOBILE NUMBER">
+                    <input type="email" class="form-input" id="signup-email" placeholder="EMAIL">
+                    <div class="error-message" id="signup-error"></div>
+                    <div class="success-message" id="signup-success"></div>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-input" placeholder="PASSWORD">
+                    <input type="password" class="form-input" id="signup-password" placeholder="PASSWORD">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-input" placeholder="CONFIRM PASSWORD">
+                    <input type="password" class="form-input" id="signup-confirm" placeholder="CONFIRM PASSWORD">
                 </div>
-                <p style="font-size: 12px; color: #999; margin-bottom: 20px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</p>
-                <button class="btn btn-primary" onclick="navigateTo('screen-goals')">SIGN UP</button>
+                <button class="btn btn-primary" onclick="handleSignup()">SIGN UP</button>
                 
                 <div class="auth-divider">— OR —</div>
                 
                 <div class="social-buttons">
-                    <button class="social-btn">🌐 GMAIL</button>
-                    <button class="social-btn">📱 SOCIAL MEDIA</button>
+                    <button class="social-btn" onclick="alert('Social signup demo')">🌐 GMAIL</button>
+                    <button class="social-btn" onclick="alert('Social signup demo')">📱 SOCIAL</button>
                 </div>
             </div>
             <div class="auth-footer">
@@ -828,263 +906,206 @@
             </div>
         </div>
 
-        <!-- 05: Goals Screen -->
+        <!-- Goals Screen -->
         <div class="screen goal-screen" id="screen-goals">
             <div class="goal-header">
                 <div class="goal-title">What is your Goal?</div>
-                <div class="goal-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</div>
+                <div class="goal-subtitle">Choose your primary fitness goal to personalize your experience</div>
             </div>
             <div class="goal-options">
-                <div class="goal-option" onclick="selectGoal(this)">
+                <div class="goal-option" onclick="selectGoal(this, 'lose-weight')">
                     <span>Lose Weight</span>
                     <div class="goal-radio"></div>
                 </div>
-                <div class="goal-option" onclick="selectGoal(this)">
+                <div class="goal-option" onclick="selectGoal(this, 'build-muscle')">
                     <span>Build Muscle</span>
                     <div class="goal-radio"></div>
                 </div>
-                <div class="goal-option" onclick="selectGoal(this)">
+                <div class="goal-option" onclick="selectGoal(this, 'stay-fit')">
                     <span>Stay Fit</span>
                     <div class="goal-radio"></div>
                 </div>
-                <div class="goal-option" onclick="selectGoal(this)">
+                <div class="goal-option" onclick="selectGoal(this, 'improve-endurance')">
                     <span>Improve Endurance</span>
                     <div class="goal-radio"></div>
                 </div>
-                <div class="goal-option" onclick="selectGoal(this)">
+                <div class="goal-option" onclick="selectGoal(this, 'increase-flexibility')">
                     <span>Increase Flexibility</span>
                     <div class="goal-radio"></div>
                 </div>
             </div>
             <div class="btn-group">
                 <button class="btn-back" onclick="navigateTo('screen-login')">← BACK</button>
-                <button class="btn-next" onclick="navigateTo('screen-profile')">NEXT →</button>
+                <button class="btn-next" onclick="handleGoalNext()">NEXT →</button>
             </div>
         </div>
 
-        <!-- 06: Profile Creation Screen -->
+        <!-- Profile Creation Screen -->
         <div class="screen profile-screen" id="screen-profile">
             <div class="profile-header">
                 <div class="profile-title">Fill your Profile</div>
-                <p style="color: #999; font-size: 14px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+                <p style="color: #999; font-size: 14px;">Set up your profile to personalize your experience</p>
             </div>
-            <div class="profile-avatar">
-                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop" alt="Profile">
+            <div class="profile-avatar" onclick="selectProfilePhoto()">
+                <img id="profile-avatar-img" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop" alt="Profile">
+                <div class="profile-avatar-overlay">Tap to change photo</div>
             </div>
             <div class="auth-form">
                 <div class="form-group">
-                    <input type="text" class="form-input" placeholder="FULL NAME" value="Emma Wilson">
+                    <input type="text" class="form-input" id="profile-name" placeholder="FULL NAME">
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-input" placeholder="NICKNAME">
+                    <input type="text" class="form-input" id="profile-nickname" placeholder="NICKNAME (optional)">
                 </div>
                 <div class="form-group">
-                    <input type="email" class="form-input" placeholder="EMAIL" value="emma@example.com">
+                    <input type="tel" class="form-input" id="profile-phone" placeholder="MOBILE NUMBER (optional)">
                 </div>
-                <div class="form-group">
-                    <input type="tel" class="form-input" placeholder="MOBILE NUMBER">
-                </div>
-                <button class="btn btn-primary" onclick="navigateTo('screen-congrats')">CONTINUE</button>
+                <button class="btn btn-primary" onclick="handleProfileComplete()">CONTINUE</button>
             </div>
+            <input type="file" id="fileInput" accept="image/*" onchange="handlePhotoSelected(event)">
         </div>
 
-        <!-- 10: Congratulations Screen -->
+        <!-- Congratulations Screen -->
         <div class="screen congrats-screen" id="screen-congrats">
             <div class="congrats-icon">✓</div>
             <div class="congrats-title">CONGRATULATIONS!</div>
-            <div class="congrats-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</div>
-            <button class="btn btn-white" onclick="navigateTo('screen-dashboard')">Continue</button>
+            <div class="congrats-text">Your profile is all set! You're ready to start your fitness journey. Let's crush those goals together!</div>
+            <button class="btn btn-white" onclick="navigateToDashboard()">Continue</button>
         </div>
 
-        <!-- 07: Dashboard/Home Screen -->
+        <!-- Dashboard Screen -->
         <div class="screen dashboard-screen" id="screen-dashboard">
             <div class="dashboard-header">
                 <div class="user-greeting">
                     <div class="user-avatar">
-                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" alt="User">
+                        <img id="dashboard-avatar" src="" alt="User">
                     </div>
                     <div class="greeting-text">
-                        <h2>Hello Emma!</h2>
-                        <p>Your last text here</p>
+                        <h2 id="dashboard-greeting">Hello!</h2>
+                        <p id="dashboard-date">Loading...</p>
                     </div>
                 </div>
             </div>
 
             <div class="dashboard-content">
-                <!-- Steps Progress -->
                 <div class="progress-card">
                     <div class="progress-header">
-                        <span class="progress-title">Steps</span>
-                        <span class="progress-value">5.2k</span>
+                        <span class="progress-title">Today's Steps</span>
+                        <span class="progress-value" id="steps-today">0</span>
                     </div>
-                    <p style="color: #999; font-size: 14px; margin-bottom: 10px;">8 000 / 15 000</p>
+                    <p style="color: #999; font-size: 14px; margin-bottom: 10px;"><span id="steps-display">0</span> / 10,000</p>
                     <div class="progress-bar-container">
-                        <div class="progress-bar" style="width: 53%"></div>
+                        <div class="progress-bar" id="steps-progress" style="width: 0%"></div>
                     </div>
                 </div>
 
-                <!-- Daily Activity -->
-                <div class="progress-card">
-                    <div class="progress-header">
-                        <span class="progress-title">Daily Activity</span>
-                        <span class="see-all">See all</span>
-                    </div>
-                    <div class="stats-grid" style="margin-top: 15px;">
-                        <div style="text-align: center;">
-                            <div style="font-size: 12px; color: #999;">Steps</div>
-                            <div style="font-size: 20px; font-weight: 600; margin: 5px 0;">8 000 / 15 000</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 12px; color: #999;">Calories</div>
-                            <div style="font-size: 20px; font-weight: 600; margin: 5px 0;">446 / 800</div>
-                        </div>
-                    </div>
-                    <div style="margin-top: 15px; text-align: center;">
-                        <div style="font-size: 12px; color: #999; margin-bottom: 5px;">Weight</div>
-                        <div style="font-size: 20px; font-weight: 600;">2.2 / 7.3 kg</div>
-                    </div>
-                    <div style="width: 120px; height: 120px; margin: 20px auto; position: relative;">
-                        <svg viewBox="0 0 120 120" style="transform: rotate(-90deg);">
-                            <circle cx="60" cy="60" r="50" fill="none" stroke="#F0F0F0" stroke-width="10"/>
-                            <circle cx="60" cy="60" r="50" fill="none" stroke="url(#gradient)" stroke-width="10" 
-                                    stroke-dasharray="314" stroke-dashoffset="147" stroke-linecap="round"/>
-                            <defs>
-                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
-                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
-                            <div style="font-size: 24px; font-weight: 600;">53%</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Stats Grid -->
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-icon">🏃</div>
-                        <div class="stat-label">Distance traveled</div>
-                        <div class="stat-value">8 000 <span class="stat-unit">/ 15 000</span></div>
+                        <div class="stat-label">Distance Today</div>
+                        <div class="stat-value"><span id="distance-today">0.0</span> <span class="stat-unit">km</span></div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">⚡</div>
-                        <div class="stat-label">Steps</div>
-                        <div class="stat-value">3.2 <span class="stat-unit">/ 7.3 kg</span></div>
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-label">Active Time</div>
+                        <div class="stat-value" id="time-today">0:00</div>
                     </div>
                 </div>
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-icon">🔥</div>
                         <div class="stat-label">Calories</div>
-                        <div class="stat-value">446 <span class="stat-unit">/ 800</span></div>
+                        <div class="stat-value"><span id="calories-today">0</span> <span class="stat-unit">kcal</span></div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">⏱️</div>
-                        <div class="stat-label">Time</div>
-                        <div class="stat-value">01:02:03</div>
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-label">Workouts</div>
+                        <div class="stat-value" id="workouts-count">0</div>
                     </div>
                 </div>
 
-                <!-- Daily Challenges -->
                 <div class="section-title">
-                    <span>Daily Challenges</span>
-                    <span class="see-all">See all</span>
+                    <span>Recent Workouts</span>
+                    <span class="see-all" onclick="navigateTo('screen-workouts')">See all</span>
                 </div>
 
-                <div class="challenge-card">
-                    <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&h=300&fit=crop" alt="Workout" class="challenge-image">
-                    <div class="challenge-content">
-                        <div class="challenge-title">Your title goes here</div>
-                        <div class="challenge-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</div>
-                    </div>
-                </div>
-
-                <div class="challenge-card">
-                    <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&h=300&fit=crop" alt="Gym" class="challenge-image">
-                    <div class="challenge-content">
-                        <div class="challenge-title">Your title goes here</div>
-                        <div class="challenge-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</div>
-                    </div>
+                <div id="recent-workouts">
+                    <p style="text-align: center; color: #999; padding: 20px;">No workouts yet. Start your first workout!</p>
                 </div>
             </div>
 
-            <!-- Bottom Navigation -->
             <div class="bottom-nav">
-                <div class="nav-item active">
+                <div class="nav-item active" onclick="navigateTo('screen-dashboard')">
                     <div class="nav-icon">🏠</div>
                     <span>Home</span>
                 </div>
                 <div class="nav-item" onclick="navigateTo('screen-workouts')">
                     <div class="nav-icon">📊</div>
-                    <span>Stats</span>
+                    <span>History</span>
                 </div>
-                <div class="nav-add">+</div>
+                <div class="nav-add" onclick="startNewWorkout()">+</div>
                 <div class="nav-item" onclick="navigateTo('screen-profile-view')">
                     <div class="nav-icon">👤</div>
                     <span>Profile</span>
                 </div>
-                <div class="nav-item">
+                <div class="nav-item" onclick="navigateTo('screen-goals')">
                     <div class="nav-icon">🏆</div>
                     <span>Goals</span>
                 </div>
             </div>
         </div>
 
-        <!-- Workouts Screen -->
+        <!-- Workout Tracking Screen -->
+        <div class="screen tracking-screen" id="screen-tracking">
+            <div class="tracking-header">
+                <button class="btn-back" onclick="stopWorkout()" style="position: absolute; left: 20px; top: 40px; color: white; border-color: white;">✕</button>
+                <h2 style="margin-top: 40px;">Workout in Progress</h2>
+                <div class="tracking-timer" id="workout-timer">00:00:00</div>
+            </div>
+
+            <div class="tracking-stats">
+                <div class="tracking-stat">
+                    <div class="tracking-stat-value" id="tracking-distance">0.00</div>
+                    <div class="tracking-stat-label">Distance (km)</div>
+                </div>
+                <div class="tracking-stat">
+                    <div class="tracking-stat-value" id="tracking-calories">0</div>
+                    <div class="tracking-stat-label">Calories</div>
+                </div>
+                <div class="tracking-stat">
+                    <div class="tracking-stat-value" id="tracking-pace">0:00</div>
+                    <div class="tracking-stat-label">Avg Pace (min/km)</div>
+                </div>
+                <div class="tracking-stat">
+                    <div class="tracking-stat-value" id="tracking-speed">0.0</div>
+                    <div class="tracking-stat-label">Speed (km/h)</div>
+                </div>
+            </div>
+
+            <div class="tracking-controls">
+                <button class="control-btn btn-pause" id="pause-btn" onclick="togglePause()">Pause</button>
+                <button class="control-btn btn-stop" onclick="finishWorkout()">Finish</button>
+            </div>
+
+            <div style="padding: 20px; color: white; text-align: center; font-size: 14px; opacity: 0.8;">
+                <p id="gps-status">📍 GPS tracking active</p>
+            </div>
+        </div>
+
+        <!-- Workouts History Screen -->
         <div class="screen dashboard-screen" id="screen-workouts">
             <div class="dashboard-header">
                 <div class="user-greeting">
                     <button class="btn-back" onclick="navigateTo('screen-dashboard')" style="color: white; border-color: white;">← Back</button>
                     <div class="greeting-text">
-                        <h2>Workouts</h2>
+                        <h2>Workout History</h2>
                     </div>
                 </div>
             </div>
 
             <div class="dashboard-content">
-                <div class="section-title">
-                    <span>Today's Exercise</span>
-                    <span class="see-all">1/4/2025</span>
-                </div>
-
-                <div class="workout-list">
-                    <div class="workout-item">
-                        <div class="workout-icon">🏃</div>
-                        <div class="workout-info">
-                            <div class="workout-name">Today's Exercise 1/4/2025</div>
-                            <div class="workout-details">4.32 Km</div>
-                        </div>
-                        <div class="workout-arrow">→</div>
-                    </div>
-
-                    <div class="workout-item">
-                        <div class="workout-icon">🏋️</div>
-                        <div class="workout-info">
-                            <div class="workout-name">Yesterday's Exercise 1/3/2025</div>
-                            <div class="workout-details">2.56 Km</div>
-                        </div>
-                        <div class="workout-arrow">→</div>
-                    </div>
-
-                    <div class="workout-item">
-                        <div class="workout-icon">🚴</div>
-                        <div class="workout-info">
-                            <div class="workout-name">Cycling Workout</div>
-                            <div class="workout-details">12.4 Km • 45 min</div>
-                        </div>
-                        <div class="workout-arrow">→</div>
-                    </div>
-
-                    <div class="workout-item">
-                        <div class="workout-icon">🧘</div>
-                        <div class="workout-info">
-                            <div class="workout-name">Yoga Session</div>
-                            <div class="workout-details">30 min</div>
-                        </div>
-                        <div class="workout-arrow">→</div>
-                    </div>
+                <div id="workout-history">
+                    <p style="text-align: center; color: #999; padding: 40px;">No workouts yet. Start your first workout by tapping the + button!</p>
                 </div>
             </div>
 
@@ -1095,14 +1116,14 @@
                 </div>
                 <div class="nav-item active">
                     <div class="nav-icon">📊</div>
-                    <span>Stats</span>
+                    <span>History</span>
                 </div>
-                <div class="nav-add">+</div>
+                <div class="nav-add" onclick="startNewWorkout()">+</div>
                 <div class="nav-item" onclick="navigateTo('screen-profile-view')">
                     <div class="nav-icon">👤</div>
                     <span>Profile</span>
                 </div>
-                <div class="nav-item">
+                <div class="nav-item" onclick="navigateTo('screen-goals')">
                     <div class="nav-icon">🏆</div>
                     <span>Goals</span>
                 </div>
@@ -1121,33 +1142,29 @@
             </div>
 
             <div class="dashboard-content">
-                <div class="profile-avatar" style="margin: 0 auto 30px;">
-                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop" alt="Profile">
+                <div class="profile-avatar" style="margin: 0 auto 30px; cursor: pointer;" onclick="selectProfilePhotoFromProfile()">
+                    <img id="profile-view-avatar" src="" alt="Profile">
+                    <div class="profile-avatar-overlay">Tap to change</div>
                 </div>
                 
                 <div class="text-center mb-20">
-                    <h2 style="font-size: 24px; margin-bottom: 5px;">Emma Wilson</h2>
-                    <p style="color: #999;">emma@example.com</p>
+                    <h2 style="font-size: 24px; margin-bottom: 5px;" id="profile-view-name">Loading...</h2>
+                    <p style="color: #999;" id="profile-view-email">Loading...</p>
+                </div>
+
+                <div class="stats-grid mb-20">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Workouts</div>
+                        <div class="stat-value" id="profile-workouts">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Total Distance</div>
+                        <div class="stat-value"><span id="profile-distance">0</span> <span class="stat-unit">km</span></div>
+                    </div>
                 </div>
 
                 <div class="workout-list">
-                    <div class="workout-item">
-                        <div class="workout-icon">🎵</div>
-                        <div class="workout-info">
-                            <div class="workout-name">Sound & Music</div>
-                        </div>
-                        <div class="workout-arrow">→</div>
-                    </div>
-
-                    <div class="workout-item">
-                        <div class="workout-icon">📖</div>
-                        <div class="workout-info">
-                            <div class="workout-name">Guide</div>
-                        </div>
-                        <div class="workout-arrow">→</div>
-                    </div>
-
-                    <div class="workout-item">
+                    <div class="workout-item" onclick="alert('Settings coming soon!')">
                         <div class="workout-icon">⚙️</div>
                         <div class="workout-info">
                             <div class="workout-name">Settings</div>
@@ -1155,10 +1172,18 @@
                         <div class="workout-arrow">→</div>
                     </div>
 
-                    <div class="workout-item">
-                        <div class="workout-icon">ℹ️</div>
+                    <div class="workout-item" onclick="exportData()">
+                        <div class="workout-icon">📥</div>
                         <div class="workout-info">
-                            <div class="workout-name">About</div>
+                            <div class="workout-name">Export Data</div>
+                        </div>
+                        <div class="workout-arrow">→</div>
+                    </div>
+
+                    <div class="workout-item" onclick="handleLogout()">
+                        <div class="workout-icon">🚪</div>
+                        <div class="workout-info">
+                            <div class="workout-name">Logout</div>
                         </div>
                         <div class="workout-arrow">→</div>
                     </div>
@@ -1172,14 +1197,14 @@
                 </div>
                 <div class="nav-item" onclick="navigateTo('screen-workouts')">
                     <div class="nav-icon">📊</div>
-                    <span>Stats</span>
+                    <span>History</span>
                 </div>
-                <div class="nav-add">+</div>
+                <div class="nav-add" onclick="startNewWorkout()">+</div>
                 <div class="nav-item active">
                     <div class="nav-icon">👤</div>
                     <span>Profile</span>
                 </div>
-                <div class="nav-item">
+                <div class="nav-item" onclick="navigateTo('screen-goals')">
                     <div class="nav-icon">🏆</div>
                     <span>Goals</span>
                 </div>
@@ -1188,70 +1213,622 @@
     </div>
 
     <script>
-        // Navigation System
+        // ============================================
+        // STATE MANAGEMENT & LOCAL STORAGE
+        // ============================================
+        
+        const APP_STATE = {
+            user: null,
+            workouts: [],
+            currentWorkout: null,
+            selectedGoal: null
+        };
+
+        // Load state from localStorage
+        function loadState() {
+            const saved = localStorage.getItem('healthmind_state');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                APP_STATE.user = parsed.user;
+                APP_STATE.workouts = parsed.workouts || [];
+                APP_STATE.selectedGoal = parsed.selectedGoal;
+            }
+        }
+
+        // Save state to localStorage
+        function saveState() {
+            localStorage.setItem('healthmind_state', JSON.stringify({
+                user: APP_STATE.user,
+                workouts: APP_STATE.workouts,
+                selectedGoal: APP_STATE.selectedGoal
+            }));
+        }
+
+        // ============================================
+        // NAVIGATION
+        // ============================================
+        
         function navigateTo(screenId) {
-            // Hide all screens
             document.querySelectorAll('.screen').forEach(screen => {
                 screen.classList.remove('active');
             });
             
-            // Show target screen
             const targetScreen = document.getElementById(screenId);
             if (targetScreen) {
                 targetScreen.classList.add('active');
+                
+                // Update dashboard when navigating to it
+                if (screenId === 'screen-dashboard') {
+                    updateDashboard();
+                } else if (screenId === 'screen-workouts') {
+                    updateWorkoutHistory();
+                } else if (screenId === 'screen-profile-view') {
+                    updateProfileView();
+                }
             }
         }
 
-        // Goal Selection
-        function selectGoal(element) {
+        // ============================================
+        // AUTHENTICATION
+        // ============================================
+        
+        function handleSignup() {
+            const name = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value;
+            const confirm = document.getElementById('signup-confirm').value;
+            
+            const errorEl = document.getElementById('signup-error');
+            const successEl = document.getElementById('signup-success');
+            
+            errorEl.textContent = '';
+            successEl.textContent = '';
+            
+            if (!name || !email || !password) {
+                errorEl.textContent = 'Please fill all fields';
+                return;
+            }
+            
+            if (password !== confirm) {
+                errorEl.textContent = 'Passwords do not match';
+                return;
+            }
+            
+            if (password.length < 6) {
+                errorEl.textContent = 'Password must be at least 6 characters';
+                return;
+            }
+            
+            // Check if email already exists
+            const existingUser = localStorage.getItem('user_' + email);
+            if (existingUser) {
+                errorEl.textContent = 'Email already registered';
+                return;
+            }
+            
+            // Create user account
+            const userData = {
+                name: name,
+                email: email,
+                password: password, // In real app, would hash this!
+                created: new Date().toISOString(),
+                avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop'
+            };
+            
+            localStorage.setItem('user_' + email, JSON.stringify(userData));
+            successEl.textContent = 'Account created! Please login.';
+            
+            setTimeout(() => {
+                navigateTo('screen-login');
+            }, 1500);
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+            const remember = document.getElementById('remember-me').checked;
+            
+            const errorEl = document.getElementById('login-error');
+            errorEl.textContent = '';
+            
+            if (!email || !password) {
+                errorEl.textContent = 'Please enter email and password';
+                return;
+            }
+            
+            const userData = localStorage.getItem('user_' + email);
+            if (!userData) {
+                errorEl.textContent = 'Account not found';
+                return;
+            }
+            
+            const user = JSON.parse(userData);
+            if (user.password !== password) {
+                errorEl.textContent = 'Incorrect password';
+                return;
+            }
+            
+            // Login successful
+            APP_STATE.user = user;
+            if (remember) {
+                localStorage.setItem('current_user', email);
+            }
+            saveState();
+            
+            navigateTo('screen-goals');
+        }
+
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('current_user');
+                APP_STATE.user = null;
+                saveState();
+                navigateTo('screen-login');
+            }
+        }
+
+        // ============================================
+        // GOAL SELECTION
+        // ============================================
+        
+        function selectGoal(element, goalId) {
             document.querySelectorAll('.goal-option').forEach(opt => {
                 opt.classList.remove('selected');
             });
             element.classList.add('selected');
+            APP_STATE.selectedGoal = goalId;
         }
 
-        // Auto navigate from splash to onboarding after 2 seconds
-        setTimeout(() => {
-            navigateTo('screen-onboarding');
-        }, 2000);
-
-        // Save user data to localStorage for persistence
-        function saveUserData() {
-            const userData = {
-                name: 'Emma Wilson',
-                email: 'emma@example.com',
-                steps: 8000,
-                calories: 446,
-                weight: 2.2
-            };
-            localStorage.setItem('healthmind_user', JSON.stringify(userData));
-        }
-
-        // Load user data
-        function loadUserData() {
-            const saved = localStorage.getItem('healthmind_user');
-            if (saved) {
-                return JSON.parse(saved);
+        function handleGoalNext() {
+            if (!APP_STATE.selectedGoal) {
+                alert('Please select a goal');
+                return;
             }
-            return null;
+            saveState();
+            navigateTo('screen-profile');
+            
+            // Pre-fill name and email if available
+            if (APP_STATE.user) {
+                document.getElementById('profile-name').value = APP_STATE.user.name || '';
+            }
         }
 
-        // Initialize app
+        // ============================================
+        // PROFILE & PHOTO UPLOAD
+        // ============================================
+        
+        function selectProfilePhoto() {
+            document.getElementById('fileInput').click();
+        }
+
+        function selectProfilePhotoFromProfile() {
+            document.getElementById('fileInput').click();
+        }
+
+        function handlePhotoSelected(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageData = e.target.result;
+                
+                // Update avatar in all places
+                document.getElementById('profile-avatar-img').src = imageData;
+                document.getElementById('dashboard-avatar').src = imageData;
+                document.getElementById('profile-view-avatar').src = imageData;
+                
+                // Save to user data
+                if (APP_STATE.user) {
+                    APP_STATE.user.avatar = imageData;
+                    localStorage.setItem('user_' + APP_STATE.user.email, JSON.stringify(APP_STATE.user));
+                    saveState();
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleProfileComplete() {
+            const name = document.getElementById('profile-name').value.trim();
+            const nickname = document.getElementById('profile-nickname').value.trim();
+            const phone = document.getElementById('profile-phone').value.trim();
+            
+            if (!name) {
+                alert('Please enter your name');
+                return;
+            }
+            
+            if (APP_STATE.user) {
+                APP_STATE.user.name = name;
+                APP_STATE.user.nickname = nickname;
+                APP_STATE.user.phone = phone;
+                localStorage.setItem('user_' + APP_STATE.user.email, JSON.stringify(APP_STATE.user));
+                saveState();
+            }
+            
+            navigateTo('screen-congrats');
+        }
+
+        function navigateToDashboard() {
+            navigateTo('screen-dashboard');
+            updateDashboard();
+        }
+
+        // ============================================
+        // DASHBOARD
+        // ============================================
+        
+        function updateDashboard() {
+            if (!APP_STATE.user) return;
+            
+            // Update greeting
+            document.getElementById('dashboard-greeting').textContent = `Hello ${APP_STATE.user.name}!`;
+            document.getElementById('dashboard-date').textContent = new Date().toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            // Update avatar
+            if (APP_STATE.user.avatar) {
+                document.getElementById('dashboard-avatar').src = APP_STATE.user.avatar;
+            }
+            
+            // Calculate today's stats
+            const today = new Date().toDateString();
+            const todayWorkouts = APP_STATE.workouts.filter(w => 
+                new Date(w.date).toDateString() === today
+            );
+            
+            let totalDistance = 0;
+            let totalTime = 0;
+            let totalCalories = 0;
+            
+            todayWorkouts.forEach(w => {
+                totalDistance += w.distance || 0;
+                totalTime += w.duration || 0;
+                totalCalories += w.calories || 0;
+            });
+            
+            // Estimate steps (rough: 1km = ~1250 steps)
+            const steps = Math.floor(totalDistance * 1250);
+            
+            // Update display
+            document.getElementById('steps-today').textContent = steps.toLocaleString();
+            document.getElementById('steps-display').textContent = steps.toLocaleString();
+            document.getElementById('distance-today').textContent = totalDistance.toFixed(2);
+            document.getElementById('calories-today').textContent = Math.floor(totalCalories);
+            document.getElementById('workouts-count').textContent = APP_STATE.workouts.length;
+            
+            const stepsProgress = Math.min((steps / 10000) * 100, 100);
+            document.getElementById('steps-progress').style.width = stepsProgress + '%';
+            
+            // Format time
+            const hours = Math.floor(totalTime / 3600);
+            const minutes = Math.floor((totalTime % 3600) / 60);
+            document.getElementById('time-today').textContent = `${hours}:${minutes.toString().padStart(2, '0')}`;
+            
+            // Show recent workouts
+            const recentDiv = document.getElementById('recent-workouts');
+            if (APP_STATE.workouts.length === 0) {
+                recentDiv.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">No workouts yet. Start your first workout!</p>';
+            } else {
+                const recent = APP_STATE.workouts.slice(-3).reverse();
+                recentDiv.innerHTML = recent.map(w => `
+                    <div class="workout-item">
+                        <div class="workout-icon">🏃</div>
+                        <div class="workout-info">
+                            <div class="workout-name">${new Date(w.date).toLocaleDateString()}</div>
+                            <div class="workout-details">${w.distance.toFixed(2)} km • ${formatDuration(w.duration)} • ${Math.floor(w.calories)} cal</div>
+                        </div>
+                        <div class="workout-arrow">→</div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function updateWorkoutHistory() {
+            const historyDiv = document.getElementById('workout-history');
+            
+            if (APP_STATE.workouts.length === 0) {
+                historyDiv.innerHTML = '<p style="text-align: center; color: #999; padding: 40px;">No workouts yet. Start your first workout by tapping the + button!</p>';
+            } else {
+                const sorted = [...APP_STATE.workouts].reverse();
+                historyDiv.innerHTML = sorted.map(w => `
+                    <div class="workout-item">
+                        <div class="workout-icon">🏃</div>
+                        <div class="workout-info">
+                            <div class="workout-name">${new Date(w.date).toLocaleString()}</div>
+                            <div class="workout-details">
+                                ${w.distance.toFixed(2)} km • ${formatDuration(w.duration)} • ${Math.floor(w.calories)} cal
+                            </div>
+                        </div>
+                        <div class="workout-arrow">→</div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function updateProfileView() {
+            if (!APP_STATE.user) return;
+            
+            document.getElementById('profile-view-name').textContent = APP_STATE.user.name;
+            document.getElementById('profile-view-email').textContent = APP_STATE.user.email;
+            
+            if (APP_STATE.user.avatar) {
+                document.getElementById('profile-view-avatar').src = APP_STATE.user.avatar;
+            }
+            
+            // Calculate totals
+            let totalDistance = 0;
+            APP_STATE.workouts.forEach(w => totalDistance += w.distance || 0);
+            
+            document.getElementById('profile-workouts').textContent = APP_STATE.workouts.length;
+            document.getElementById('profile-distance').textContent = totalDistance.toFixed(1);
+        }
+
+        // ============================================
+        // WORKOUT TRACKING (GPS + TIMER)
+        // ============================================
+        
+        let trackingInterval = null;
+        let gpsWatchId = null;
+        let workoutStartTime = null;
+        let workoutPaused = false;
+        let pausedTime = 0;
+        let lastPosition = null;
+
+        function startNewWorkout() {
+            // Request GPS permission
+            if (!navigator.geolocation) {
+                alert('GPS not available on this device');
+                return;
+            }
+            
+            APP_STATE.currentWorkout = {
+                startTime: Date.now(),
+                distance: 0,
+                calories: 0,
+                positions: []
+            };
+            
+            navigateTo('screen-tracking');
+            startTracking();
+        }
+
+        function startTracking() {
+            workoutStartTime = Date.now();
+            workoutPaused = false;
+            pausedTime = 0;
+            lastPosition = null;
+            
+            // Start GPS tracking
+            gpsWatchId = navigator.geolocation.watchPosition(
+                handlePositionUpdate,
+                handleGPSError,
+                { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+            );
+            
+            // Start timer
+            trackingInterval = setInterval(updateTrackingDisplay, 1000);
+            
+            document.getElementById('gps-status').textContent = '📍 GPS tracking active';
+        }
+
+        function handlePositionUpdate(position) {
+            if (workoutPaused) return;
+            
+            const currentPos = {
+                lat: position.coords.latitude,
+                lon: position.coords.longitude,
+                timestamp: Date.now()
+            };
+            
+            APP_STATE.currentWorkout.positions.push(currentPos);
+            
+            // Calculate distance if we have a previous position
+            if (lastPosition) {
+                const dist = calculateDistance(
+                    lastPosition.lat, lastPosition.lon,
+                    currentPos.lat, currentPos.lon
+                );
+                APP_STATE.currentWorkout.distance += dist;
+            }
+            
+            lastPosition = currentPos;
+            document.getElementById('gps-status').textContent = '📍 GPS signal strong';
+        }
+
+        function handleGPSError(error) {
+            console.error('GPS Error:', error);
+            document.getElementById('gps-status').textContent = '⚠️ GPS signal weak';
+        }
+
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            // Haversine formula for distance between two lat/lon points
+            const R = 6371; // Earth's radius in km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = 
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        function updateTrackingDisplay() {
+            if (workoutPaused) return;
+            
+            const elapsed = Math.floor((Date.now() - workoutStartTime - pausedTime) / 1000);
+            const hours = Math.floor(elapsed / 3600);
+            const minutes = Math.floor((elapsed % 3600) / 60);
+            const seconds = elapsed % 60;
+            
+            document.getElementById('workout-timer').textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            const distance = APP_STATE.currentWorkout.distance;
+            document.getElementById('tracking-distance').textContent = distance.toFixed(2);
+            
+            // Calculate calories (rough: 60 cal per km)
+            const calories = distance * 60;
+            APP_STATE.currentWorkout.calories = calories;
+            document.getElementById('tracking-calories').textContent = Math.floor(calories);
+            
+            // Calculate pace and speed
+            if (distance > 0 && elapsed > 0) {
+                const speed = (distance / elapsed) * 3600; // km/h
+                const pace = elapsed / 60 / distance; // min/km
+                
+                document.getElementById('tracking-speed').textContent = speed.toFixed(1);
+                
+                const paceMin = Math.floor(pace);
+                const paceSec = Math.floor((pace - paceMin) * 60);
+                document.getElementById('tracking-pace').textContent = 
+                    `${paceMin}:${paceSec.toString().padStart(2, '0')}`;
+            }
+        }
+
+        function togglePause() {
+            workoutPaused = !workoutPaused;
+            const btn = document.getElementById('pause-btn');
+            
+            if (workoutPaused) {
+                btn.textContent = 'Resume';
+                btn.classList.remove('btn-pause');
+                btn.classList.add('btn-start');
+                pausedTime += Date.now() - workoutStartTime;
+            } else {
+                btn.textContent = 'Pause';
+                btn.classList.remove('btn-start');
+                btn.classList.add('btn-pause');
+                workoutStartTime = Date.now();
+            }
+        }
+
+        function finishWorkout() {
+            if (!confirm('Finish this workout?')) return;
+            
+            // Stop tracking
+            if (gpsWatchId) {
+                navigator.geolocation.clearWatch(gpsWatchId);
+            }
+            if (trackingInterval) {
+                clearInterval(trackingInterval);
+            }
+            
+            // Save workout
+            const duration = Math.floor((Date.now() - APP_STATE.currentWorkout.startTime - pausedTime) / 1000);
+            const workout = {
+                date: new Date().toISOString(),
+                duration: duration,
+                distance: APP_STATE.currentWorkout.distance,
+                calories: APP_STATE.currentWorkout.calories,
+                positions: APP_STATE.currentWorkout.positions
+            };
+            
+            APP_STATE.workouts.push(workout);
+            APP_STATE.currentWorkout = null;
+            saveState();
+            
+            alert(`Workout saved!\n\nDistance: ${workout.distance.toFixed(2)} km\nTime: ${formatDuration(duration)}\nCalories: ${Math.floor(workout.calories)}`);
+            
+            navigateTo('screen-dashboard');
+        }
+
+        function stopWorkout() {
+            if (!confirm('Stop this workout? Progress will be lost.')) return;
+            
+            if (gpsWatchId) {
+                navigator.geolocation.clearWatch(gpsWatchId);
+            }
+            if (trackingInterval) {
+                clearInterval(trackingInterval);
+            }
+            
+            APP_STATE.currentWorkout = null;
+            navigateTo('screen-dashboard');
+        }
+
+        function formatDuration(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            
+            if (hours > 0) {
+                return `${hours}h ${minutes}m`;
+            }
+            return `${minutes}m ${secs}s`;
+        }
+
+        // ============================================
+        // DATA EXPORT
+        // ============================================
+        
+        function exportData() {
+            const data = {
+                user: APP_STATE.user,
+                workouts: APP_STATE.workouts,
+                goal: APP_STATE.selectedGoal,
+                exported: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `healthmind-data-${Date.now()}.json`;
+            link.click();
+            
+            alert('Your data has been exported!');
+        }
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        
         document.addEventListener('DOMContentLoaded', () => {
-            // Check if user is logged in
-            const userData = loadUserData();
-            if (userData) {
-                // Skip to dashboard if user data exists
-                // Uncomment this to enable auto-login:
-                // setTimeout(() => navigateTo('screen-dashboard'), 2500);
+            loadState();
+            
+            // Auto-login if user is remembered
+            const currentUser = localStorage.getItem('current_user');
+            if (currentUser && !APP_STATE.user) {
+                const userData = localStorage.getItem('user_' + currentUser);
+                if (userData) {
+                    APP_STATE.user = JSON.parse(userData);
+                    saveState();
+                }
+            }
+            
+            // Skip to dashboard if logged in
+            if (APP_STATE.user) {
+                setTimeout(() => {
+                    navigateTo('screen-dashboard');
+                    updateDashboard();
+                }, 2000);
+            } else {
+                // Show onboarding
+                setTimeout(() => {
+                    navigateTo('screen-onboarding');
+                }, 2000);
             }
         });
 
-        // Service Worker for PWA functionality
+        // Service Worker registration (optional - for offline mode)
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').catch(() => {
-                    // Service worker registration failed, app still works without it
+                navigator.serviceWorker.register('sw.js').catch((error) => {
+                    console.log('Service worker not available:', error);
+                    // App still works without service worker
                 });
             });
         }
