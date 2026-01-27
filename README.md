@@ -1,36 +1,26 @@
-# HealthMind AI - Fitness Tracker 💪
+# HealthMind AI - Intelligent Fitness Tracker
 
-Modern fitness tracking app with GPS, AI coach, and progress visualization. 100% FREE!
+Modern fitness tracking app with GPS, AI coach, and comprehensive health monitoring.
 
 ## ✨ Features
 
-- 🏃 GPS Workout Tracking (Walk/Run/Bike)
-- 🤖 Local AI Health Coach
-- 📊 Circular Progress Visualizations
-- 🎯 Goal Tracking
+- 🤖 AI Health Coach (Chrome AI + 70+ keyword responses)
+- 🏃 GPS Workout Tracking (distance, steps, calories)
+- 📊 Dashboard with beautiful visualizations
 - 🥗 Nutrition Logging
-- ⚙️ Miles/KM Toggle
-- 📸 Profile Photo Upload
+- 🎯 Goals & Progress Tracking
+- 📱 PWA - Install to home screen
 
-## 🚀 Deploy to GitHub Pages
+## 🚀 Upload to GitHub
 
-1. Create GitHub repository (public)
-2. Upload: `index.html`, `manifest.json`, `sw.js`, `README.md`
-3. Settings → Pages → Deploy from `main` branch
-4. Wait 2 minutes
-5. Done! 🎉
+1. Upload: index.html, manifest.json, sw.js, README.md
+2. Settings → Pages → Deploy from main
+3. Wait 2 minutes
+4. Done!
 
-## 📱 Install on Phone
+## 💾 All Data Stored Locally
 
-**iPhone:** Safari → Share → "Add to Home Screen"
-**Android:** Chrome → Menu → "Install app"
-
-## 💾 All Data Local
-
-- No servers
-- No tracking
-- 100% private
-- Free forever
+Users persist across sessions in localStorage.
 
 ---
 
