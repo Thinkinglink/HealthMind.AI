@@ -1,11 +1,11 @@
 {
-  "name": "HealthMind Fitness Tracker",
+  "name": "HealthMind AI Fitness Tracker",
   "short_name": "HealthMind",
-  "description": "Track your fitness with GPS, workouts, and progress monitoring",
+  "description": "Track your fitness with GPS, AI coach, and personalized workouts",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#667eea",
-  "theme_color": "#667eea",
+  "background_color": "#00BFA5",
+  "theme_color": "#00BFA5",
   "orientation": "portrait",
   "icons": [
     {
