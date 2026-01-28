@@ -1,0 +1,75 @@
+const AI_KNOWLEDGE = {
+"lose weight":"Create a caloric deficit of 300-500 cal daily. Combine cardio (3-4x/week) with strength training (2-3x/week). Track food. Aim for 1-2 lbs loss per week.",
+"fast":"Intermittent fasting can work! Try 16:8 (16hr fast, 8hr eating). Start slow. Stay hydrated. Not for everyone - listen to your body.",
+"calories":"Calculate TDEE. Weight loss: TDEE-500. Maintenance: TDEE. Muscle gain: TDEE+300-500.",
+"plateau":"Hit plateau? 1) Increase intensity 2) Change routine 3) Recalculate calories 4) Check portions.",
+"build muscle":"Eat 0.8-1g protein per lb bodyweight. Lift heavy 3-4x/week. Progressive overload is key. Sleep 7-9hrs.",
+"protein":"Aim 0.8-1g per lb bodyweight. Sources: chicken, fish, eggs, Greek yogurt, beans, tofu, powder. Spread throughout day.",
+"bulk":"Lean bulk: Eat TDEE+300-500 cal. Whole foods. 40% carbs, 30% protein, 30% fat. Lift heavy 4-5x/week.",
+"supplements":"Not necessary but helpful: Protein powder, Creatine (5g daily), Vitamin D, Omega-3. Food first!",
+"diet":"Whole foods: lean proteins, fruits, vegetables, whole grains, healthy fats. 80/20 rule. No extreme restrictions.",
+"carbs":"Carbs fuel workouts! Choose complex: oats, brown rice, quinoa, sweet potato. Eat most around workouts.",
+"fat":"Healthy fats essential! Avocados, nuts, olive oil, fatty fish. 20-30% total calories. Supports hormones.",
+"meal prep":"Prep Sundays! Cook proteins bulk, chop veggies, portion meals. Use containers. Freeze extras.",
+"cheat meal":"Yes! One per week keeps you sane. Enjoy guilt-free. Back on track next meal.",
+"water":"Half bodyweight in ounces daily. +16-20oz per hour exercise. Dark urine = dehydrated.",
+"drink":"Water best! Also: green tea, black coffee, sparkling water. Limit: soda, juice, alcohol.",
+"electrolytes":"Important for 60+ min workouts or heat. Coconut water, sports drinks, or pinch salt in water.",
+"workout":"Beginners: 3-4x/week full body. Intermediate: 4-5x/week split. Include: warm-up, main workout, cool-down.",
+"cardio":"Mix steady-state (30-45min moderate) or HIIT (15-20min intervals). 3-5x/week. After weights or separate days.",
+"strength":"Compound first: squats, deadlifts, bench, rows. Then isolation. 3-4 sets, 8-12 reps. Rest 48hrs between groups.",
+"hiit":"20-30sec max effort, 60-90sec rest. Repeat 8-10x. Great for fat loss. 2-3x/week max!",
+"abs":"Abs made in kitchen! Core work 2-3x/week: planks, twists, leg raises, crunches. No daily needed.",
+"home workout":"No gym? Bodyweight: push-ups, squats, lunges, planks, burpees. Add bands, dumbbells. YouTube!",
+"rest":"Rest crucial! Muscles grow during rest. 1-2 full rest days/week. Light activity OK.",
+"sleep":"7-9hrs nightly. Muscle recovery and hormones happen here. Poor sleep = poor results!",
+"sore":"DOMS normal! Peaks 24-48hrs post-workout. Ease: light movement, stretching, foam rolling, protein.",
+"stretch":"Dynamic before workouts. Static after (hold 30sec). Improves flexibility, reduces injury.",
+"foam roll":"Helps recovery! Roll each muscle 30-60sec post-workout or rest days. Don't overdo.",
+"warm up":"Always 5-10min! Light cardio + dynamic stretching. Prepares muscles, prevents injury. Never skip!",
+"injury":"Stop if pain! RICE: Rest, Ice, Compression, Elevation. See doctor if persists. Don't train through!",
+"form":"Form over weight ALWAYS! Bad form = injury. Start light, master movement, add weight. Hire trainer.",
+"overtraining":"Signs: fatigue, decreased performance, mood changes, sleep trouble, illness. Rest week, reduce volume.",
+"motivated":"SMART goals. Track progress with photos/measurements. Workout buddy. Remember your WHY!",
+"started":"Week 1-2 tough! Push through - gets easier. Start small: 3x/week, 20-30min. Consistency > perfection.",
+"lazy":"Lay out gym clothes, pre-plan workouts, commit 10min, reward yourself, find fun activities!",
+"results":"Be patient! Visible changes 4-6 weeks. Strength first (2-3 weeks). Fat loss not linear. Trust process!",
+"give up":"Don't quit! Bad day normal. Missed workout? No big deal. Cheat day? Back tomorrow. Keep going!",
+"morning workout":"Great! Fasted or light snack. Benefits: consistency, energy all day. Eat protein after.",
+"evening workout":"Works too! May be stronger. Eat 1-2hrs before. May affect sleep - test it.",
+"age":"Never too old! Start slow, focus form, listen body. Strength training especially important for aging.",
+"woman":"Ladies lift weights! Won't get bulky (not enough testosterone). Benefits: strength, bones, metabolism!",
+"pregnant":"Congrats! Safe with doctor OK. Avoid lying on back after 1st tri, lower intensity. Listen body.",
+"myth":"Myths busted: Lifting makes women bulky ❌ Cardio best for fat loss ❌ No pain no gain ❌",
+"spot reduce":"Can't spot reduce fat! Full-body + cardio + deficit. Fat comes off everywhere gradually.",
+"toned":"Build muscle + lose fat. Lift weights + slight deficit = toned look. No 'toning exercises'.",
+"beginner":"Welcome! 3x/week full body, 20-30min cardio 2-3x/week. Learn form. Track nutrition. Be patient.",
+"gym":"First visit: Tour, start machines, learn 5-6 basic exercises, don't compare, ask staff, off-peak hours.",
+"equipment":"Minimal home: resistance bands ($20), adjustable dumbbells ($100-200), yoga mat ($20). Enough!",
+"track":"Track everything! Apps for: workouts (sets/reps/weight), food (cal/macros), measurements. Data = progress.",
+"weigh":"1-2x/week, same time (morning, after bathroom, before eating). Weight fluctuates. Weekly averages.",
+"measure":"Beyond scale: measurements (waist, hips, arms), progress photos (every 2-4 weeks), how clothes fit.",
+"stress":"Exercise reduces stress! Also: meditation, yoga, breathing, nature, sleep, talk to someone.",
+"mental health":"Exercise boosts mood! Releases endorphins. Find fun activities. Therapy great too!",
+"consistency":"Consistency EVERYTHING! Better 30min 4x/week than 2hr once. Build habits. Small actions = big results."
+};
+
+function getAIResponse(msg) {
+    msg = msg.toLowerCase();
+    for (let key in AI_KNOWLEDGE) {
+        if (msg.includes(key)) return AI_KNOWLEDGE[key];
+    }
+    if (msg.includes('workout')||msg.includes('exercise')||msg.includes('train'))
+        return "I recommend 3-4 workouts/week mixing cardio and strength. What specific training are you curious about? (e.g., 'beginner workout', 'HIIT', 'home workout')";
+    if (msg.includes('food')||msg.includes('eat')||msg.includes('nutrition'))
+        return "Nutrition is key! Whole foods, lean proteins, fruits, veggies. What specifically? (e.g., 'meal prep', 'protein', 'carbs', 'calories')";
+    if (msg.includes('weight'))
+        return "Looking to lose weight or build muscle? I can help! Try: 'how to lose weight' or 'how to build muscle'";
+    if (msg.includes('help')||msg.includes('what')||msg.includes('how'))
+        return "I can help with: weight loss, muscle building, nutrition, workouts, recovery, motivation, and more! Try: 'protein', 'cardio', 'motivation', 'beginner tips'";
+    if (msg.includes('thanks')||msg.includes('thank'))
+        return "You're welcome! Keep crushing it! 💪 Other questions?";
+    if (msg.includes('hello')||msg.includes('hi')||msg.includes('hey'))
+        return "Hey! 👋 Ready to crush fitness goals? Ask me anything about workouts, nutrition, motivation, or wellness!";
+    return "Great question! I know about: weight loss, muscle building, nutrition (protein/carbs/fats), workouts (cardio/strength/HIIT), recovery, motivation, meal prep, supplements, and more. Ask something specific!";
+}
