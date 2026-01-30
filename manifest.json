@@ -1,22 +1,18 @@
 {
-  "name": "HealthMind AI - Fitness Tracker",
-  "short_name": "HealthMind AI",
-  "description": "Your intelligent fitness companion with AI coaching",
-  "start_url": "./index.html",
+  "name": "HealthMind AI",
+  "short_name": "HealthMind",
+  "description": "Your personal AI fitness and nutrition coach",
+  "start_url": "/",
   "display": "standalone",
-  "background_color": "#00BFA5",
-  "theme_color": "#00BFA5",
+  "background_color": "#0EA5E9",
+  "theme_color": "#0EA5E9",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-512.png",
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%230EA5E9'/%3E%3Cstop offset='100%25' style='stop-color:%237C3AED'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' fill='url(%23grad)'/%3E%3Cpath fill='white' d='M256 80c-52 0-94 42-94 94 0 52 42 94 94 94s94-42 94-94c0-52-42-94-94-94zm0 150c-31 0-56-25-56-56s25-56 56-56 56 25 56 56-25 56-56 56zm100 52h-40c-11 0-20 9-20 20v110c0 11 9 20 20 20h40c11 0 20-9 20-20V302c0-11-9-20-20-20zm-160 0h-40c-11 0-20 9-20 20v110c0 11 9 20 20 20h40c11 0 20-9 20-20V302c0-11-9-20-20-20z'/%3E%3C/svg%3E",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ]
 }
