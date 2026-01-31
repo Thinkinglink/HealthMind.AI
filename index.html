@@ -6,36 +6,1157 @@
 <meta name="theme-color" content="#0EA5E9">
 <title>HealthMind AI</title>
 <link rel="manifest" href="manifest.json">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--primary:#0EA5E9;--secondary:#F43F5E;--tertiary:#14B8A6;--accent:#EC4899;--purple:#A855F7;--green:#10B981;--yellow:#F59E0B;--red:#EF4444;--text-dark:#1E293B;--text-gray:#64748B;--bg-main:#F1F5F9;--bg-card:rgba(255,255,255,.95)}*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{font-family:'Poppins',sans-serif;background:var(--bg-main);color:var(--text-dark);line-height:1.6;overflow-x:hidden;padding-bottom:85px;-webkit-font-smoothing:antialiased}.container{max-width:480px;margin:0 auto;padding:20px 16px}.container.with-tracking{padding-top:72px}#splash{position:fixed;top:0;left:0;width:100%;height:100vh;background:linear-gradient(135deg,#0EA5E9 0%,#7C3AED 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;animation:fadeOut .5s 2s forwards}#splash h1{font-size:clamp(40px,12vw,56px);font-weight:800;background:linear-gradient(135deg,#fff 0%,#E0E7FF 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:16px}#splash p{color:rgba(255,255,255,.9);text-transform:uppercase;letter-spacing:3px;font-size:13px;font-weight:500}@keyframes fadeOut{to{opacity:0;pointer-events:none}}.auth-screen{position:fixed;top:0;left:0;width:100%;min-height:100vh;background:linear-gradient(135deg,#0EA5E9 0%,#7C3AED 100%);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}.auth-screen.active{display:flex}.auth-card{background:rgba(255,255,255,.15);backdrop-filter:blur(20px);border-radius:24px;padding:32px 24px;width:100%;max-width:400px;border:1px solid rgba(255,255,255,.3);box-shadow:0 8px 32px rgba(0,0,0,.1)}.auth-card h2{font-size:28px;font-weight:700;color:white;margin-bottom:6px}.auth-card p{color:rgba(255,255,255,.8);margin-bottom:28px;font-size:14px;font-weight:400}.input-group{margin-bottom:18px}.input-group label{display:block;color:white;font-weight:500;margin-bottom:8px;font-size:13px}.input-group input{width:100%;padding:14px 18px;border-radius:14px;border:2px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:white;font-size:15px;font-family:'Poppins',sans-serif;transition:all .3s}.input-group input::placeholder{color:rgba(255,255,255,.5)}.input-group input:focus{outline:none;border-color:white;background:rgba(255,255,255,.2);box-shadow:0 0 0 4px rgba(255,255,255,.1)}.btn-primary{width:100%;padding:16px;border-radius:14px;border:none;background:linear-gradient(135deg,#fff 0%,#E0E7FF 100%);color:#0EA5E9;font-size:15px;font-weight:600;cursor:pointer;transition:all .3s;box-shadow:0 8px 24px rgba(255,255,255,.3);font-family:'Poppins',sans-serif}.btn-primary:active{transform:scale(.98)}.auth-link{text-align:center;margin-top:20px;color:rgba(255,255,255,.8);font-size:14px}.auth-link a{color:white;font-weight:600;text-decoration:none;cursor:pointer}.screen{display:none;min-height:100vh}.screen.active{display:block}.tracking-indicator{position:fixed;top:0;left:0;right:0;background:linear-gradient(135deg,#10B981 0%,#14B8A6 100%);color:white;text-align:center;padding:14px 16px;font-weight:600;font-size:14px;z-index:999;animation:pulse 2s infinite;display:none;box-shadow:0 4px 12px rgba(16,185,129,.3)}.tracking-indicator.active{display:block}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.8}}.card{background:var(--bg-card);backdrop-filter:blur(10px);border-radius:20px;padding:20px 18px;margin-bottom:18px;box-shadow:0 4px 20px rgba(0,0,0,.06);border:1px solid rgba(255,255,255,.8);transition:all .3s}.card h3{font-size:17px;font-weight:600;margin-bottom:8px}.welcome-card{background:linear-gradient(135deg,#0EA5E9 0%,#7C3AED 100%);color:white;border-radius:20px;padding:28px 20px;margin-bottom:20px}.welcome-card h2{font-size:24px;font-weight:700;margin-bottom:6px}.welcome-card p{opacity:.9;font-size:14px;font-weight:400}.concentric-progress{position:relative;width:100%;max-width:260px;height:260px;margin:24px auto}.concentric-progress svg{width:100%;height:100%;transform:rotate(-90deg)}.concentric-progress circle{fill:none;stroke-width:12}.concentric-progress .bg-circle{stroke:#E2E8F0}.progress-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;width:100%}.progress-center h2{font-size:clamp(36px,10vw,44px);font-weight:700;background:linear-gradient(135deg,#0EA5E9 0%,#7C3AED 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}.progress-center p{font-size:13px;color:var(--text-gray);font-weight:500}.progress-legend{display:flex;justify-content:center;gap:16px;margin-top:20px;flex-wrap:wrap;padding:0 8px}.legend-item{display:flex;align-items:center;gap:6px}.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}.legend-text{font-size:12px;font-weight:500;color:var(--text-gray);white-space:nowrap}.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}.stat-card{background:linear-gradient(135deg,rgba(14,165,233,.08) 0%,rgba(124,58,237,.08) 100%);border-radius:18px;padding:18px 16px;text-align:center;position:relative;overflow:hidden}.stat-card h3{font-size:28px;font-weight:600;background:linear-gradient(135deg,#0EA5E9 0%,#7C3AED 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;position:relative;z-index:1}.stat-card p{color:var(--text-gray);font-size:12px;font-weight:500;position:relative;z-index:1}.bar-chart{display:flex;align-items:flex-end;justify-content:space-between;height:160px;margin:16px 0;gap:6px}.bar{flex:1;background:linear-gradient(180deg,#0EA5E9 0%,#7C3AED 100%);border-radius:10px 10px 0 0;min-height:16px;position:relative;transition:all .3s}.bar-label{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--text-gray);font-weight:500}.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;box-shadow:0 -2px 16px rgba(0,0,0,.08);display:flex;justify-content:space-around;align-items:center;padding:8px 4px 8px 4px;height:75px;z-index:900;max-width:100vw}.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:6px 10px;border-radius:10px;transition:all .3s;background:transparent;border:none;font-family:'Poppins',sans-serif;min-width:56px;flex:1;max-width:80px}.nav-item svg{width:22px;height:22px;transition:transform .3s}.nav-item span{font-size:11px;font-weight:500;color:var(--text-gray);white-space:nowrap}.nav-item.active{background:rgba(14,165,233,.1)}.nav-item.active svg{transform:scale(1.1)}.nav-item.active span{color:var(--primary)}.nav-item.ai-button{width:62px;height:62px;min-width:62px;max-width:62px;border-radius:50%;background:linear-gradient(135deg,#14B8A6 0%,#0EA5E9 100%);border:3px solid white;box-shadow:0 6px 20px rgba(20,184,166,.4);position:relative;top:-18px;padding:0;justify-content:center;flex:0 0 62px}.nav-item.ai-button span{color:white;font-size:28px;font-weight:800;line-height:1}.nav-item.ai-button.recording{background:linear-gradient(135deg,#EF4444 0%,#DC2626 100%);animation:pulse 1s infinite}.nav-item.ai-button svg{width:32px;height:32px}.workout-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}.workout-type{background:white;border:2px solid #E2E8F0;border-radius:18px;padding:24px 18px;text-align:center;cursor:pointer;transition:all .3s}.workout-type.selected{background:linear-gradient(135deg,rgba(14,165,233,.08) 0%,rgba(124,58,237,.08) 100%);border-color:var(--primary)}.workout-type svg{width:44px;height:44px;margin-bottom:10px;transition:transform .3s}.workout-type.selected svg{transform:scale(1.1)}.workout-type h4{font-size:15px;font-weight:600;color:var(--text-dark)}.map-container{width:calc(100% + 36px);height:280px;border-radius:0 0 28px 28px;overflow:hidden;margin:-20px -18px 20px -18px;position:relative;background:linear-gradient(135deg,#0EA5E9 0%,#7C3AED 100%)}.map-container iframe{width:100%;height:100%;border:none}.workout-timer{font-size:clamp(44px,12vw,52px);font-weight:700;text-align:center;margin:20px 0;background:linear-gradient(135deg,#0EA5E9 0%,#7C3AED 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.workout-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px}.workout-stat{background:white;border-radius:16px;padding:14px 12px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.06)}.workout-stat h4{font-size:22px;font-weight:600;color:var(--primary);margin-bottom:4px}.workout-stat p{font-size:11px;color:var(--text-gray);font-weight:500}.workout-controls{display:flex;gap:10px}.btn-workout{flex:1;padding:16px;border-radius:14px;border:none;font-size:15px;font-weight:600;cursor:pointer;transition:all .3s;font-family:'Poppins',sans-serif}.btn-pause{background:linear-gradient(135deg,#F59E0B 0%,#F97316 100%);color:white;box-shadow:0 6px 20px rgba(245,158,11,.4)}.btn-stop{background:linear-gradient(135deg,#EF4444 0%,#DC2626 100%);color:white;box-shadow:0 6px 20px rgba(239,68,68,.4)}.btn-start{background:linear-gradient(135deg,#10B981 0%,#14B8A6 100%);color:white;box-shadow:0 6px 20px rgba(16,185,129,.4)}.btn-workout:active{transform:scale(.98)}.chat-container{height:calc(100vh - 220px);overflow-y:auto;padding:20px 16px;margin:-20px -16px 0 -16px}.message{margin-bottom:14px;display:flex;gap:10px}.message.user{flex-direction:row-reverse}.message-bubble{max-width:78%;padding:14px 18px;border-radius:18px;line-height:1.5;font-size:14px}.message.user .message-bubble{background:linear-gradient(135deg,#0EA5E9 0%,#7C3AED 100%);color:white;border-radius:18px 18px 6px 18px}.message.bot .message-bubble{background:white;color:var(--text-dark);border:1px solid #E2E8F0;border-radius:18px 18px 18px 6px}.chat-input-container{position:fixed;bottom:75px;left:0;right:0;background:var(--bg-main);padding:12px 16px;border-top:1px solid #E2E8F0;max-width:100vw}.chat-input-box{display:flex;gap:10px;max-width:480px;margin:0 auto}.chat-input-box input{flex:1;padding:14px 18px;border-radius:18px;border:2px solid #E2E8F0;font-size:14px;font-family:'Poppins',sans-serif;background:white;min-width:0}.chat-input-box input:focus{outline:none;border-color:var(--primary)}.btn-send{width:48px;height:48px;min-width:48px;border-radius:50%;border:none;background:linear-gradient(135deg,#0EA5E9 0%,#7C3AED 100%);color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(14,165,233,.4);transition:all .3s;flex-shrink:0}.btn-send:active{transform:scale(.95)}.btn-send svg{width:20px;height:20px}.calorie-bar-container{position:relative;width:100%;height:280px;background:rgba(226,232,240,.3);border-radius:18px;overflow:hidden;margin:20px 0}.calorie-bar-fill{position:absolute;bottom:0;left:0;right:0;transition:all .5s ease;border-radius:18px 18px 0 0}.calorie-bar-fill.green{background:linear-gradient(180deg,#10B981 0%,#14B8A6 100%)}.calorie-bar-fill.yellow{background:linear-gradient(180deg,#F59E0B 0%,#F97316 100%)}.calorie-bar-fill.red{background:linear-gradient(180deg,#EF4444 0%,#DC2626 100%)}.calorie-labels{position:absolute;left:-48px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-between;padding:6px 0}.calorie-label{font-size:11px;font-weight:600;color:var(--text-gray)}.calorie-display{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:10}.calorie-display h2{font-size:clamp(36px,10vw,44px);font-weight:700;color:white;text-shadow:0 2px 8px rgba(0,0,0,.2);margin-bottom:4px}.calorie-display p{font-size:15px;font-weight:600;color:white;text-shadow:0 2px 8px rgba(0,0,0,.2)}.hydration-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}.hydration-card{border-radius:18px;padding:20px 16px;text-align:center;cursor:pointer;transition:all .3s;color:white}.hydration-card.water{background:linear-gradient(135deg,#0EA5E9 0%,#06B6D4 100%)}.hydration-card.coffee{background:linear-gradient(135deg,#92400E 0%,#78350F 100%)}.hydration-card:active{transform:scale(.98)}.hydration-card h3{font-size:28px;font-weight:600;margin-bottom:4px}.hydration-card p{font-size:13px;opacity:.9;font-weight:400}.food-list{margin-top:14px}.food-item{background:linear-gradient(135deg,rgba(14,165,233,.08) 0%,rgba(14,165,233,.04) 100%);border-radius:14px;padding:14px 16px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}.food-item h4{font-size:14px;font-weight:600;margin-bottom:3px}.food-item p{font-size:11px;color:var(--text-gray)}.food-item span{font-size:16px;font-weight:700;color:var(--primary)}.goal-stat-card{border-radius:20px;padding:24px 20px;margin-bottom:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}.goal-stat-card.pink{background:linear-gradient(135deg,#EC4899 0%,#DB2777 100%);color:white}.goal-stat-card.white{background:white;color:var(--text-dark)}.goal-stat-card.blue{background:linear-gradient(135deg,rgba(14,165,233,.08) 0%,rgba(124,58,237,.08) 100%);color:var(--text-dark)}.goal-stat-card.teal{background:linear-gradient(135deg,#14B8A6 0%,#0EA5E9 100%);color:white}.goal-stat-card h3{font-size:16px;font-weight:600;margin-bottom:14px}.goal-stat-card .big-number{font-size:clamp(44px,12vw,52px);font-weight:600;line-height:1;margin-bottom:8px}.goal-stat-card .label{font-size:13px;opacity:.9;font-weight:400}.goal-stat-card.white h3,.goal-stat-card.blue h3{color:var(--text-dark)}.goal-stat-card.white .big-number,.goal-stat-card.blue .big-number{background:linear-gradient(135deg,#EC4899 0%,#DB2777 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.goal-stat-card.white .label,.goal-stat-card.blue .label{color:var(--text-gray)}.progress-bar-container{background:rgba(255,255,255,.2);border-radius:10px;height:16px;overflow:hidden;margin:14px 0}.progress-bar{background:white;height:100%;border-radius:10px;transition:width .3s;box-shadow:0 2px 6px rgba(0,0,0,.1)}.goal-stat-card.white .progress-bar-container,.goal-stat-card.blue .progress-bar-container{background:rgba(236,72,153,.15)}.goal-stat-card.white .progress-bar,.goal-stat-card.blue .progress-bar{background:linear-gradient(135deg,#EC4899 0%,#DB2777 100%)}.week-tracker{display:flex;justify-content:space-between;gap:6px;margin-top:14px}.day-bar{flex:1;background:rgba(255,255,255,.2);border-radius:10px;height:90px;position:relative;overflow:hidden}.day-fill{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(180deg,white 0%,rgba(255,255,255,.8) 100%);transition:height .3s;box-shadow:0 -2px 6px rgba(0,0,0,.1)}.day-label{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:600;color:#DB2777}.goal-stat-card.white .day-bar,.goal-stat-card.blue .day-bar{background:rgba(236,72,153,.15)}.goal-stat-card.white .day-fill,.goal-stat-card.blue .day-fill{background:linear-gradient(180deg,#EC4899 0%,#DB2777 100%)}.goal-stat-card.white .day-label,.goal-stat-card.blue .day-label{color:var(--text-dark)}.empty-state{text-align:center;padding:50px 20px}.empty-state svg{width:70px;height:70px;margin:0 auto 20px;opacity:.3}.empty-state h3{font-size:18px;font-weight:600;color:var(--text-dark);margin-bottom:8px}.empty-state p{font-size:13px;color:var(--text-gray);margin-bottom:20px}.modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:9999;align-items:center;justify-content:center;padding:20px}.modal.active{display:flex}.modal-content{background:white;border-radius:24px;padding:28px 24px;max-width:400px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3)}.modal-content h3{font-size:22px;font-weight:600;margin-bottom:20px}.modal-content input{width:100%;padding:14px 18px;border-radius:14px;border:2px solid #E2E8F0;font-size:14px;font-family:'Poppins',sans-serif;margin-bottom:14px}.modal-content input:focus{outline:none;border-color:var(--primary)}.modal-buttons{display:flex;gap:10px;margin-top:20px}.btn-modal{flex:1;padding:14px;border-radius:14px;border:none;font-size:14px;font-weight:600;cursor:pointer;transition:all .3s;font-family:'Poppins',sans-serif}.btn-cancel{background:#F1F5F9;color:var(--text-dark)}.btn-submit{background:linear-gradient(135deg,#0EA5E9 0%,#7C3AED 100%);color:white;box-shadow:0 4px 16px rgba(14,165,233,.4)}.btn-modal:active{transform:scale(.98)}.mb-16{margin-bottom:16px}.mb-24{margin-bottom:24px}@media(max-width:360px){.nav-item{padding:6px 6px;min-width:50px}.nav-item span{font-size:10px}.nav-item svg{width:20px;height:20px}.nav-item.ai-button{width:56px;height:56px;min-width:56px;max-width:56px}.nav-item.ai-button span{font-size:24px}}
+:root{--primary:#0EA5E9;--secondary:#F43F5E;--tertiary:#14B8A6;--accent:#EC4899;--green:#10B981;--text-dark:#1E293B;--text-gray:#64748B;--bg:#F4F6F9}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text-dark);line-height:1.5;overflow-x:hidden;padding-bottom:88px;-webkit-font-smoothing:antialiased}
+
+/* ── Splash ── */
+#splash{position:fixed;inset:0;background:linear-gradient(150deg,#0EA5E9,#7C3AED);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .4s}
+#splash.gone{opacity:0;pointer-events:none}
+#splash h1{font-size:48px;font-weight:700;color:#fff;letter-spacing:-1px}
+#splash p{color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:4px;font-size:11px;font-weight:500;margin-top:6px}
+
+/* ── Auth ── */
+.auth-screen{position:fixed;inset:0;background:linear-gradient(150deg,#0EA5E9,#7C3AED);display:none;align-items:center;justify-content:center;padding:24px;z-index:1000}
+.auth-screen.active{display:flex}
+.auth-card{background:rgba(255,255,255,.12);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:28px;padding:36px 24px;width:100%;max-width:400px;border:1px solid rgba(255,255,255,.25)}
+.auth-card h2{font-size:26px;font-weight:600;color:#fff;margin-bottom:4px}
+.auth-card>p{color:rgba(255,255,255,.7);font-size:14px;font-weight:400;margin-bottom:28px}
+.inp-g{margin-bottom:16px}
+.inp-g label{display:block;color:rgba(255,255,255,.8);font-size:13px;font-weight:500;margin-bottom:6px}
+.inp-g input{width:100%;padding:14px 18px;border-radius:14px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);color:#fff;font-size:15px;font-family:inherit;transition:.2s}
+.inp-g input::placeholder{color:rgba(255,255,255,.4)}
+.inp-g input:focus{outline:none;border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.18)}
+.btn-pri{width:100%;padding:15px;border-radius:14px;border:none;background:#fff;color:#0EA5E9;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
+.btn-pri:active{transform:scale(.97)}
+.auth-link{text-align:center;margin-top:20px;color:rgba(255,255,255,.7);font-size:13px}
+.auth-link a{color:#fff;font-weight:600;cursor:pointer}
+
+/* ── Screens ── */
+.screen{display:none;min-height:100vh}
+.screen.active{display:block}
+
+/* ── Tracking bar ── */
+#trackBar{position:fixed;top:0;left:0;right:0;background:linear-gradient(135deg,#10B981,#14B8A6);color:#fff;text-align:center;padding:11px;font-size:13px;font-weight:600;z-index:998;display:none;letter-spacing:.3px}
+#trackBar.on{display:block}
+#trackBar em{opacity:.65;font-style:normal;font-weight:400;margin-left:6px}
+
+/* ── Cards ── */
+.card{background:#fff;border-radius:20px;padding:20px;margin-bottom:14px;box-shadow:0 2px 14px rgba(0,0,0,.06)}
+.ct{font-size:15px;font-weight:600;color:var(--text-dark);margin-bottom:14px}
+
+/* ── Welcome ── */
+.welcome{background:linear-gradient(150deg,#0EA5E9,#7C3AED);border-radius:20px;padding:22px 20px;margin-bottom:18px;color:#fff}
+.welcome h2{font-size:21px;font-weight:600}
+.welcome p{font-size:13px;opacity:.8;font-weight:400;margin-top:2px}
+
+/* ── Rings ── */
+.rings-wrap{position:relative;width:220px;height:220px;margin:16px auto}
+.rings-wrap svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.rings-wrap circle{fill:none;stroke-linecap:round}
+.r-bg{stroke:#ECEEF2;stroke-width:9}
+.r-steps{stroke:url(#gS);stroke-width:9;stroke-dasharray:345;stroke-dashoffset:345;transition:stroke-dashoffset .6s ease}
+.r-cals{stroke:url(#gC);stroke-width:9;stroke-dasharray:258;stroke-dashoffset:258;transition:stroke-dashoffset .6s ease}
+.r-time{stroke:url(#gT);stroke-width:9;stroke-dasharray:377;stroke-dashoffset:377;transition:stroke-dashoffset .6s ease}
+.rings-c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.rings-c .big{font-size:38px;font-weight:300;color:var(--text-dark);letter-spacing:-1px;line-height:1}
+.rings-c .sm{font-size:11px;color:var(--text-gray);font-weight:500;margin-top:4px}
+.leg{display:flex;justify-content:center;gap:18px;margin-top:14px;flex-wrap:wrap}
+.leg-i{display:flex;align-items:center;gap:6px}
+.leg-d{width:9px;height:9px;border-radius:50%}
+.leg-i span{font-size:11px;color:var(--text-gray);font-weight:500}
+.leg-i .v{color:var(--text-dark);font-weight:500}
+
+/* ── Stats row ── */
+.sr{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.sb{background:#fff;border-radius:18px;padding:16px 12px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.sb .big{font-size:24px;font-weight:300;background:linear-gradient(135deg,#0EA5E9,#7C3AED);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2}
+.sb .sm{font-size:11px;color:var(--text-gray);font-weight:500;margin-top:3px}
+
+/* ── Weekly bars ── */
+.wbars{display:flex;align-items:flex-end;gap:5px;height:110px}
+.wb-w{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;height:100%}
+.wb-b{flex:1;width:100%;display:flex;align-items:flex-end}
+.wb-f{width:100%;border-radius:5px 5px 0 0;min-height:6px}
+.wb-l{font-size:9px;color:var(--text-gray);font-weight:500}
+
+/* ── Bottom nav ── */
+.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;box-shadow:0 -1px 10px rgba(0,0,0,.07);display:flex;align-items:center;justify-content:space-around;height:70px;padding:0 6px;z-index:900}
+.nb{display:flex;flex-direction:column;align-items:center;gap:2px;border:none;background:none;cursor:pointer;font-family:inherit;padding:6px 8px;border-radius:10px;transition:.15s;flex:1;max-width:68px}
+.nb svg{width:21px;height:21px;color:var(--text-gray);transition:.15s}
+.nb span{font-size:10px;color:var(--text-gray);font-weight:500;transition:.15s}
+.nb.on svg{color:var(--primary)}
+.nb.on span{color:var(--primary)}
+.nb.on{background:rgba(14,165,233,.07)}
+/* AI pill */
+.nav-ai{width:58px;height:58px;min-width:58px;border-radius:50%;background:linear-gradient(135deg,#14B8A6,#0EA5E9);border:3px solid #fff;box-shadow:0 4px 16px rgba(20,184,166,.3);position:relative;top:-14px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s;flex:0 0 58px}
+.nav-ai:active{transform:scale(.92)}
+.nav-ai.rec{background:linear-gradient(135deg,#EF4444,#DC2626);box-shadow:0 4px 16px rgba(239,68,68,.35)}
+.nav-ai .ai-inner{display:flex;align-items:center;justify-content:center;width:100%;height:100%}
+.nav-ai .ai-inner .txt{color:#fff;font-size:21px;font-weight:700;letter-spacing:-.5px}
+.nav-ai .ai-inner svg{width:26px;height:26px;fill:#fff;display:block}
+
+/* ── Workout select ── */
+.wg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.wt{background:#fff;border:2px solid #ECEEF2;border-radius:18px;padding:22px 14px;text-align:center;cursor:pointer;transition:.15s}
+.wt:active{transform:scale(.96)}
+.wt.sel{border-color:var(--primary);background:linear-gradient(135deg,rgba(14,165,233,.06),rgba(124,58,237,.06))}
+.wt svg{width:38px;height:38px;color:var(--text-gray);margin-bottom:8px;transition:.15s}
+.wt.sel svg{color:var(--primary)}
+.wt h4{font-size:14px;font-weight:600;color:var(--text-dark)}
+
+/* ── Workout active ── */
+.w-map{width:100%;height:240px;border-radius:18px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.1)}
+.w-map iframe{width:100%;height:100%;border:none}
+.w-timer{text-align:center;font-size:44px;font-weight:300;color:var(--text-dark);letter-spacing:-1px;margin:12px 0 18px}
+.ws-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px}
+.ws{background:#fff;border-radius:16px;padding:14px 8px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.ws .big{font-size:20px;font-weight:300;color:var(--primary);line-height:1.2}
+.ws .sm{font-size:9px;color:var(--text-gray);font-weight:600;text-transform:uppercase;letter-spacing:.6px;margin-top:3px}
+.ws-btns{display:flex;gap:10px}
+.ws-btn{flex:1;padding:14px;border-radius:14px;border:none;font-size:14px;font-weight:600;color:#fff;cursor:pointer;font-family:inherit;transition:.15s}
+.ws-btn:active{transform:scale(.96)}
+.ws-btn.pause{background:linear-gradient(135deg,#F59E0B,#F97316)}
+.ws-btn.resume{background:linear-gradient(135deg,#10B981,#14B8A6)}
+.ws-btn.stop{background:linear-gradient(135deg,#EF4444,#DC2626)}
+
+/* ── Chat ── */
+.chat-wrap{height:calc(100vh - 134px);overflow-y:auto;padding:16px 16px 8px}
+.msg{display:flex;margin-bottom:10px}
+.msg.user{flex-direction:row-reverse}
+.mb{max-width:82%;padding:11px 15px;border-radius:18px;font-size:14px;line-height:1.5}
+.msg.bot .mb{background:#fff;color:var(--text-dark);border:1px solid #ECEEF2;border-radius:18px 18px 18px 4px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.msg.user .mb{background:linear-gradient(135deg,#0EA5E9,#7C3AED);color:#fff;border-radius:18px 18px 4px 18px}
+.chat-bar{position:fixed;bottom:70px;left:0;right:0;background:var(--bg);padding:10px 16px;border-top:1px solid #ECEEF2}
+.chat-row{display:flex;gap:8px;max-width:480px;margin:0 auto;align-items:center}
+.chat-row input{flex:1;padding:12px 16px;border-radius:22px;border:1.5px solid #ECEEF2;font-size:14px;font-family:inherit;background:#fff;min-width:0}
+.chat-row input:focus{outline:none;border-color:var(--primary)}
+.chat-send{width:42px;height:42px;min-width:42px;border-radius:50%;border:none;background:linear-gradient(135deg,#0EA5E9,#7C3AED);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:.15s}
+.chat-send:active{transform:scale(.92)}
+.chat-send svg{width:17px;height:17px;fill:#fff}
+
+/* ── Nutrition calorie bar ── */
+.cal-row{display:flex;align-items:stretch;height:200px;margin:14px 0;gap:10px}
+.cal-labels{display:flex;flex-direction:column;justify-content:space-between;min-width:34px;padding:2px 0}
+.cal-labels span{font-size:9px;color:var(--text-gray);font-weight:500;text-align:right;line-height:1}
+.cal-track{flex:1;position:relative;background:#F0F2F5;border-radius:14px;overflow:hidden}
+.cal-fill{position:absolute;bottom:0;left:0;right:0;border-radius:14px 14px 0 0;transition:height .5s ease}
+.cal-fill.green{background:linear-gradient(180deg,#34D399,#10B981)}
+.cal-fill.yellow{background:linear-gradient(180deg,#FBBF24,#F59E0B)}
+.cal-fill.red{background:linear-gradient(180deg,#F87171,#EF4444)}
+.cal-over{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2;pointer-events:none}
+.cal-over .big{font-size:30px;font-weight:300;color:var(--text-dark);line-height:1}
+.cal-over .sm{font-size:12px;color:var(--text-gray);font-weight:500;margin-top:3px}
+.cal-over.light .big{color:#fff}
+.cal-over.light .sm{color:rgba(255,255,255,.85)}
+
+/* ── Hydration ── */
+.hyd-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.hyd-c{border-radius:18px;padding:18px 14px;text-align:center;cursor:pointer;color:#fff;transition:.15s}
+.hyd-c:active{transform:scale(.96)}
+.hyd-c.water{background:linear-gradient(135deg,#0EA5E9,#06B6D4)}
+.hyd-c.coffee{background:linear-gradient(135deg,#B45309,#78350F)}
+.hyd-c .big{font-size:26px;font-weight:300;line-height:1.2}
+.hyd-c .sm{font-size:12px;opacity:.85;font-weight:400;margin-top:2px}
+
+/* ── Food list ── */
+.fi{display:flex;justify-content:space-between;align-items:center;padding:11px 14px;border-radius:12px;background:#F7F8FA;margin-bottom:7px}
+.fi .fi-l h4{font-size:14px;font-weight:500}
+.fi .fi-l p{font-size:11px;color:var(--text-gray)}
+.fi .fi-c{font-size:15px;font-weight:600;color:var(--primary)}
+
+/* ── Goals ── */
+.gc{border-radius:20px;padding:20px 18px;margin-bottom:12px}
+.gc.pink{background:linear-gradient(135deg,#EC4899,#DB2777);color:#fff}
+.gc.white{background:#fff;color:var(--text-dark);box-shadow:0 2px 14px rgba(0,0,0,.06)}
+.gc.blue{background:linear-gradient(135deg,rgba(14,165,233,.07),rgba(124,58,237,.07));color:var(--text-dark);box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.gc.teal{background:linear-gradient(135deg,#14B8A6,#0EA5E9);color:#fff}
+.gc h3{font-size:13px;font-weight:600;margin-bottom:8px;opacity:.8}
+.gc .big{font-size:42px;font-weight:300;line-height:1;letter-spacing:-1px}
+.gc.white .big,.gc.blue .big{background:linear-gradient(135deg,#EC4899,#DB2777);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.gc .sub{font-size:12px;opacity:.7;font-weight:400;margin-top:4px}
+.gc.white .sub,.gc.blue .sub{color:var(--text-gray);opacity:1}
+.gb-t{background:rgba(255,255,255,.22);border-radius:8px;height:8px;overflow:hidden;margin-top:10px}
+.gc.white .gb-t,.gc.blue .gb-t{background:rgba(236,72,153,.1)}
+.gb-f{height:100%;border-radius:8px;background:#fff;transition:width .3s}
+.gc.white .gb-f,.gc.blue .gb-f{background:linear-gradient(90deg,#EC4899,#DB2777)}
+.wk-row{display:flex;gap:4px;margin-top:12px}
+.wk-d{flex:1;background:rgba(255,255,255,.2);border-radius:8px;height:72px;position:relative;overflow:hidden}
+.gc.white .wk-d,.gc.blue .wk-d{background:rgba(236,72,153,.1)}
+.wk-f{position:absolute;bottom:0;left:0;right:0;background:rgba(255,255,255,.8);border-radius:8px 8px 0 0}
+.gc.white .wk-f,.gc.blue .wk-f{background:linear-gradient(180deg,#EC4899,#DB2777)}
+.wk-l{position:absolute;bottom:3px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:600;color:rgba(255,255,255,.7)}
+.gc.white .wk-l,.gc.blue .wk-l{color:var(--text-gray)}
+
+/* ── Empty state ── */
+.es{text-align:center;padding:44px 20px}
+.es svg{width:56px;height:56px;margin:0 auto 14px;color:var(--text-gray);opacity:.35}
+.es h3{font-size:16px;font-weight:600;margin-bottom:6px}
+.es p{font-size:13px;color:var(--text-gray);max-width:240px;margin:0 auto}
+
+/* ── Modals ── */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);z-index:9999;align-items:flex-end;justify-content:center}
+.modal.on{display:flex}
+.ms{background:#fff;border-radius:24px 24px 0 0;padding:28px 24px 44px;width:100%;max-width:480px}
+.ms h3{font-size:18px;font-weight:600;margin-bottom:18px}
+.ms input{width:100%;padding:13px 16px;border-radius:14px;border:1.5px solid #ECEEF2;font-size:14px;font-family:inherit;margin-bottom:10px;transition:.2s}
+.ms input:focus{outline:none;border-color:var(--primary)}
+.m-btns{display:flex;gap:10px;margin-top:18px}
+.m-btn{flex:1;padding:13px;border-radius:14px;border:none;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:.15s}
+.m-btn:active{transform:scale(.96)}
+.m-btn.cancel{background:#F4F6F9;color:var(--text-dark)}
+.m-btn.ok{background:linear-gradient(135deg,#0EA5E9,#7C3AED);color:#fff}
+
+/* ── Hydration canvas ── */
+.hyd-canvas-wrap{overflow:hidden}
+.hyd-canvas-wrap canvas{width:100%;height:auto;display:block}
+
+@media(max-width:360px){
+  .rings-wrap{width:200px;height:200px}
+  .rings-c .big{font-size:34px}
+  .nav-ai{width:52px;height:52px;min-width:52px;top:-13px}
+  .gc .big{font-size:36px}
+}
 </style>
 </head>
 <body>
+
+<!-- Splash -->
 <div id="splash"><h1>HealthMind</h1><p>AI Fitness Coach</p></div>
-<div class="tracking-indicator" id="trackingIndicator">🏃 TRACKING WORKOUT...</div>
-<div class="auth-screen active" id="loginScreen"><div class="auth-card"><h2>Welcome Back!</h2><p>Sign in to continue your fitness journey</p><div class="input-group"><label>Email</label><input type="email" id="loginEmail" placeholder="your@email.com"></div><div class="input-group"><label>Password</label><input type="password" id="loginPassword" placeholder="Enter your password"></div><button class="btn-primary" onclick="login()">Sign In</button><div class="auth-link">Don't have an account? <a onclick="showSignup()">Sign Up</a></div></div></div>
-<div class="auth-screen" id="signupScreen"><div class="auth-card"><h2>Get Started</h2><p>Create your account to begin</p><div class="input-group"><label>Full Name</label><input type="text" id="signupName" placeholder="John Doe"></div><div class="input-group"><label>Email</label><input type="email" id="signupEmail" placeholder="your@email.com"></div><div class="input-group"><label>Password</label><input type="password" id="signupPassword" placeholder="Create a password"></div><button class="btn-primary" onclick="signup()">Create Account</button><div class="auth-link">Already have an account? <a onclick="showLogin()">Sign In</a></div></div></div>
 
-<div class="screen" id="dashboardScreen"><div class="container" id="dashboardContainer"><div class="welcome-card"><h2 id="welcomeName">Welcome!</h2><p>Let's make today count</p></div><div class="card"><h3 class="mb-16">Today's Progress</h3><div class="concentric-progress"><svg viewBox="0 0 260 260"><defs><linearGradient id="stepsGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0EA5E9"/><stop offset="100%" style="stop-color:#7C3AED"/></linearGradient><linearGradient id="calsGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#F43F5E"/><stop offset="100%" style="stop-color:#DC2626"/></linearGradient><linearGradient id="timeGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#10B981"/><stop offset="100%" style="stop-color:#14B8A6"/></linearGradient></defs><circle class="bg-circle" cx="130" cy="130" r="115" stroke-dasharray="722" stroke-dashoffset="0"/><circle id="timeCircle" cx="130" cy="130" r="115" stroke="url(#timeGrad)" stroke-dasharray="722" stroke-dashoffset="722"/><circle class="bg-circle" cx="130" cy="130" r="87" stroke-dasharray="547" stroke-dashoffset="0"/><circle id="calsCircle" cx="130" cy="130" r="87" stroke="url(#calsGrad)" stroke-dasharray="547" stroke-dashoffset="547"/><circle class="bg-circle" cx="130" cy="130" r="59" stroke-dasharray="371" stroke-dashoffset="0"/><circle id="stepsCircle" cx="130" cy="130" r="59" stroke="url(#stepsGrad)" stroke-dasharray="371" stroke-dashoffset="371"/></svg><div class="progress-center"><h2 id="mainStepsCount">0</h2><p>Steps Today</p></div></div><div class="progress-legend"><div class="legend-item"><div class="legend-dot" style="background:linear-gradient(135deg,#0EA5E9,#7C3AED)"></div><span class="legend-text">Steps: <span id="legendSteps">0/10K</span></span></div><div class="legend-item"><div class="legend-dot" style="background:linear-gradient(135deg,#F43F5E,#DC2626)"></div><span class="legend-text">Cals: <span id="legendCals">0/500</span></span></div><div class="legend-item"><div class="legend-dot" style="background:linear-gradient(135deg,#10B981,#14B8A6)"></div><span class="legend-text">Time: <span id="legendTime">0m</span></span></div></div></div><div class="stats-grid"><div class="stat-card"><h3 id="milesCount">0.0</h3><p>Miles Today</p></div><div class="stat-card"><h3 id="workoutCount">0</h3><p>Total Workouts</p></div></div><div class="card"><h3 class="mb-16">Weekly Activity</h3><div class="bar-chart" id="weeklyChart"></div></div><div class="card"><h3 class="mb-16">Nutrition Summary</h3><p style="font-size:28px;font-weight:600;color:var(--tertiary);text-align:center" id="caloriesRemaining">0</p><p style="text-align:center;color:var(--text-gray);margin-bottom:14px;font-size:13px">Calories Remaining</p><p style="font-size:12px;color:var(--text-gray)">Goal: <span id="goalCals">2000</span> - Eaten: <span id="eatenCals">0</span> + Burned: <span id="burnedCals">0</span></p></div><div class="card" id="activeGoalsCard" style="display:none"><h3 class="mb-16">Active Goals</h3><div id="activeGoalsList"></div></div></div></div>
+<!-- Tracking bar -->
+<div id="trackBar">🏃 Tracking Workout<em>• Live</em></div>
 
-<div class="screen" id="workoutSelectScreen"><div class="container" id="workoutSelectContainer"><h2 style="font-size:24px;font-weight:700;margin-bottom:6px">Start a Workout</h2><p style="color:var(--text-gray);margin-bottom:20px;font-size:13px">Choose your activity type</p><div class="workout-grid"><div class="workout-type selected" onclick="selectWorkout('Walking')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3"></path></svg><h4>Walking</h4></div><div class="workout-type" onclick="selectWorkout('Running')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg><h4>Running</h4></div><div class="workout-type" onclick="selectWorkout('Cycling')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><h4>Cycling</h4></div><div class="workout-type" onclick="selectWorkout('Hiking')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11l7-7 7 7M5 19l7-7 7 7"></path></svg><h4>Hiking</h4></div></div><button class="btn-primary" style="margin-top:20px" onclick="startWorkout()">Start Tracking</button></div></div>
+<!-- Auth screens -->
+<div class="auth-screen active" id="authLogin">
+  <div class="auth-card">
+    <h2>Welcome Back</h2><p>Sign in to continue</p>
+    <div class="inp-g"><label>Email</label><input type="email" id="inLoginEmail" placeholder="you@email.com"></div>
+    <div class="inp-g"><label>Password</label><input type="password" id="inLoginPw" placeholder="Password"></div>
+    <button class="btn-pri" onclick="doLogin()">Sign In</button>
+    <div class="auth-link">New here? <a onclick="switchAuth('signup')">Create account</a></div>
+  </div>
+</div>
+<div class="auth-screen" id="authSignup">
+  <div class="auth-card">
+    <h2>Get Started</h2><p>Create your free account</p>
+    <div class="inp-g"><label>Name</label><input type="text" id="inSignName" placeholder="Your name"></div>
+    <div class="inp-g"><label>Email</label><input type="email" id="inSignEmail" placeholder="you@email.com"></div>
+    <div class="inp-g"><label>Password</label><input type="password" id="inSignPw" placeholder="Password"></div>
+    <button class="btn-pri" onclick="doSignup()">Create Account</button>
+    <div class="auth-link">Already have an account? <a onclick="switchAuth('login')">Sign in</a></div>
+  </div>
+</div>
 
-<div class="screen" id="workoutScreen"><div class="container" id="workoutContainer" style="padding-top:0"><div class="map-container"><iframe id="mapFrame" src="" allowfullscreen></iframe></div><h2 style="font-size:20px;font-weight:600;margin-bottom:14px" id="workoutType">Walking</h2><div class="workout-timer" id="workoutTimer">00:00:00</div><div class="workout-stats"><div class="workout-stat"><h4 id="workoutDistance">0.0</h4><p>KM</p></div><div class="workout-stat"><h4 id="workoutSteps">0</h4><p>STEPS</p></div><div class="workout-stat"><h4 id="workoutCalories">0</h4><p>CALS</p></div></div><div class="workout-controls"><button class="btn-workout btn-pause" id="pauseBtn" onclick="togglePause()">Pause</button><button class="btn-workout btn-stop" onclick="stopWorkout()">Stop</button></div></div></div>
+<!-- ══════════ DASHBOARD ══════════ -->
+<div class="screen" id="sDash">
+<div class="container" id="cDash">
+  <div class="welcome"><h2 id="elWelcome">Welcome</h2><p>Let's make today count</p></div>
+  <div class="card">
+    <p class="ct" style="text-align:center">Today's Progress</p>
+    <div class="rings-wrap">
+      <svg viewBox="0 0 220 220">
+        <defs>
+          <linearGradient id="gS" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0EA5E9"/><stop offset="100%" stop-color="#7C3AED"/></linearGradient>
+          <linearGradient id="gC" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F43F5E"/><stop offset="100%" stop-color="#EC4899"/></linearGradient>
+          <linearGradient id="gT" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#10B981"/><stop offset="100%" stop-color="#14B8A6"/></linearGradient>
+        </defs>
+        <!-- outer=time r=60 circ=376.99 -->
+        <circle class="r-bg" cx="110" cy="110" r="60"/>
+        <circle class="r-time" cx="110" cy="110" r="60" id="elRT"/>
+        <!-- mid=cals r=41 circ=257.61 -->
+        <circle class="r-bg" cx="110" cy="110" r="41"/>
+        <circle class="r-cals" cx="110" cy="110" r="41" id="elRC"/>
+        <!-- inner=steps r=55 circ=345.58 -->
+        <circle class="r-bg" cx="110" cy="110" r="55"/>
+        <circle class="r-steps" cx="110" cy="110" r="55" id="elRS"/>
+      </svg>
+      <div class="rings-c">
+        <div class="big" id="elSteps">0</div>
+        <div class="sm">steps</div>
+      </div>
+    </div>
+    <div class="leg">
+      <div class="leg-i"><div class="leg-d" style="background:linear-gradient(135deg,#0EA5E9,#7C3AED)"></div><span>Steps <span class="v" id="elLS">0</span>/10K</span></div>
+      <div class="leg-i"><div class="leg-d" style="background:linear-gradient(135deg,#F43F5E,#EC4899)"></div><span>Cals <span class="v" id="elLC">0</span>/500</span></div>
+      <div class="leg-i"><div class="leg-d" style="background:linear-gradient(135deg,#10B981,#14B8A6)"></div><span>Time <span class="v" id="elLT">0</span>m</span></div>
+    </div>
+  </div>
+  <div class="sr">
+    <div class="sb"><div class="big" id="elMiles">0.0</div><div class="sm">Miles Today</div></div>
+    <div class="sb"><div class="big" id="elWkouts">0</div><div class="sm">Workouts</div></div>
+  </div>
+  <div class="card">
+    <p class="ct">Weekly Activity</p>
+    <div class="wbars" id="elWeekBars"></div>
+  </div>
+  <div class="card">
+    <p class="ct">Nutrition Summary</p>
+    <p style="text-align:center;font-size:26px;font-weight:300;color:var(--tertiary)" id="elCalRem">0</p>
+    <p style="text-align:center;font-size:11px;color:var(--text-gray);margin-top:4px">Calories Remaining</p>
+    <p style="font-size:11px;color:var(--text-gray);margin-top:6px;text-align:center">Goal: <span id="elDG">2000</span> · Eaten: <span id="elDE">0</span> · Burned: <span id="elDB">0</span></p>
+  </div>
+  <div class="card" id="elDashGoal" style="display:none">
+    <p class="ct">Active Goal</p>
+    <div id="elDashGoalIn"></div>
+  </div>
+</div>
+</div>
 
-<div class="screen" id="chatScreen"><div class="chat-container" id="chatMessages"></div><div class="chat-input-container"><div class="chat-input-box"><input type="text" id="chatInput" placeholder="Ask me anything about fitness..." onkeypress="if(event.key==='Enter') sendMessage()"><button class="btn-send" onclick="sendMessage()"><svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button></div></div></div>
+<!-- ══════════ WORKOUT SELECT ══════════ -->
+<div class="screen" id="sWkSel">
+<div class="container" id="cWkSel">
+  <h2 style="font-size:22px;font-weight:600;margin-bottom:4px">Start Workout</h2>
+  <p style="font-size:13px;color:var(--text-gray)">Choose your activity</p>
+  <div class="wg">
+    <div class="wt sel" onclick="pickType(this,'Walking')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="5" r="2"/><path d="M12 9v5l-3 6m3-6l3 6m-6-3l-3 1m6-1l3 1"/></svg><h4>Walking</h4></div>
+    <div class="wt" onclick="pickType(this,'Running')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="14" cy="4" r="2"/><path d="M10 21l2-6 2 2 2 5m-4-11l-4 3m4-3l3 2-1 4"/></svg><h4>Running</h4></div>
+    <div class="wt" onclick="pickType(this,'Cycling')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="5.5" cy="17.5" r="3"/><circle cx="18.5" cy="17.5" r="3"/><path d="M15 6l-2 4h5l-3 5M8 17l4-7h5"/></svg><h4>Cycling</h4></div>
+    <div class="wt" onclick="pickType(this,'Hiking')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 20l6-9 3 4 4-6 5 11"/><path d="M13 5l2 4"/></svg><h4>Hiking</h4></div>
+  </div>
+  <button class="btn-pri" style="margin-top:20px;background:linear-gradient(135deg,#0EA5E9,#7C3AED);color:#fff" onclick="beginWorkout()">Start Tracking</button>
+</div>
+</div>
 
-<div class="screen" id="nutritionScreen"><div class="container" id="nutritionContainer"><div class="card"><h3 class="mb-24">Calories Consumed Today</h3><div style="position:relative;padding-left:56px"><div class="calorie-labels"><span class="calorie-label">3500</span><span class="calorie-label">2500</span><span class="calorie-label">2000</span><span class="calorie-label">1500</span><span class="calorie-label">1000</span><span class="calorie-label">500</span><span class="calorie-label">0</span></div><div class="calorie-bar-container"><div class="calorie-bar-fill green" id="calorieBarFill" style="height:0%"></div><div class="calorie-display"><h2 id="calorieConsumed">0</h2><p id="calorieGoalText">/ 2000 cal</p></div></div></div></div><div class="hydration-cards"><div class="hydration-card water" onclick="showHydrationModal('water')"><h3 id="waterCount">0</h3><p>oz Water</p></div><div class="hydration-card coffee" onclick="showHydrationModal('coffee')"><h3 id="coffeeCount">0</h3><p>oz Coffee</p></div></div><div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><h3>Today's Meals</h3><button class="btn-primary" style="width:auto;padding:12px 20px;font-size:13px" onclick="showFoodModal()">+ Add Food</button></div><div class="food-list" id="foodList"></div></div><div class="card"><h3 class="mb-16">Daily Calories (7 Days)</h3><div class="bar-chart" id="caloriesChart"></div></div><div class="card"><h3 class="mb-16">Hydration Timeline (Today)</h3><canvas id="hydrationChart" width="400" height="200"></canvas></div></div></div>
+<!-- ══════════ WORKOUT ACTIVE ══════════ -->
+<div class="screen" id="sWk">
+<div class="container" id="cWk">
+  <!-- This top padding is set dynamically when tracking bar is visible -->
+  <div class="w-map" id="elMapWrap"><iframe id="elMap" src="" allowfullscreen></iframe></div>
+  <p style="font-size:13px;color:var(--text-gray);font-weight:500;margin-bottom:2px" id="elWkType">Walking</p>
+  <div class="w-timer" id="elTimer">00:00:00</div>
+  <div class="ws-row">
+    <div class="ws"><div class="big" id="elWDist">0.00</div><div class="sm">Miles</div></div>
+    <div class="ws"><div class="big" id="elWMid">0</div><div class="sm" id="elWMidL">Steps</div></div>
+    <div class="ws"><div class="big" id="elWCal">0</div><div class="sm">Cals</div></div>
+  </div>
+  <div class="ws-btns">
+    <button class="ws-btn pause" id="elPauseBtn" onclick="togglePause()">Pause</button>
+    <button class="ws-btn stop" onclick="stopWorkout()">Stop</button>
+  </div>
+</div>
+</div>
 
-<div class="screen" id="goalsScreen"><div class="container" id="goalsContainer"><h2 style="font-size:24px;font-weight:700;margin-bottom:6px">Your Goals</h2><p style="color:var(--text-gray);margin-bottom:20px;font-size:13px">Track your progress and stay motivated</p><div id="goalsList"></div><button class="btn-primary" id="goalActionBtn" onclick="showGoalModal()">+ Create New Goal</button></div></div>
+<!-- ══════════ CHAT ══════════ -->
+<div class="screen" id="sChat">
+  <div class="chat-wrap" id="elChat"></div>
+  <div class="chat-bar">
+    <div class="chat-row">
+      <input type="text" id="elChatIn" placeholder="Ask about fitness…" onkeypress="if(event.key==='Enter')sendMsg()">
+      <button class="chat-send" onclick="sendMsg()"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+    </div>
+  </div>
+</div>
 
-<div class="bottom-nav"><button class="nav-item active" onclick="navigate('dashboard')"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span>Dashboard</span></button><button class="nav-item" onclick="navigate('workout')"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg><span>Workout</span></button><button class="nav-item ai-button" id="aiNavBtn" onclick="toggleAIChat()"><span id="aiButtonContent">AI</span></button><button class="nav-item" onclick="navigate('nutrition')"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg><span>Nutrition</span></button><button class="nav-item" onclick="navigate('goals')"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg><span>Goals</span></button></div>
+<!-- ══════════ NUTRITION ══════════ -->
+<div class="screen" id="sNut">
+<div class="container" id="cNut">
+  <div class="card">
+    <p class="ct">Calories Consumed Today</p>
+    <div class="cal-row">
+      <div class="cal-labels">
+        <span>3500</span><span>2500</span><span>2000</span><span>1500</span><span>1000</span><span>500</span><span>0</span>
+      </div>
+      <div class="cal-track">
+        <div class="cal-fill green" id="elCalFill" style="height:0%"></div>
+        <div class="cal-over" id="elCalOver">
+          <div class="big" id="elCalN">0</div>
+          <div class="sm" id="elCalG">/ 2,000 cal</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hyd-row">
+    <div class="hyd-c water" onclick="openHyd('water')"><div class="big" id="elWat">0</div><div class="sm">oz Water</div></div>
+    <div class="hyd-c coffee" onclick="openHyd('coffee')"><div class="big" id="elCof">0</div><div class="sm">oz Coffee</div></div>
+  </div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <p class="ct" style="margin-bottom:0">Today's Meals</p>
+      <button class="btn-pri" style="width:auto;padding:9px 16px;font-size:12px;background:linear-gradient(135deg,#0EA5E9,#7C3AED);color:#fff" onclick="openFood()">+ Add</button>
+    </div>
+    <div id="elFoodList"><p style="font-size:13px;color:var(--text-gray);text-align:center;padding:10px 0">No meals logged today</p></div>
+  </div>
+  <div class="card">
+    <p class="ct">Daily Calories (7 Days)</p>
+    <div class="wbars" id="elCalBars"></div>
+  </div>
+  <div class="card">
+    <p class="ct">Hydration Timeline</p>
+    <div class="hyd-canvas-wrap"><canvas id="elHydCvs" width="360" height="150"></canvas></div>
+  </div>
+</div>
+</div>
 
-<div class="modal" id="foodModal"><div class="modal-content"><h3>Add Food</h3><input type="text" id="foodName" placeholder="Food name"><input type="number" id="foodCalories" placeholder="Calories"><div class="modal-buttons"><button class="btn-modal btn-cancel" onclick="closeFoodModal()">Cancel</button><button class="btn-modal btn-submit" onclick="addFood()">Add</button></div></div></div>
-<div class="modal" id="hydrationModal"><div class="modal-content"><h3 id="hydrationModalTitle">Add Water</h3><input type="number" id="hydrationOz" placeholder="Ounces (oz)"><div class="modal-buttons"><button class="btn-modal btn-cancel" onclick="closeHydrationModal()">Cancel</button><button class="btn-modal btn-submit" onclick="addHydration()">Add</button></div></div></div>
-<div class="modal" id="goalModal"><div class="modal-content"><h3 id="goalModalTitle">Create Weight Loss Goal</h3><input type="number" id="currentWeight" placeholder="Current weight (lbs)"><input type="number" id="targetWeight" placeholder="Target weight (lbs)"><input type="number" id="goalDays" placeholder="Days to achieve"><div class="modal-buttons"><button class="btn-modal btn-cancel" onclick="closeGoalModal()">Cancel</button><button class="btn-modal btn-submit" onclick="createGoal()">Create</button></div></div></div>
+<!-- ══════════ GOALS ══════════ -->
+<div class="screen" id="sGoals">
+<div class="container" id="cGoals">
+  <h2 style="font-size:22px;font-weight:600;margin-bottom:4px">Your Goals</h2>
+  <p style="font-size:13px;color:var(--text-gray);margin-bottom:18px">Track your progress</p>
+  <div id="elGoalsList"></div>
+  <button class="btn-pri" id="elGoalBtn" style="background:linear-gradient(135deg,#0EA5E9,#7C3AED);color:#fff" onclick="openGoalModal()">+ Create New Goal</button>
+</div>
+</div>
+
+<!-- ══════════ NAV ══════════ -->
+<div class="nav">
+  <button class="nb on" id="nb0" onclick="go('dash')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span>Dashboard</span></button>
+  <button class="nb" id="nb1" onclick="go('workout')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg><span>Workout</span></button>
+  <div class="nav-ai" id="elAI" onclick="aiTap()"><div class="ai-inner" id="elAIInner"><span class="txt">AI</span></div></div>
+  <button class="nb" id="nb3" onclick="go('nutrition')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg><span>Nutrition</span></button>
+  <button class="nb" id="nb4" onclick="go('goals')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg><span>Goals</span></button>
+</div>
+
+<!-- ══════════ MODALS ══════════ -->
+<div class="modal" id="mFood"><div class="ms"><h3>Add Food</h3><input type="text" id="inFName" placeholder="Food name"><input type="number" id="inFCal" placeholder="Calories"><div class="m-btns"><button class="m-btn cancel" onclick="closeM('mFood')">Cancel</button><button class="m-btn ok" onclick="addFood()">Add</button></div></div></div>
+<div class="modal" id="mHyd"><div class="ms"><h3 id="elHydTitle">Add Water</h3><input type="number" id="inHOz" placeholder="Ounces (oz)"><div class="m-btns"><button class="m-btn cancel" onclick="closeM('mHyd')">Cancel</button><button class="m-btn ok" onclick="addHyd()">Add</button></div></div></div>
+<div class="modal" id="mGoal"><div class="ms"><h3 id="elGoalTitle">Weight Loss Goal</h3><input type="number" id="inGCur" placeholder="Current weight (lbs)"><input type="number" id="inGTgt" placeholder="Target weight (lbs)"><input type="number" id="inGDays" placeholder="Days to reach goal"><div class="m-btns"><button class="m-btn cancel" onclick="closeM('mGoal')">Cancel</button><button class="m-btn ok" onclick="saveGoal()">Save</button></div></div></div>
+
 <script>
-let STATE={user:null,workouts:[],foods:[],goals:[],hydration:[],selectedWorkoutType:'Walking',pedometerSteps:0,todayWorkoutMinutes:0};let currentHydration='water',workoutTimer=null,workoutSeconds=0,workoutPaused=!1,workoutData={distance:0,steps:0,calories:0,positions:[]},lastPosition=null,mapUpdateInterval=null,recognition=null,isRecording=!1,isWorkoutActive=!1,pedometerInterval=null;const AI_RESPONSES={"lose weight":"To lose weight sustainably, aim for a 500-calorie daily deficit through diet and exercise. Focus on whole foods, stay hydrated, and be patient—1-2 lbs per week is healthy progress!","build muscle":"Building muscle requires progressive overload and protein! Aim for 0.8-1g protein per lb bodyweight, lift heavy 3-4x/week, and prioritize compound movements like squats and deadlifts.","protein":"Great question! Most people need 0.8-1g of protein per pound of bodyweight. Good sources include chicken, fish, eggs, Greek yogurt, and legumes. Spread intake throughout the day for best results.","water":"Hydration is crucial! Aim for 8-10 glasses (64-80oz) daily, more if you're active. Proper hydration boosts energy, aids recovery, and supports fat loss. Track it in the Nutrition tab!","workout":"Consistency beats intensity! Start with 3-4 workouts per week mixing cardio and strength training. Listen to your body, progress gradually, and remember—rest days are when you grow stronger.","cardio":"Cardio is excellent for heart health and calorie burning! Mix steady-state (30-45 min) with HIIT (20 min) 3-4x weekly. Walking, running, cycling—pick what you enjoy and you'll stick with it!","rest":"Rest days are essential—they're when your muscles repair and grow! Take 1-2 full rest days weekly, or do active recovery like yoga or walking. Sleep 7-9 hours for optimal recovery.","motivated":"Motivation fluctuates—build discipline instead! Set small daily goals, track progress visibly, find an accountability partner, and celebrate wins. Remember why you started on tough days!","diet":"Focus on whole foods: lean proteins, complex carbs, healthy fats, and lots of veggies. An 80/20 approach works—eat nutrient-dense 80% of the time, enjoy treats 20%. Sustainability is key!","sleep":"Sleep is your secret weapon! Aim for 7-9 hours. It regulates hunger hormones, aids muscle recovery, and improves workout performance. Create a routine: dark room, cool temp, no screens 1hr before bed.","beginner":"Welcome! Start simple: 30-min walks daily, basic bodyweight exercises (squats, push-ups), and focus on forming the habit. Progress gradually, be patient with yourself, and enjoy the journey!","abs":"Abs are made in the kitchen! Core exercises help, but visible abs require low body fat (10-15% men, 18-22% women). Do planks, dead bugs, and anti-rotation work 2-3x weekly.","stretch":"Stretching improves flexibility and prevents injury! Do dynamic stretches before workouts (leg swings, arm circles) and static stretches after (hold 30 sec). Yoga is excellent too!","strength":"Strength training is vital at any age! It builds muscle, strengthens bones, boosts metabolism, and improves quality of life. Start with 2-3 sessions weekly using compound movements.","running":"Running burns calories and builds endurance! Start with run-walk intervals, increase gradually (10% weekly max), invest in proper shoes, and always warm up. Track your progress here!","cycling":"Cycling is low-impact and great for cardio! It's joint-friendly, burns serious calories, and builds leg strength. Mix steady rides with interval training for best results.","walking":"Walking is underrated! It's low-impact, reduces stress, aids digestion, and adds up—10,000 steps = ~5 miles and 400+ calories. Make it enjoyable with music or podcasts!","hiking":"Hiking combines cardio with nature therapy! It burns more calories than flat walking (thanks to elevation), builds leg strength, and boosts mental health. Start easy and progress gradually.","calories":"Calories matter for weight goals! For fat loss, aim for a 300-500 deficit. For muscle gain, a 200-300 surplus. Use the app to track intake and burned calories accurately.","carbs":"Carbs aren't the enemy! They fuel workouts and brain function. Choose complex carbs (oats, rice, potatoes) over refined. Timing matters—have them around workouts for energy!","fat":"Healthy fats are essential! They support hormones, vitamin absorption, and satiety. Include avocados, nuts, olive oil, and fatty fish. Aim for 20-35% of total calories from fat.","meal prep":"Meal prep saves time and keeps you on track! Dedicate Sunday to cook proteins, chop veggies, and portion meals. Store in glass containers. You'll thank yourself all week!","supplements":"Supplements supplement—they don't replace real food! Protein powder, creatine, and vitamin D are beneficial for most. Everything else depends on individual needs. Food first, always!","creatine":"Creatine is one of the most researched supplements! It improves strength, power, and muscle growth. Take 5g daily, any time. It's safe, effective, and works for most people.","injury":"Sorry to hear that! Rest is crucial—don't push through pain. Ice for swelling, gentle movement when able, and see a professional if it persists. Prevention beats recovery!","sore":"Muscle soreness (DOMS) is normal 24-48hrs after workouts! It means you challenged yourself. Active recovery (walking, light cardio), stretching, and protein help. It decreases as you adapt.","plateau":"Plateaus happen to everyone! Mix things up: change exercises, increase intensity, adjust calories, or take a deload week. Progress isn't always linear—trust the process!","recovery":"Recovery is where gains happen! Prioritize sleep, nutrition, and active recovery. Consider massage, foam rolling, or stretching. Listen to your body—sometimes rest is the best workout.","consistency":"Consistency is everything! Small daily actions compound into massive results. Show up even when motivation is low. Build systems, not reliance on willpower. You've got this!","motivation":"Motivation comes and goes—discipline stays! Create habits, set systems, track progress, and remember your 'why'. Visual progress (photos, measurements) helps when motivation dips.","stress":"Exercise is an excellent stress reliever! It releases endorphins, improves sleep, and provides mental clarity. Try yoga, walking in nature, or any movement you enjoy. Self-care isn't selfish!","gym":"Gym intimidation is real but temporary! Everyone started somewhere. Focus on your workout, use lighter weights to learn form, and remember—people are focused on themselves, not judging you!","home":"Home workouts are effective! You need minimal equipment—bodyweight exercises, resistance bands, and dumbbells work great. YouTube has tons of free routines. Consistency matters more than location!","equipment":"Start simple! For home: resistance bands ($15), adjustable dumbbells ($50), and a mat ($20) cover most bases. At gym: barbells, dumbbells, cable machines are most versatile.","track":"Tracking keeps you accountable! This app tracks workouts, nutrition, and goals. Also consider: progress photos (monthly), measurements (weekly), and how clothes fit. Data motivates!","progress":"Celebrate all progress! Scale weight fluctuates, so track: strength gains, endurance improvements, how clothes fit, energy levels, and consistency. Non-scale victories matter just as much!","age":"You can get fit at any age! Adjust intensity to your level, prioritize form, allow more recovery time, and focus on consistency. Strength training is especially important as we age!","woman":"Women benefit hugely from strength training! You won't get bulky (it's very hard to), but you'll get stronger, leaner, and healthier. Lift heavy, don't fear weights, and fuel properly!","form":"Form over ego, always! Bad form causes injury and limits progress. Start light, film yourself, or work with a trainer. Control the weight, full range of motion, no bouncing!","nutrition":"Nutrition is 70% of results! Focus on whole foods, adequate protein, lots of veggies, and staying hydrated. Small sustainable changes beat extreme diets every time.","hydration":"Hydration affects everything: energy, performance, recovery, and fat loss! Drink water throughout the day, more before/during/after workouts. Urine should be pale yellow.","flexibility":"Flexibility prevents injury and improves performance! Stretch after workouts when muscles are warm. Yoga 1-2x weekly helps. Don't bounce—hold stretches 30+ seconds.","core":"Core strength supports everything! It's more than abs—it includes back and obliques. Planks, dead bugs, pallof presses, and bird dogs are excellent. Train core 2-3x weekly.","hiit":"HIIT is time-efficient and effective! It burns calories, boosts metabolism, and improves cardiovascular fitness. Do 20-30 min sessions 2-3x weekly. Don't overdo it—recovery matters!","morning":"Morning workouts are great for consistency! They boost energy all day and ensure it gets done. Eat a light snack 30min before or train fasted if it feels okay.","evening":"Evening workouts work too! Use them to destress after work. Just finish 2-3hrs before bed so you can wind down. What matters is consistency, not timing!","food":"Think of food as fuel! Choose nutrient-dense options that support your goals. Enjoy treats in moderation. No foods are forbidden—it's about balance and overall patterns.","weight loss":"Sustainable weight loss = calorie deficit + patience! Aim for 1-2 lbs weekly through diet and exercise. Track intake, stay active, prioritize protein and sleep. Consistency wins!","muscle":"Building muscle takes time and dedication! Progressive overload (gradually increasing weight), adequate protein (0.8-1g per lb), and rest are key. Trust the process!","exercise":"Any movement is good movement! Find exercises you enjoy so you'll stick with it. Mix cardio and strength training for overall fitness. Start where you are, progress gradually!","how":"Great question! For anything fitness-related, start simple, learn proper form, be consistent, and progress gradually. This app tracks everything to help you succeed!","when":"The best time to workout is whenever you'll actually do it! Morning, lunch, or evening—consistency matters more than timing. Choose what fits your schedule and energy levels.","start":"Starting is the hardest part—congrats! Begin with small achievable goals, track your progress, be patient with yourself, and celebrate small wins. You're on the right path!"};const AI_FALLBACKS=["That's a great question! While I'm not sure about that specifically, I can help with workout tracking, nutrition planning, and fitness goals. What would you like to know?","I'm here to help with your fitness journey! Ask me about weight loss, muscle building, nutrition, workout tips, or how to use this app effectively.","Interesting! For specific medical or highly technical questions, consult a professional. But I can definitely help with general fitness, nutrition, and motivation! What's on your mind?","I'm your AI fitness coach focused on workouts, nutrition, and healthy habits! Try asking about exercise routines, meal planning, or staying motivated.","Great to chat! I specialize in fitness guidance, workout tracking, and nutrition tips. What aspect of your health journey can I help with today?"];function init(){loadState();STATE.user&&showDashboard();setTimeout(()=>{document.getElementById('splash').style.display='none'},2500);checkChromeAI();setupSpeechRecognition();startPedometer();'serviceWorker'in navigator&&navigator.serviceWorker.register('sw.js').catch(e=>console.log('SW registration failed'))}function startPedometer(){if(window.DeviceMotionEvent){let lastTime=Date.now(),stepThreshold=1.2,lastY=0;window.addEventListener('devicemotion',event=>{if(event.accelerationIncludingGravity){const now=Date.now();if(now-lastTime>200){const y=event.accelerationIncludingGravity.y||0,delta=Math.abs(y-lastY);delta>stepThreshold&&!isWorkoutActive&&(STATE.pedometerSteps++,saveState(),updateDashboard());lastY=y;lastTime=now}}})}pedometerInterval=setInterval(()=>{isWorkoutActive||(STATE.pedometerSteps+=Math.floor(Math.random()*5),saveState(),updateDashboard())},1e4)}async function checkChromeAI(){try{window.ai&&window.ai.languageModel&&console.log('Chrome AI available')}catch(e){console.log('Chrome AI not available, using keyword matching')}}function setupSpeechRecognition(){'webkitSpeechRecognition'in window&&(recognition=new webkitSpeechRecognition,recognition.continuous=!1,recognition.interimResults=!1,recognition.onresult=event=>{const transcript=event.results[0][0].transcript;document.getElementById('chatInput').value=transcript;sendMessage()},recognition.onend=()=>{isRecording=!1;updateAIButton()})}function showSignup(){document.getElementById('loginScreen').classList.remove('active');document.getElementById('signupScreen').classList.add('active')}function showLogin(){document.getElementById('signupScreen').classList.remove('active');document.getElementById('loginScreen').classList.add('active')}function signup(){const name=document.getElementById('signupName').value.trim(),email=document.getElementById('signupEmail').value.trim(),password=document.getElementById('signupPassword').value;if(!name||!email||!password)return void alert('Please fill in all fields');const userData={name:name,email:email,password:password};localStorage.setItem('u_'+email,JSON.stringify(userData));STATE.user={name:name,email:email};saveState();showDashboard()}function login(){const email=document.getElementById('loginEmail').value.trim(),password=document.getElementById('loginPassword').value;if(!email||!password)return void alert('Please fill in all fields');const stored=localStorage.getItem('u_'+email);if(!stored)return void alert('Account not found. Please sign up.');const userData=JSON.parse(stored);if(userData.password!==password)return void alert('Incorrect password');STATE.user={name:userData.name,email:userData.email};saveState();showDashboard()}function showDashboard(){document.getElementById('loginScreen').classList.remove('active');document.getElementById('signupScreen').classList.remove('active');navigate('dashboard');updateDashboard()}function navigate(screen){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));let screenId,needsTracking=!1;switch(screen){case'dashboard':screenId='dashboardScreen';updateDashboard();needsTracking=isWorkoutActive;break;case'workout':if(isWorkoutActive){screenId='workoutScreen';needsTracking=!0}else{screenId='workoutSelectScreen';needsTracking=!1}break;case'chat':return void toggleAIChat();case'nutrition':screenId='nutritionScreen';updateNutrition();needsTracking=isWorkoutActive;break;case'goals':screenId='goalsScreen';updateGoals();needsTracking=isWorkoutActive}document.getElementById(screenId).classList.add('active');const containers=document.querySelectorAll('.container');containers.forEach(c=>{needsTracking?c.classList.add('with-tracking'):c.classList.remove('with-tracking')});const navItems=document.querySelectorAll('.nav-item:not(.ai-button)'),index=['dashboard','workout','','nutrition','goals'].indexOf(screen);-1!==index&&navItems[index].classList.add('active')}function updateDashboard(){if(!STATE.user)return;const firstName=STATE.user.name.split(' ')[0];document.getElementById('welcomeName').textContent=`Welcome, ${firstName}!`;const workoutSteps=STATE.workouts.reduce((sum,w)=>sum+w.steps,0),totalSteps=STATE.pedometerSteps+workoutSteps,totalCalories=STATE.workouts.reduce((sum,w)=>sum+w.calories,0),totalMinutes=STATE.todayWorkoutMinutes+Math.floor(workoutSeconds/60),totalMiles=.621371*STATE.workouts.reduce((sum,w)=>sum+w.distance,0),workoutCount=STATE.workouts.length;document.getElementById('mainStepsCount').textContent=totalSteps.toLocaleString();document.getElementById('legendSteps').textContent=`${totalSteps.toLocaleString()}/10K`;document.getElementById('legendCals').textContent=`${totalCalories}/500`;document.getElementById('legendTime').textContent=`${totalMinutes}m`;const stepsProgress=Math.min(totalSteps/1e4*371,371);document.getElementById('stepsCircle').style.strokeDashoffset=371-stepsProgress;const calsProgress=Math.min(totalCalories/500*547,547);document.getElementById('calsCircle').style.strokeDashoffset=547-calsProgress;const timeProgress=Math.min(totalMinutes/60*722,722);document.getElementById('timeCircle').style.strokeDashoffset=722-timeProgress;document.getElementById('milesCount').textContent=totalMiles.toFixed(1);document.getElementById('workoutCount').textContent=workoutCount;renderWeeklyChart();const goal=STATE.goals.length>0?STATE.goals[0].dailyCalDeficit||2000:2000,eaten=STATE.foods.reduce((sum,f)=>sum+f.calories,0),burned=totalCalories,remaining=goal-eaten+burned;document.getElementById('caloriesRemaining').textContent=remaining;document.getElementById('goalCals').textContent=goal;document.getElementById('eatenCals').textContent=eaten;document.getElementById('burnedCals').textContent=burned;if(STATE.goals.length>0){document.getElementById('activeGoalsCard').style.display='block';let html='';STATE.goals.forEach(goal=>{const daysElapsed=Math.floor((Date.now()-goal.created)/864e5),daysLeft=Math.max(0,goal.days-daysElapsed),progress=Math.min(daysElapsed/goal.days*100,100);html+=`<div style="background:linear-gradient(135deg,rgba(236,72,153,.08) 0%,rgba(219,39,119,.08) 100%);padding:14px;border-radius:14px;margin-bottom:10px"><h4 style="font-size:14px;font-weight:600;margin-bottom:8px;color:var(--accent)">${goal.title}</h4><div style="background:rgba(236,72,153,.15);height:6px;border-radius:3px;overflow:hidden"><div style="background:var(--accent);height:100%;width:${progress}%"></div></div><p style="font-size:11px;color:var(--text-gray);margin-top:6px">${daysLeft} days left of ${goal.days}</p></div>`});document.getElementById('activeGoalsList').innerHTML=html}}function renderWeeklyChart(){const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],data=[45,60,30,80,55,70,65];let html='';data.forEach((value,i)=>{const height=value/100*160;html+=`<div class="bar" style="height:${height}px"><div class="bar-label">${days[i]}</div></div>`});document.getElementById('weeklyChart').innerHTML=html}function selectWorkout(type){STATE.selectedWorkoutType=type;document.querySelectorAll('.workout-type').forEach(w=>w.classList.remove('selected'));event.target.closest('.workout-type').classList.add('selected')}function startWorkout(){if(!STATE.selectedWorkoutType)return void alert('Please select a workout type');isWorkoutActive=!0;document.getElementById('workoutSelectScreen').classList.remove('active');document.getElementById('workoutScreen').classList.add('active');document.getElementById('workoutType').textContent=STATE.selectedWorkoutType;workoutSeconds=0;workoutPaused=!1;workoutData={distance:0,steps:0,calories:0,positions:[]};lastPosition=null;startGPS();startTimer();document.getElementById('trackingIndicator').classList.add('active');document.getElementById('workoutContainer').classList.add('with-tracking')}function startGPS(){navigator.geolocation&&navigator.geolocation.getCurrentPosition(position=>{const lat=position.coords.latitude,lon=position.coords.longitude;lastPosition={lat:lat,lon:lon};updateMap(lat,lon);mapUpdateInterval=setInterval(trackPosition,2e3)},error=>{console.error('GPS error:',error);updateMap(37.7749,-122.4194)})}function updateMap(lat,lon){document.getElementById('mapFrame').src=`https://www.openstreetmap.org/export/embed.html?bbox=${lon-.01},${lat-.01},${lon+.01},${lat+.01}&layer=mapnik&marker=${lat},${lon}`}function trackPosition(){workoutPaused||navigator.geolocation.getCurrentPosition(position=>{const lat=position.coords.latitude,lon=position.coords.longitude;if(lastPosition){const distance=calculateDistance(lastPosition.lat,lastPosition.lon,lat,lon);workoutData.distance+=distance;const activityRates={Walking:{stepsPerKm:1315,calsPerKm:65},Running:{stepsPerKm:1570,calsPerKm:100},Cycling:{stepsPerKm:0,calsPerKm:50},Hiking:{stepsPerKm:1400,calsPerKm:80}},rates=activityRates[STATE.selectedWorkoutType];workoutData.steps+=Math.round(distance*rates.stepsPerKm);workoutData.calories+=Math.round(distance*rates.calsPerKm)}lastPosition={lat:lat,lon:lon};workoutData.positions.push({lat:lat,lon:lon,time:Date.now()});updateMap(lat,lon);updateWorkoutDisplay()})}function calculateDistance(lat1,lon1,lat2,lon2){const R=6371,dLat=(lat2-lat1)*Math.PI/180,dLon=(lon2-lon1)*Math.PI/180,a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);return 6371*(2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)))}function startTimer(){workoutTimer=setInterval(()=>{workoutPaused||(workoutSeconds++,updateTimerDisplay())},1e3)}function updateTimerDisplay(){const hours=Math.floor(workoutSeconds/3600),minutes=Math.floor(workoutSeconds%3600/60),seconds=workoutSeconds%60,display=`${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;document.getElementById('workoutTimer').textContent=display}function updateWorkoutDisplay(){document.getElementById('workoutDistance').textContent=workoutData.distance.toFixed(1);document.getElementById('workoutSteps').textContent=workoutData.steps.toLocaleString();document.getElementById('workoutCalories').textContent=workoutData.calories}function togglePause(){workoutPaused=!workoutPaused;const btn=document.getElementById('pauseBtn');workoutPaused?(btn.textContent='Resume',btn.classList.remove('btn-pause'),btn.classList.add('btn-start')):(btn.textContent='Pause',btn.classList.remove('btn-start'),btn.classList.add('btn-pause'))}function stopWorkout(){confirm('Are you sure you want to stop this workout?')&&(isWorkoutActive=!1,clearInterval(workoutTimer),clearInterval(mapUpdateInterval),STATE.todayWorkoutMinutes+=Math.floor(workoutSeconds/60),STATE.workouts.push({type:STATE.selectedWorkoutType,date:Date.now(),distance:workoutData.distance,steps:workoutData.steps,calories:workoutData.calories,duration:workoutSeconds}),saveState(),document.getElementById('trackingIndicator').classList.remove('active'),navigate('dashboard'))}function toggleAIChat(){const chatScreen=document.getElementById('chatScreen'),aiBtn=document.getElementById('aiNavBtn');if(chatScreen.classList.contains('active')){chatScreen.classList.remove('active');navigate('dashboard')}else{document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));chatScreen.classList.add('active');0===document.getElementById('chatMessages').children.length&&addBotMessage("Hi! I'm your AI health coach. Ask me anything about fitness, nutrition, or weight loss!");document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'))}}function updateAIButton(){const btn=document.getElementById('aiNavBtn'),content=document.getElementById('aiButtonContent');if(isRecording){btn.classList.add('recording');content.innerHTML='<svg width="32" height="32" fill="white" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12"/></svg>'}else if(document.getElementById('chatScreen').classList.contains('active')){btn.classList.remove('recording');content.innerHTML='<svg width="32" height="32" fill="white" viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>'}else{btn.classList.remove('recording');content.textContent='AI'}}async function sendMessage(){const input=document.getElementById('chatInput'),message=input.value.trim();if(!message)return;addUserMessage(message);input.value='';let response=await getChromeAIResponse(message);response||(response=getKeywordResponse(message));addBotMessage(response);'speechSynthesis'in window&&speechSynthesis.speak(new SpeechSynthesisUtterance(response))}async function getChromeAIResponse(message){try{if(window.ai&&window.ai.languageModel){const session=await window.ai.languageModel.create({systemPrompt:"You are a helpful fitness and nutrition coach. Provide concise, practical advice in 2-3 sentences. Focus on health, exercise, nutrition, and motivation."}),response=await session.prompt(message);session.destroy();return response}}catch(e){console.log('Chrome AI failed, using keyword matching')}return null}function getKeywordResponse(message){const lower=message.toLowerCase();for(const[keyword,response]of Object.entries(AI_RESPONSES))if(lower.includes(keyword))return response;return AI_FALLBACKS[Math.floor(Math.random()*AI_FALLBACKS.length)]}function addUserMessage(text){const container=document.getElementById('chatMessages'),div=document.createElement('div');div.className='message user';div.innerHTML=`<div class="message-bubble">${text}</div>`;container.appendChild(div);container.scrollTop=container.scrollHeight}function addBotMessage(text){const container=document.getElementById('chatMessages'),div=document.createElement('div');div.className='message bot';div.innerHTML=`<div class="message-bubble">${text}</div>`;container.appendChild(div);container.scrollTop=container.scrollHeight}aiNavBtn.onclick=function(){if(document.getElementById('chatScreen').classList.contains('active')){if(!recognition)return void alert('Voice input not supported in your browser');isRecording?(recognition.stop(),isRecording=!1):(recognition.start(),isRecording=!0);updateAIButton()}else toggleAIChat()};function updateNutrition(){const goal=STATE.goals.length>0?STATE.goals[0].dailyCalDeficit||2000:2000,eaten=STATE.foods.reduce((sum,f)=>sum+f.calories,0);document.getElementById('calorieConsumed').textContent=eaten;document.getElementById('calorieGoalText').textContent=`/ ${goal} cal`;const percentage=eaten/3500*100,displayHeight=Math.min(percentage,100);document.getElementById('calorieBarFill').style.height=`${displayHeight}%`;const barFill=document.getElementById('calorieBarFill');barFill.className='calorie-bar-fill';eaten<2e3?barFill.classList.add('green'):eaten<3500?barFill.classList.add('yellow'):barFill.classList.add('red');const waterToday=STATE.hydration.filter(h=>'water'===h.type&&isToday(h.time)).reduce((sum,h)=>sum+h.oz,0),coffeeToday=STATE.hydration.filter(h=>'coffee'===h.type&&isToday(h.time)).reduce((sum,h)=>sum+h.oz,0);document.getElementById('waterCount').textContent=waterToday;document.getElementById('coffeeCount').textContent=coffeeToday;renderFoodList();renderCaloriesChart();renderHydrationChart()}function isToday(timestamp){return new Date().setHours(0,0,0,0)===new Date(timestamp).setHours(0,0,0,0)}function renderFoodList(){const todayFoods=STATE.foods.filter(f=>isToday(f.time));let html='';0===todayFoods.length?html='<p style="text-align:center;color:var(--text-gray);font-size:13px">No meals logged today</p>':todayFoods.forEach(food=>{const time=new Date(food.time).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});html+=`<div class="food-item"><div><h4>${food.name}</h4><p>${time}</p></div><span>${food.calories} cal</span></div>`});document.getElementById('foodList').innerHTML=html}function renderCaloriesChart(){const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],data=[1800,2100,1950,2200,1850,2050,1900];let html='';data.forEach((value,i)=>{const height=value/2500*160;html+=`<div class="bar" style="height:${height}px;background:linear-gradient(180deg,#14B8A6 0%,#0EA5E9 100%)"><div class="bar-label">${days[i]}</div></div>`});document.getElementById('caloriesChart').innerHTML=html}function renderHydrationChart(){const canvas=document.getElementById('hydrationChart'),ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);const waterData=[0,0,0,0,0,0,8,16,8,0,12,8,16,0,8,12,8,16,0,0,0,0,0,0],coffeeData=[0,0,0,0,0,0,0,12,8,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0],width=canvas.width,height=canvas.height,maxOz=Math.max(...waterData,...coffeeData,20);ctx.strokeStyle='#0EA5E9';ctx.lineWidth=2;ctx.beginPath();waterData.forEach((oz,i)=>{const x=i/23*(width-40)+20,y=height-30-oz/maxOz*(height-50);0===i?ctx.moveTo(x,y):ctx.lineTo(x,y)});ctx.stroke();ctx.strokeStyle='#92400E';ctx.lineWidth=2;ctx.beginPath();coffeeData.forEach((oz,i)=>{const x=i/23*(width-40)+20,y=height-30-oz/maxOz*(height-50);0===i?ctx.moveTo(x,y):ctx.lineTo(x,y)});ctx.stroke();ctx.strokeStyle='#E2E8F0';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(20,height-30);ctx.lineTo(width-20,height-30);ctx.stroke();ctx.fillStyle='#64748B';ctx.font='11px Poppins';ctx.fillText('6AM',75,height-10);ctx.fillText('12PM',width/2-18,height-10);ctx.fillText('6PM',width-75,height-10)}function showFoodModal(){document.getElementById('foodModal').classList.add('active')}function closeFoodModal(){document.getElementById('foodModal').classList.remove('active');document.getElementById('foodName').value='';document.getElementById('foodCalories').value=''}function addFood(){const name=document.getElementById('foodName').value.trim(),calories=parseInt(document.getElementById('foodCalories').value);if(!name||!calories)return void alert('Please fill in all fields');STATE.foods.push({name:name,calories:calories,time:Date.now()});saveState();closeFoodModal();updateNutrition()}function showHydrationModal(type){currentHydration=type;document.getElementById('hydrationModalTitle').textContent='water'===type?'Add Water':'Add Coffee';document.getElementById('hydrationModal').classList.add('active')}function closeHydrationModal(){document.getElementById('hydrationModal').classList.remove('active');document.getElementById('hydrationOz').value=''}function addHydration(){const oz=parseInt(document.getElementById('hydrationOz').value);if(!oz)return void alert('Please enter ounces');const now=new Date;STATE.hydration.push({type:currentHydration,oz:oz,time:Date.now(),hour:now.getHours()});saveState();closeHydrationModal();updateNutrition()}function updateGoals(){const goalBtn=document.getElementById('goalActionBtn');let html='';if(0===STATE.goals.length){goalBtn.textContent='+ Create New Goal';goalBtn.onclick=showGoalModal;html='<div class="empty-state"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><h3>No Goals Yet</h3><p>Create your first goal to start tracking your progress!</p></div>'}else{goalBtn.textContent='Adjust Your Goal';goalBtn.onclick=showGoalModal;STATE.goals.forEach((goal,idx)=>{const daysElapsed=Math.floor((Date.now()-goal.created)/864e5),daysLeft=Math.max(0,goal.days-daysElapsed),progress=Math.min(daysElapsed/goal.days*100,100),weightLoss=goal.current-goal.target,motivations=["You're doing amazing! Keep it up! 💪","Every day is progress. Stay strong! 🔥","Consistency is key. You've got this! ⭐","Believe in yourself. Results are coming! 🎯","Small steps lead to big changes! 🚀"],motivation=motivations[Math.floor(Math.random()*motivations.length)],cardClasses=['pink','white','blue','teal','white'];html+=`<div class="goal-stat-card ${cardClasses[0]}"><h3>Weight Loss Goal</h3><div class="big-number">${weightLoss.toFixed(1)}<span style="font-size:20px"> lbs</span></div><p class="label">${goal.current} → ${goal.target} lbs</p></div>`;html+=`<div class="goal-stat-card ${cardClasses[1]}"><h3>Days Remaining</h3><div class="big-number">${daysLeft}</div><p class="label">of ${goal.days} total days</p></div>`;html+=`<div class="goal-stat-card ${cardClasses[2]}"><h3>Progress</h3><div class="big-number">${progress.toFixed(0)}<span style="font-size:20px">%</span></div><p class="label">${motivation}</p><div class="progress-bar-container"><div class="progress-bar" style="width:${progress}%"></div></div></div>`;html+=`<div class="goal-stat-card ${cardClasses[3]}"><h3>Daily Calorie Target</h3><div class="big-number" style="font-size:clamp(36px,10vw,44px)">${goal.dailyCalDeficit}</div><p class="label">calories per day</p></div>`;html+=`<div class="goal-stat-card ${cardClasses[4]}"><h3>Weekly Progress</h3><div class="week-tracker">${renderWeekTracker()}</div></div>`})}document.getElementById('goalsList').innerHTML=html}function renderWeekTracker(){const days=['M','T','W','T','F','S','S'],progress=[80,95,70,100,85,60,90];let html='';return days.forEach((day,i)=>{html+=`<div class="day-bar"><div class="day-fill" style="height:${progress[i]}%"></div><div class="day-label">${day}</div></div>`}),html}function showGoalModal(){document.getElementById('goalModalTitle').textContent=STATE.goals.length>0?'Adjust Weight Loss Goal':'Create Weight Loss Goal';if(STATE.goals.length>0){const goal=STATE.goals[0];document.getElementById('currentWeight').value=goal.current;document.getElementById('targetWeight').value=goal.target;document.getElementById('goalDays').value=goal.days}document.getElementById('goalModal').classList.add('active')}function closeGoalModal(){document.getElementById('goalModal').classList.remove('active');document.getElementById('currentWeight').value='';document.getElementById('targetWeight').value='';document.getElementById('goalDays').value=''}function createGoal(){const current=parseFloat(document.getElementById('currentWeight').value),target=parseFloat(document.getElementById('targetWeight').value),days=parseInt(document.getElementById('goalDays').value);if(!current||!target||!days)return void alert('Please fill in all fields');if(target>=current)return void alert('Target weight must be less than current weight');const weightLoss=current-target,lbsPerWeek=weightLoss/days*7,dailyCalDeficit=Math.round(3500*lbsPerWeek/7);STATE.goals.length>0?STATE.goals[0]={title:`Lose ${weightLoss.toFixed(1)} lbs`,current:current,target:target,days:days,dailyCalDeficit:dailyCalDeficit,created:Date.now()}:STATE.goals.push({title:`Lose ${weightLoss.toFixed(1)} lbs`,current:current,target:target,days:days,dailyCalDeficit:dailyCalDeficit,created:Date.now()});saveState();closeGoalModal();updateGoals()}function saveState(){localStorage.setItem('hm_data',JSON.stringify(STATE))}function loadState(){const saved=localStorage.getItem('hm_data');saved&&(STATE=JSON.parse(saved))}window.onload=init;
+// ════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════
+let S={user:null,workouts:[],foods:[],goals:[],hydration:[],pedSteps:0,wkMin:0};
+let selType='Walking';
+let wActive=false,wPaused=false,wSec=0,wTimerId=null,wData={dist:0,steps:0,cals:0,speed:0},lastPos=null,mapInt=null;
+let chatOpen=false,isRec=false,recog=null,curHyd='water';
+// voice pre-load flag
+let voicesReady=false;
+
+// ════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════
+window.onload=function(){
+  load();
+  setTimeout(function(){document.getElementById('splash').classList.add('gone')},2000);
+  if(S.user)showApp();
+  initSpeech();
+  startPed();
+  // pre-load voices list immediately
+  if('speechSynthesis'in window){
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged=function(){voicesReady=true};
+  }
+  if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(function(){});
+};
+
+// ════════════════════════════════════════════════
+// PERSIST
+// ════════════════════════════════════════════════
+function save(){localStorage.setItem('hm',JSON.stringify(S))}
+function load(){try{var d=localStorage.getItem('hm');if(d)S=JSON.parse(d)}catch(e){}}
+
+// ════════════════════════════════════════════════
+// AUTH
+// ════════════════════════════════════════════════
+function switchAuth(which){
+  document.getElementById('authLogin').classList.toggle('active',which==='login');
+  document.getElementById('authSignup').classList.toggle('active',which==='signup');
+}
+function doSignup(){
+  var n=document.getElementById('inSignName').value.trim(),e=document.getElementById('inSignEmail').value.trim(),p=document.getElementById('inSignPw').value;
+  if(!n||!e||!p)return alert('Please fill all fields');
+  localStorage.setItem('u_'+e,JSON.stringify({name:n,email:e,password:p}));
+  S.user={name:n,email:e};save();showApp();
+}
+function doLogin(){
+  var e=document.getElementById('inLoginEmail').value.trim(),p=document.getElementById('inLoginPw').value;
+  if(!e||!p)return alert('Please fill all fields');
+  var raw=localStorage.getItem('u_'+e);
+  if(!raw)return alert('Account not found');
+  var u=JSON.parse(raw);
+  if(u.password!==p)return alert('Wrong password');
+  S.user={name:u.name,email:u.email};save();showApp();
+}
+function showApp(){
+  document.getElementById('authLogin').classList.remove('active');
+  document.getElementById('authSignup').classList.remove('active');
+  go('dash');
+}
+
+// ════════════════════════════════════════════════
+// NAVIGATION
+// ════════════════════════════════════════════════
+function go(which){
+  // If leaving chat, reset AI icon
+  if(chatOpen&&which!=='chat'){chatOpen=false;setAI('ai')}
+  // hide all
+  ['sDash','sWkSel','sWk','sChat','sNut','sGoals'].forEach(function(id){document.getElementById(id).classList.remove('active')});
+  ['nb0','nb1','nb3','nb4'].forEach(function(id){document.getElementById(id).classList.remove('active')});
+
+  var trackH=wActive?46:0;// tracking bar height
+
+  if(which==='dash'){
+    document.getElementById('sDash').classList.add('active');
+    document.getElementById('nb0').classList.add('active');
+    document.getElementById('cDash').style.paddingTop=(trackH+16)+'px';
+    refreshDash();
+  }
+  else if(which==='workout'){
+    document.getElementById('nb1').classList.add('active');
+    if(wActive){
+      document.getElementById('sWk').classList.add('active');
+      // map needs extra space below tracking bar
+      document.getElementById('elMapWrap').style.marginTop=(trackH+12)+'px';
+    } else {
+      document.getElementById('sWkSel').classList.add('active');
+      document.getElementById('cWkSel').style.paddingTop=(trackH+16)+'px';
+    }
+  }
+  else if(which==='nutrition'){
+    document.getElementById('sNut').classList.add('active');
+    document.getElementById('nb3').classList.add('active');
+    document.getElementById('cNut').style.paddingTop=(trackH+16)+'px';
+    refreshNutrition();
+  }
+  else if(which==='goals'){
+    document.getElementById('sGoals').classList.add('active');
+    document.getElementById('nb4').classList.add('active');
+    document.getElementById('cGoals').style.paddingTop=(trackH+16)+'px';
+    refreshGoals();
+  }
+}
+
+// ════════════════════════════════════════════════
+// AI BUTTON & SPEECH
+// ════════════════════════════════════════════════
+function aiTap(){
+  if(!chatOpen){
+    // Open chat
+    chatOpen=true;
+    ['sDash','sWkSel','sWk','sNut','sGoals'].forEach(function(id){document.getElementById(id).classList.remove('active')});
+    ['nb0','nb1','nb3','nb4'].forEach(function(id){document.getElementById(id).classList.remove('active')});
+    document.getElementById('sChat').classList.add('active');
+    if(!document.getElementById('elChat').children.length){
+      appendMsg('bot',"Hi! I'm your AI health coach. Ask me anything about fitness, nutrition, or weight loss! 😊");
+    }
+    // ← KEY FIX: switch icon to mic immediately on entering chat
+    setAI('mic');
+  } else {
+    // Already in chat – toggle mic
+    if(!recog){alert('Voice input not supported in your browser');return}
+    if(isRec){
+      try{recog.stop()}catch(e){}
+      isRec=false;
+      setAI('mic');
+    } else {
+      try{
+        recog.start();
+        isRec=true;
+        setAI('stop');
+      } catch(e){
+        // If recognition is still running, abort and retry
+        try{recog.abort()}catch(e2){}
+        setTimeout(function(){
+          try{recog.start();isRec=true;setAI('stop')}catch(e3){alert('Could not start voice. Try again.')}
+        },300);
+      }
+    }
+  }
+}
+
+function setAI(mode){
+  var inner=document.getElementById('elAIInner');
+  var btn=document.getElementById('elAI');
+  btn.classList.toggle('rec',mode==='stop');
+  if(mode==='ai'){
+    inner.innerHTML='<span class="txt">AI</span>';
+  } else if(mode==='mic'){
+    inner.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>';
+  } else if(mode==='stop'){
+    inner.innerHTML='<svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>';
+  }
+}
+
+function initSpeech(){
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR)return;
+  recog=new SR();
+  recog.continuous=false;
+  recog.interimResults=false;
+  recog.lang='en-US';
+  recog.onresult=function(ev){
+    var txt=ev.results[0][0].transcript;
+    document.getElementById('elChatIn').value=txt;
+    isRec=false;
+    setAI('mic');
+    sendMsg();
+  };
+  recog.onerror=function(){isRec=false;setAI('mic')};
+  recog.onend=function(){isRec=false;setAI('mic')};
+}
+
+// ─── SPEECH SYNTHESIS (natural voice) ───────────
+function speak(text){
+  if(!('speechSynthesis'in window))return;
+  // Cancel any current speech
+  window.speechSynthesis.cancel();
+
+  function doSpeak(){
+    var u=new SpeechSynthesisUtterance(text);
+    var voices=window.speechSynthesis.getVoices();
+    // Prefer named natural voices, fall back to any English
+    var pick=null;
+    if(voices.length){
+      pick=voices.find(function(v){return v.name==='Samantha'})
+        ||voices.find(function(v){return v.name==='Alex'})
+        ||voices.find(function(v){return v.name.includes('Female')&&v.lang.startsWith('en')})
+        ||voices.find(function(v){return v.lang.startsWith('en')&&!v.name.toLowerCase().includes('google')})
+        ||voices.find(function(v){return v.lang.startsWith('en')})
+        ||voices[0];
+    }
+    if(pick)u.voice=pick;
+    u.rate=0.92;
+    u.pitch=1.02;
+    u.volume=0.92;
+    window.speechSynthesis.speak(u);
+  }
+
+  // Voices might not be loaded on very first call
+  var v=window.speechSynthesis.getVoices();
+  if(v.length>0){doSpeak()}
+  else{
+    // wait for voices to load, then speak
+    window.speechSynthesis.onvoiceschanged=function(){doSpeak()};
+    // Trigger loading
+    window.speechSynthesis.speak(new SpeechSynthesisUtterance(''));
+  }
+}
+
+// ════════════════════════════════════════════════
+// PEDOMETER
+// ════════════════════════════════════════════════
+function startPed(){
+  if(window.DeviceMotionEvent){
+    var lastY=0,lastT=0;
+    window.addEventListener('devicemotion',function(ev){
+      if(!ev.accelerationIncludingGravity)return;
+      var now=Date.now();
+      if(now-lastT<250)return;
+      var y=ev.accelerationIncludingGravity.y||0;
+      if(Math.abs(y-lastY)>1.4&&!wActive){S.pedSteps++;save();refreshDash()}
+      lastY=y;lastT=now;
+    });
+  }
+  // Gentle simulation so dashboard feels alive
+  setInterval(function(){
+    if(!wActive){S.pedSteps+=Math.floor(Math.random()*3)+1;save();refreshDash()}
+  },9000);
+}
+
+// ════════════════════════════════════════════════
+// DASHBOARD
+// ════════════════════════════════════════════════
+function refreshDash(){
+  if(!S.user)return;
+  document.getElementById('elWelcome').textContent='Welcome, '+S.user.name.split(' ')[0];
+
+  var wkSteps=S.workouts.reduce(function(a,w){return a+w.steps},0);
+  var totSteps=S.pedSteps+wkSteps+(wActive?wData.steps:0);
+  var totCals=S.workouts.reduce(function(a,w){return a+w.cals},0)+(wActive?wData.cals:0);
+  var totMin=S.wkMin+(wActive?Math.floor(wSec/60):0);
+  var totMiles=(S.workouts.reduce(function(a,w){return a+w.dist},0)+(wActive?wData.dist:0))*0.621371;
+
+  document.getElementById('elSteps').textContent=totSteps.toLocaleString();
+  document.getElementById('elLS').textContent=totSteps.toLocaleString();
+  document.getElementById('elLC').textContent=totCals;
+  document.getElementById('elLT').textContent=totMin;
+  document.getElementById('elMiles').textContent=totMiles.toFixed(1);
+  document.getElementById('elWkouts').textContent=S.workouts.length;
+
+  // Rings: inner=steps r=55 circ≈345.58, mid=cals r=41 circ≈257.61, outer=time r=60 circ≈376.99
+  setRing('elRS',345.58,totSteps/10000);
+  setRing('elRC',257.61,totCals/500);
+  setRing('elRT',376.99,totMin/60);
+
+  // Nutrition summary
+  var goal=S.goals.length?(S.goals[0].dailyCalDef||2000):2000;
+  var eaten=S.foods.filter(function(f){return isToday(f.t)}).reduce(function(a,f){return a+f.cal},0);
+  document.getElementById('elCalRem').textContent=goal-eaten+totCals;
+  document.getElementById('elDG').textContent=goal;
+  document.getElementById('elDE').textContent=eaten;
+  document.getElementById('elDB').textContent=totCals;
+
+  // Weekly activity bars
+  drawBars('elWeekBars',[45,60,30,80,55,70,65],100,'linear-gradient(180deg,#0EA5E9,#7C3AED)');
+
+  // Active goal mini card
+  if(S.goals.length){
+    var g=S.goals[0];
+    var elapsed=Math.floor((Date.now()-g.created)/86400000);
+    var pct=Math.min(elapsed/g.days*100,100);
+    document.getElementById('elDashGoal').style.display='block';
+    document.getElementById('elDashGoalIn').innerHTML=
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+
+        '<span style="font-size:14px;font-weight:500;color:var(--accent)">'+(g.cur-g.tgt).toFixed(1)+' lbs goal</span>'+
+        '<span style="font-size:11px;color:var(--text-gray)">'+Math.max(0,g.days-elapsed)+' days left</span>'+
+      '</div>'+
+      '<div style="background:#F0F2F5;border-radius:8px;height:7px;overflow:hidden"><div style="background:var(--accent);height:100%;width:'+pct+'%;border-radius:8px"></div></div>';
+  }
+}
+
+function setRing(id,circ,ratio){
+  ratio=Math.min(ratio,1);
+  document.getElementById(id).style.strokeDashoffset=circ*(1-ratio);
+}
+
+function drawBars(containerId,data,max,grad){
+  var days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  var html='';
+  data.forEach(function(v,i){
+    var pct=Math.max(v/max*100,8);
+    html+='<div class="wb-w"><div class="wb-b"><div class="wb-f" style="height:'+pct+'%;background:'+grad+'"></div></div><div class="wb-l">'+days[i]+'</div></div>';
+  });
+  document.getElementById(containerId).innerHTML=html;
+}
+
+// ════════════════════════════════════════════════
+// WORKOUT
+// ════════════════════════════════════════════════
+function pickType(el,type){
+  document.querySelectorAll('.wt').forEach(function(e){e.classList.remove('sel')});
+  el.classList.add('sel');
+  selType=type;
+}
+
+function beginWorkout(){
+  wActive=true;wPaused=false;wSec=0;
+  wData={dist:0,steps:0,cals:0,speed:0};
+  lastPos=null;
+  document.getElementById('trackBar').classList.add('on');
+  document.getElementById('sWkSel').classList.remove('active');
+  document.getElementById('sWk').classList.add('active');
+  document.getElementById('elWkType').textContent=selType;
+  // Set correct map margin (tracking bar is now visible = 46px)
+  document.getElementById('elMapWrap').style.marginTop='58px';
+  // Update the mid stat label for cycling vs others
+  syncMidLabel();
+  startGPS();
+  wTimerId=setInterval(function(){if(!wPaused){wSec++;updTimer()}},1000);
+}
+
+function syncMidLabel(){
+  if(selType==='Cycling'){
+    document.getElementById('elWMidL').textContent='MPH';
+    document.getElementById('elWMid').textContent=wData.speed.toFixed(1);
+  } else {
+    document.getElementById('elWMidL').textContent='Steps';
+    document.getElementById('elWMid').textContent=wData.steps.toLocaleString();
+  }
+}
+
+function startGPS(){
+  if(!navigator.geolocation)return;
+  navigator.geolocation.getCurrentPosition(function(p){
+    lastPos={lat:p.coords.latitude,lng:p.coords.longitude,t:Date.now()};
+    updMap(lastPos.lat,lastPos.lng);
+    mapInt=setInterval(trackPos,2500);
+  },function(){updMap(37.7749,-122.4194)});
+}
+
+function updMap(lat,lng){
+  document.getElementById('elMap').src='https://www.openstreetmap.org/export/embed.html?bbox='+(lng-.01)+','+(lat-.01)+','+(lng+.01)+','+(lat+.01)+'&layer=mapnik&marker='+lat+','+lng;
+}
+
+function trackPos(){
+  if(wPaused)return;
+  navigator.geolocation.getCurrentPosition(function(p){
+    var lat=p.coords.latitude,lng=p.coords.longitude,now=Date.now();
+    if(lastPos){
+      var dKm=haversine(lastPos.lat,lastPos.lng,lat,lng);
+      wData.dist+=dKm;
+      var rates={Walking:{spm:1315,cpm:65},Running:{spm:1570,cpm:100},Cycling:{spm:0,cpm:50},Hiking:{spm:1400,cpm:80}};
+      var r=rates[selType];
+      wData.steps+=Math.round(dKm*r.spm);
+      wData.cals+=Math.round(dKm*r.cpm);
+      // Speed in MPH: distance in km / time in hours * 0.621371
+      var dtHrs=(now-lastPos.t)/3600000;
+      if(dtHrs>0){wData.speed=Math.min((dKm/dtHrs)*0.621371,999)}
+    }
+    lastPos={lat:lat,lng:lng,t:now};
+    updMap(lat,lng);
+    updWorkoutUI();
+  });
+}
+
+function haversine(lat1,lng1,lat2,lng2){
+  var R=6371,dLat=(lat2-lat1)*Math.PI/180,dLng=(lng2-lng1)*Math.PI/180;
+  var a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)*Math.sin(dLng/2);
+  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+
+function updTimer(){
+  var h=Math.floor(wSec/3600),m=Math.floor((wSec%3600)/60),s=wSec%60;
+  document.getElementById('elTimer').textContent=pad2(h)+':'+pad2(m)+':'+pad2(s);
+}
+function pad2(n){return n<10?'0'+n:''+n}
+
+function updWorkoutUI(){
+  // Distance always in miles
+  document.getElementById('elWDist').textContent=(wData.dist*0.621371).toFixed(2);
+  document.getElementById('elWCal').textContent=wData.cals;
+  // Mid stat: speed for cycling, steps for others
+  syncMidLabel();
+}
+
+function togglePause(){
+  wPaused=!wPaused;
+  var btn=document.getElementById('elPauseBtn');
+  if(wPaused){btn.textContent='Resume';btn.className='ws-btn resume'}
+  else{btn.textContent='Pause';btn.className='ws-btn pause'}
+}
+
+function stopWorkout(){
+  if(!confirm('Stop this workout?'))return;
+  wActive=false;wPaused=false;
+  clearInterval(wTimerId);clearInterval(mapInt);
+  document.getElementById('trackBar').classList.remove('on');
+  S.wkMin+=Math.floor(wSec/60);
+  S.workouts.push({type:selType,dist:wData.dist,steps:wData.steps,cals:wData.cals,dur:wSec,date:Date.now()});
+  save();
+  go('dash');
+}
+
+// ════════════════════════════════════════════════
+// CHAT / AI RESPONSES
+// ════════════════════════════════════════════════
+var AI={
+"lose weight":"To lose weight sustainably, aim for a 500-calorie daily deficit. Focus on whole foods, stay hydrated, and be patient — 1 to 2 pounds a week is healthy and realistic.",
+"weight loss":"Sustainable weight loss comes from a consistent calorie deficit. Track what you eat, stay active, and prioritize protein and quality sleep every single day.",
+"build muscle":"Building muscle requires progressive overload and enough protein. Aim for about 0.8 to 1 gram per pound of bodyweight, lift heavy 3 to 4 times a week, and rest well.",
+"muscle":"Muscle growth takes time and consistency. Focus on compound movements like squats and deadlifts, eat enough protein, and get quality sleep every night.",
+"protein":"Most people do well with 0.8 to 1 gram of protein per pound of bodyweight. Great sources include chicken, fish, eggs, Greek yogurt, and lentils. Spread it throughout the day.",
+"water":"Hydration is everything. Aim for 8 to 10 glasses a day, and more when you exercise. It boosts energy, supports digestion, and helps with fat loss.",
+"hydration":"Stay hydrated all day long. It affects your energy, performance, recovery, and even your mood. Drink before, during, and after every workout.",
+"workout":"Consistency always wins over intensity. Start with 3 to 4 workouts a week, mix cardio with strength training, and always listen to your body.",
+"cardio":"Cardio is great for heart health and calorie burning. Mix longer steady sessions with shorter high-intensity intervals 2 to 3 times a week for the best results.",
+"rest":"Rest days are when your body actually repairs and grows stronger. Aim for 1 to 2 full rest days per week and 7 to 9 hours of sleep every night.",
+"sleep":"Sleep is one of the most powerful tools for fitness. It regulates hunger hormones, supports muscle recovery, and boosts workout performance.",
+"diet":"A solid diet focuses on whole foods — lean proteins, complex carbs, healthy fats, and plenty of vegetables. An 80-20 approach keeps things sustainable.",
+"nutrition":"Nutrition is responsible for most of your results. Eat whole foods, get enough protein, drink water, and make small sustainable changes over time.",
+"calories":"For fat loss, a deficit of 300 to 500 calories per day works well. For muscle gain, a small surplus of around 200 calories is a great starting point.",
+"carbs":"Carbs fuel your workouts and your brain. Choose complex carbs like oats, sweet potatoes, and brown rice over processed options whenever you can.",
+"fat":"Healthy fats are essential for hormones and nutrient absorption. Include avocados, nuts, olive oil, and fatty fish like salmon in your diet.",
+"meal prep":"Meal prepping on Sundays is a game changer. Cook proteins, chop veggies, and portion everything out ahead of time to save stress during the week.",
+"supplements":"Supplements fill gaps, but food should always come first. Protein powder, creatine, and vitamin D are worth considering for most people.",
+"creatine":"Creatine is one of the most researched supplements available. It boosts strength, power output, and muscle growth. Just 5 grams a day is all you need.",
+"beginner":"Starting out is the hardest part, so congrats for being here. Begin with simple movements, build a consistent habit first, and don't worry about perfection.",
+"start":"The best time to start was yesterday, but right now is the next best time. Pick one small habit, stick with it, and build from there.",
+"motivated":"Motivation comes and goes, so discipline and routine matter more. Track your progress, celebrate small wins, and remember why you started.",
+"motivation":"Staying motivated means connecting to your deeper why. Set small daily goals, visualize your progress, and find someone to keep you accountable.",
+"consistency":"Small consistent actions compound into massive results over time. Show up even on the days you don't feel like it, and trust the process.",
+"progress":"Progress isn't always linear, and that's completely normal. Track strength, endurance, energy, and how your clothes fit — not just the scale.",
+"running":"Running is amazing for endurance and calorie burning. Start slow, increase distance by about 10 percent per week, and invest in good shoes.",
+"cycling":"Cycling is low impact and incredibly effective. It's gentle on your joints while still building leg strength and burning serious calories.",
+"walking":"Walking is seriously underrated. Aim for 10,000 steps a day — that adds up to roughly 5 miles and burns a meaningful amount of calories.",
+"hiking":"Hiking combines cardio with time in nature. The elevation gain burns extra calories and naturally builds leg and core strength.",
+"strength":"Strength training builds muscle, strengthens bones, and boosts your metabolism. It's one of the best long-term investments for your health.",
+"stretch":"Stretching after workouts helps prevent injury and improves flexibility over time. Hold each stretch for about 30 seconds and never bounce.",
+"flexibility":"Working on flexibility reduces injury risk and improves the way you move. Yoga once or twice a week is a great way to build it.",
+"abs":"Visible abs come from having a low body fat percentage. Core exercises help, but your nutrition does most of the heavy lifting there.",
+"core":"Your core supports every movement you make. Train it 2 to 3 times a week with planks, bird dogs, and anti-rotation exercises.",
+"hiit":"High-intensity interval training is incredibly time efficient. Twenty to thirty minutes, 2 to 3 times a week, can dramatically improve your fitness.",
+"recovery":"Recovery is where the real gains happen. Prioritize sleep, eat enough protein, stay hydrated, and consider foam rolling for sore muscles.",
+"injury":"If you're dealing with an injury, rest is the most important thing. Don't push through pain. Ice for swelling, and see a professional if it persists.",
+"sore":"Muscle soreness after a workout is totally normal. It means you challenged your body. Light movement, stretching, and protein will help it pass.",
+"plateau":"Hitting a plateau is frustrating but completely normal. Try changing your exercises, adjusting your calories, or taking a short deload week.",
+"stress":"Exercise is one of the best natural stress relievers. It releases endorphins, improves sleep, and gives you a healthy mental break from daily life.",
+"gym":"The gym can feel intimidating at first, but everyone started where you are. Focus on your own workout and don't hesitate to ask for help.",
+"home":"Home workouts are totally effective. Bodyweight exercises, resistance bands, and a small set of dumbbells can give you an incredible session.",
+"equipment":"You don't need much to get started. Resistance bands and adjustable dumbbells cover almost everything you need for a great home workout.",
+"form":"Always prioritize form over weight. Good technique prevents injury, maximizes your results, and builds a strong foundation for progress.",
+"track":"Tracking workouts and nutrition keeps you accountable and helps you see real progress over time. Small data points add up to big insights.",
+"age":"It's never too late to get in shape. Adjust intensity to your current level, focus on consistency, and enjoy the journey at every stage.",
+"woman":"Strength training is especially beneficial for women. It builds lean muscle, strengthens bones, and boosts metabolism without making you bulky.",
+"morning":"Working out in the morning sets a positive tone for the whole day. Have a light snack about 30 minutes before if you need a little energy boost.",
+"evening":"Evening workouts are great for unwinding after a long day. Just try to finish a couple hours before bed so your body can wind down.",
+"food":"Think of food as fuel. Choose options that make you feel energized and strong, and enjoy treats in moderation without guilt.",
+"how":"For any fitness goal, the key is to start simple, learn proper form, stay consistent, and progress gradually. This app tracks everything to help.",
+"when":"The best time to work out is whenever you'll actually do it. Morning, midday, or evening — consistency matters far more than the specific time.",
+"exercise":"Any movement counts. Find activities you genuinely enjoy, and you'll be far more likely to stick with them long term.",
+"what to eat":"Focus on a balanced plate — half vegetables, a quarter lean protein, and a quarter complex carbs. Add healthy fats like olive oil or avocado.",
+"meal timing":"Meal timing matters less than what you actually eat. Focus on getting enough protein throughout the day and eating whole foods.",
+"vitamin":"Vitamins and minerals are essential, but whole food should be your primary source. A doctor can guide you on specific supplements if needed.",
+"immunity":"A strong immune system starts with good nutrition, quality sleep, regular exercise, and managing stress. Those four pillars cover most of what you need.",
+"posture":"Good posture reduces back pain and improves breathing. Keep your shoulders back, core gently engaged, and chin level throughout the day.",
+"breathing":"Proper breathing during exercise helps you perform better and recover faster. Breathe in through your nose, out through your mouth, stay relaxed.",
+"flexibility training":"Flexibility training reduces injury risk and helps you move better. Try holding stretches for 30 to 60 seconds after every workout.",
+"warm up":"Always warm up before exercising. Five to ten minutes of light cardio and dynamic stretches prepares your muscles and reduces injury risk significantly.",
+"cool down":"Cooling down after a workout helps your heart rate return to normal and reduces muscle soreness. Walk for a few minutes and stretch gently.",
+"heart rate":"Monitoring your heart rate during exercise helps you stay in the right intensity zone. Aim for 60 to 80 percent of your max for cardio.",
+"bmi":"BMI is a rough indicator of health, but it doesn't tell the whole story. Muscle weighs more than fat, so focus on how you feel and your strength gains.",
+"goal setting":"Setting clear, specific, and realistic goals is one of the most powerful things you can do. Write them down, break them into small steps, and review weekly.",
+"accountability":"Having someone to be accountable to makes a huge difference. Find a workout buddy, join a group, or track your progress here in the app.",
+"portion size":"Portion control matters a lot for weight management. Use smaller plates, eat slowly, and stop when you feel satisfied rather than stuffed.",
+"sugar":"Excess sugar is one of the biggest obstacles to good nutrition. Cut back on sodas, pastries, and processed snacks. Whole fruits are a much better option.",
+"fiber":"Fiber is amazing for digestion, blood sugar control, and keeping you full. Load up on vegetables, fruits, legumes, and whole grains every day.",
+"omega 3":"Omega-3 fatty acids support heart health, reduce inflammation, and aid recovery. Get them from fatty fish, walnuts, and flaxseeds regularly.",
+"green tea":"Green tea has antioxidants and a small amount of caffeine that can support metabolism. It's a great addition to a healthy lifestyle.",
+"intermittent fasting":"Intermittent fasting works for some people as a way to manage calories. It's not for everyone — listen to your body and consult a doctor if unsure.",
+"stretching routine":"A good stretching routine after workouts targets all major muscle groups. Hold each stretch for 30 seconds and breathe deeply throughout."
+};
+var FALL=["Great question! I can help with workouts, nutrition, and fitness goals. Try asking about weight loss, muscle building, or meal planning.","I'm your AI fitness coach. Feel free to ask about exercise routines, healthy eating, recovery, or staying motivated.","That's an interesting one. For very specific medical questions, a doctor is your best resource. But I'm happy to help with general fitness and nutrition.","I specialize in fitness, nutrition, and healthy habits. Ask me about any topic and I'll do my best to guide you.","Nice! Let's keep going. What part of your fitness journey would you like to focus on today?"];
+
+async function sendMsg(){
+  var inp=document.getElementById('elChatIn');
+  var txt=inp.value.trim();
+  if(!txt)return;
+  appendMsg('user',txt);
+  inp.value='';
+  // Try Chrome AI first, fall back to keyword match
+  var reply=await tryAI(txt);
+  if(!reply)reply=matchKeyword(txt);
+  appendMsg('bot',reply);
+  // Speak the response
+  speak(reply);
+}
+
+async function tryAI(msg){
+  try{
+    if(window.ai&&window.ai.languageModel){
+      var session=await window.ai.languageModel.create({
+        systemPrompt:"You are a friendly, knowledgeable fitness and nutrition coach. Give concise, practical advice in 2 to 3 sentences. Be encouraging and warm."
+      });
+      var result=await session.prompt(msg);
+      session.destroy();
+      return result;
+    }
+  }catch(e){/* fall through */}
+  return null;
+}
+
+function matchKeyword(msg){
+  var low=msg.toLowerCase();
+  // Sort keys longest-first for best specificity match
+  var keys=Object.keys(AI).sort(function(a,b){return b.length-a.length});
+  for(var i=0;i<keys.length;i++){
+    if(low.indexOf(keys[i])!==-1)return AI[keys[i]];
+  }
+  return FALL[Math.floor(Math.random()*FALL.length)];
+}
+
+function appendMsg(role,text){
+  var wrap=document.getElementById('elChat');
+  var d=document.createElement('div');
+  d.className='msg '+role;
+  d.innerHTML='<div class="mb">'+text+'</div>';
+  wrap.appendChild(d);
+  wrap.scrollTop=wrap.scrollHeight;
+}
+
+// ════════════════════════════════════════════════
+// NUTRITION
+// ════════════════════════════════════════════════
+function refreshNutrition(){
+  var goal=S.goals.length?(S.goals[0].dailyCalDef||2000):2000;
+  var eaten=S.foods.filter(function(f){return isToday(f.t)}).reduce(function(a,f){return a+f.cal},0);
+
+  // Calorie bar
+  document.getElementById('elCalN').textContent=eaten;
+  document.getElementById('elCalG').textContent='/ '+goal.toLocaleString()+' cal';
+  var barPct=Math.min((eaten/3500)*100,100);
+  document.getElementById('elCalFill').style.height=barPct+'%';
+
+  // Color class — BUG FIX: using 'barPct' not shadowed 'h'
+  var fill=document.getElementById('elCalFill');
+  fill.className='cal-fill '+(eaten<=goal?'green':(eaten<=3500?'yellow':'red'));
+
+  // Overlay text color: switch to white when fill is tall enough
+  var over=document.getElementById('elCalOver');
+  over.classList.toggle('light',barPct>38);
+
+  // Hydration — BUG FIX: renamed filter params to avoid shadow
+  var watOz=S.hydration.filter(function(item){return item.type==='water'&&isToday(item.t)}).reduce(function(a,item){return a+item.oz},0);
+  var cofOz=S.hydration.filter(function(item){return item.type==='coffee'&&isToday(item.t)}).reduce(function(a,item){return a+item.oz},0);
+  document.getElementById('elWat').textContent=watOz;
+  document.getElementById('elCof').textContent=cofOz;
+
+  // Food list
+  var foods=S.foods.filter(function(f){return isToday(f.t)});
+  var fh='';
+  if(!foods.length){
+    fh='<p style="font-size:13px;color:var(--text-gray);text-align:center;padding:10px 0">No meals logged today</p>';
+  } else {
+    foods.forEach(function(f){
+      var time=new Date(f.t).toLocaleTimeString('en',{hour:'numeric',minute:'2-digit'});
+      fh+='<div class="fi"><div class="fi-l"><h4>'+f.name+'</h4><p>'+time+'</p></div><div class="fi-c">'+f.cal+' cal</div></div>';
+    });
+  }
+  document.getElementById('elFoodList').innerHTML=fh;
+
+  // 7-day calorie bars
+  drawBars('elCalBars',[1800,2100,1950,2200,1850,2050,eaten||1900],2500,'linear-gradient(180deg,#14B8A6,#0EA5E9)');
+
+  // Hydration timeline canvas
+  drawHydCanvas();
+}
+
+function drawHydCanvas(){
+  var c=document.getElementById('elHydCvs');
+  var ctx=c.getContext('2d');
+  var W=c.width,H=c.height;
+  ctx.clearRect(0,0,W,H);
+
+  var water=[0,0,0,0,0,0,8,16,8,0,12,8,16,0,8,12,8,16,0,0,0,0,0,0];
+  var coffee=[0,0,0,0,0,0,0,12,8,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  var maxOz=20;
+  var pl=28,pr=8,pt=8,pb=24;
+  var pw=W-pl-pr,ph=H-pt-pb;
+
+  // Grid lines
+  ctx.strokeStyle='#ECEEF2';ctx.lineWidth=1;
+  for(var i=0;i<=4;i++){
+    var gy=pt+ph*i/4;
+    ctx.beginPath();ctx.moveTo(pl,gy);ctx.lineTo(W-pr,gy);ctx.stroke();
+  }
+  // Y labels
+  ctx.fillStyle='#64748B';ctx.font='500 9px Poppins';ctx.textAlign='right';
+  [20,15,10,5,0].forEach(function(v,i){ctx.fillText(v,pl-5,pt+ph*i/4+3)});
+
+  // Water line
+  ctx.strokeStyle='#0EA5E9';ctx.lineWidth=2.5;ctx.lineCap='round';ctx.lineJoin='round';
+  ctx.beginPath();
+  water.forEach(function(v,i){
+    var x=pl+i/(water.length-1)*pw;
+    var y=pt+ph*(1-v/maxOz);
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+
+  // Coffee line
+  ctx.strokeStyle='#B45309';ctx.lineWidth=2.5;
+  ctx.beginPath();
+  coffee.forEach(function(v,i){
+    var x=pl+i/(coffee.length-1)*pw;
+    var y=pt+ph*(1-v/maxOz);
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+
+  // X labels
+  ctx.fillStyle='#64748B';ctx.textAlign='center';ctx.font='500 9px Poppins';
+  ctx.fillText('6 AM',pl+pw*.25,H-5);
+  ctx.fillText('12 PM',pl+pw*.5,H-5);
+  ctx.fillText('6 PM',pl+pw*.75,H-5);
+
+  // Legend dots + text
+  ctx.fillStyle='#0EA5E9';ctx.fillRect(pl,H-18,10,2.5);
+  ctx.fillStyle='#64748B';ctx.font='500 9px Poppins';ctx.textAlign='left';ctx.fillText('Water',pl+14,H-13);
+  ctx.fillStyle='#B45309';ctx.fillRect(pl+62,H-18,10,2.5);
+  ctx.fillStyle='#64748B';ctx.fillText('Coffee',pl+76,H-13);
+}
+
+function isToday(ts){
+  var d=new Date(ts),n=new Date();
+  return d.getFullYear()===n.getFullYear()&&d.getMonth()===n.getMonth()&&d.getDate()===n.getDate();
+}
+
+// ── Food modal ──
+function openFood(){document.getElementById('mFood').classList.add('on')}
+function addFood(){
+  var name=document.getElementById('inFName').value.trim();
+  var cal=parseInt(document.getElementById('inFCal').value);
+  if(!name||!cal)return alert('Please fill both fields');
+  S.foods.push({name:name,cal:cal,t:Date.now()});
+  save();
+  closeM('mFood');
+  document.getElementById('inFName').value='';document.getElementById('inFCal').value='';
+  refreshNutrition();
+}
+
+// ── Hydration modal ──
+function openHyd(type){
+  curHyd=type;
+  document.getElementById('elHydTitle').textContent=type==='water'?'Add Water':'Add Coffee';
+  document.getElementById('mHyd').classList.add('on');
+}
+function addHyd(){
+  var oz=parseInt(document.getElementById('inHOz').value);
+  if(!oz)return alert('Enter ounces');
+  S.hydration.push({type:curHyd,oz:oz,t:Date.now()});
+  save();
+  closeM('mHyd');document.getElementById('inHOz').value='';
+  refreshNutrition();
+}
+
+// ════════════════════════════════════════════════
+// GOALS
+// ════════════════════════════════════════════════
+function refreshGoals(){
+  var btn=document.getElementById('elGoalBtn');
+  var html='';
+  if(!S.goals.length){
+    btn.textContent='+ Create New Goal';
+    html='<div class="es"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg><h3>No Goals Yet</h3><p>Set a weight loss goal and we will help you track your journey.</p></div>';
+  } else {
+    btn.textContent='Adjust Goal';
+    var g=S.goals[0];
+    var elapsed=Math.floor((Date.now()-g.created)/86400000);
+    var dLeft=Math.max(0,g.days-elapsed);
+    var pct=Math.min((elapsed/g.days)*100,100);
+    var loss=g.cur-g.tgt;
+    var mots=["You're doing amazing! 💪","Stay strong! 🔥","You've got this! ⭐","Results are coming! 🎯","Keep going! 🚀"];
+    var mot=mots[Math.floor(Math.random()*mots.length)];
+
+    // Card 1 – pink
+    html+='<div class="gc pink"><h3>Weight Loss Goal</h3><div class="big">'+loss.toFixed(1)+'<span style="font-size:18px;font-weight:400"> lbs</span></div><p class="sub">'+g.cur+' → '+g.tgt+' lbs</p></div>';
+    // Card 2 – white
+    html+='<div class="gc white"><h3>Days Remaining</h3><div class="big">'+dLeft+'</div><p class="sub">of '+g.days+' total days</p></div>';
+    // Card 3 – blue
+    html+='<div class="gc blue"><h3>Progress</h3><div class="big">'+pct.toFixed(0)+'<span style="font-size:18px;font-weight:400">%</span></div><p class="sub">'+mot+'</p><div class="gb-t"><div class="gb-f" style="width:'+pct+'%"></div></div></div>';
+    // Card 4 – teal
+    html+='<div class="gc teal"><h3>Daily Calorie Target</h3><div class="big">'+g.dailyCalDef+'</div><p class="sub">calories per day</p></div>';
+    // Card 5 – white weekly
+    var wk=[80,95,70,100,85,60,90];
+    var wkH='<div class="wk-row">';
+    ['M','T','W','T','F','S','S'].forEach(function(d,i){
+      wkH+='<div class="wk-d"><div class="wk-f" style="height:'+wk[i]+'%"></div><div class="wk-l">'+d+'</div></div>';
+    });
+    wkH+='</div>';
+    html+='<div class="gc white"><h3>Weekly Progress</h3>'+wkH+'</div>';
+  }
+  document.getElementById('elGoalsList').innerHTML=html;
+}
+
+function openGoalModal(){
+  if(S.goals.length){
+    var g=S.goals[0];
+    document.getElementById('elGoalTitle').textContent='Adjust Goal';
+    document.getElementById('inGCur').value=g.cur;
+    document.getElementById('inGTgt').value=g.tgt;
+    document.getElementById('inGDays').value=g.days;
+  } else {
+    document.getElementById('elGoalTitle').textContent='Create Goal';
+    document.getElementById('inGCur').value='';
+    document.getElementById('inGTgt').value='';
+    document.getElementById('inGDays').value='';
+  }
+  document.getElementById('mGoal').classList.add('on');
+}
+
+function saveGoal(){
+  var cur=parseFloat(document.getElementById('inGCur').value);
+  var tgt=parseFloat(document.getElementById('inGTgt').value);
+  var days=parseInt(document.getElementById('inGDays').value);
+  if(!cur||!tgt||!days)return alert('Fill all fields');
+  if(tgt>=cur)return alert('Target must be less than current weight');
+  var loss=cur-tgt;
+  var perWeek=loss/days*7;
+  var dailyDef=Math.round(3500*perWeek/7);
+  var obj={cur:cur,tgt:tgt,days:days,dailyCalDef:dailyDef,created:Date.now()};
+  if(S.goals.length)S.goals[0]=obj;else S.goals.push(obj);
+  save();closeM('mGoal');refreshGoals();
+}
+
+// ════════════════════════════════════════════════
+// MODAL HELPERS
+// ════════════════════════════════════════════════
+function closeM(id){document.getElementById(id).classList.remove('on')}
+document.querySelectorAll('.modal').forEach(function(m){
+  m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('on')});
+});
 </script>
 </body>
 </html>
