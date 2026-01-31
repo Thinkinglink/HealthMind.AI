@@ -123,7 +123,7 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text-dark
 .ws-btn.stop{background:linear-gradient(135deg,#EF4444,#DC2626)}
 
 /* ── Chat ── */
-.chat-wrap{height:calc(100vh - 134px);overflow-y:auto;padding:16px 16px 8px}
+.chat-wrap{position:fixed;left:0;right:0;bottom:134px;overflow-y:auto;padding:16px 20px 8px}
 .msg{display:flex;margin-bottom:10px}
 .msg.user{flex-direction:row-reverse}
 .mb{max-width:82%;padding:11px 15px;border-radius:18px;font-size:14px;line-height:1.5}
@@ -529,6 +529,8 @@ function aiTap(){
     ['sDash','sWkSel','sWk','sNut','sGoals'].forEach(function(id){document.getElementById(id).classList.remove('active')});
     ['nb0','nb1','nb3','nb4'].forEach(function(id){document.getElementById(id).classList.remove('active')});
     document.getElementById('sChat').classList.add('active');
+    // Position chat scroll area top: 44px base (status bar) + 46px if tracking bar active
+    document.getElementById('elChat').style.top=(44+(wActive?46:0))+'px';
     if(!document.getElementById('elChat').children.length){
       appendMsg('bot',"Hi! I'm your AI health coach. Ask me anything about fitness, nutrition, or weight loss! 😊");
     }
@@ -629,21 +631,47 @@ function speak(text){
 // PEDOMETER
 // ════════════════════════════════════════════════
 function startPed(){
-  if(window.DeviceMotionEvent){
-    var lastY=0,lastT=0;
-    window.addEventListener('devicemotion',function(ev){
-      if(!ev.accelerationIncludingGravity)return;
-      var now=Date.now();
-      if(now-lastT<250)return;
-      var y=ev.accelerationIncludingGravity.y||0;
-      if(Math.abs(y-lastY)>1.4&&!wActive){S.pedSteps++;save();refreshDash()}
-      lastY=y;lastT=now;
-    });
+  // Step detection using accelerometer magnitude + peak/trough algorithm.
+  // A walking step produces a clear spike in acceleration magnitude as the
+  // foot strikes the ground, followed by a dip. We detect the spike crossing
+  // a dynamic threshold and enforce a minimum stride interval (~500ms).
+
+  var THRESHOLD=11.5;        // magnitude must exceed this to count as a strike
+  var MIN_STRIDE_MS=500;     // can't take steps faster than ~2/sec
+  var SMOOTHING=0.25;        // low-pass filter coefficient (lower = smoother)
+
+  var smoothed=9.81;         // running smoothed magnitude, starts at gravity
+  var lastStepT=0;           // timestamp of last counted step
+  var wasAbove=false;        // whether we were above threshold last sample
+
+  if(!window.DeviceMotionEvent){
+    // No motion sensor — do nothing. No fake steps.
+    return;
   }
-  // Gentle simulation so dashboard feels alive
-  setInterval(function(){
-    if(!wActive){S.pedSteps+=Math.floor(Math.random()*3)+1;save();refreshDash()}
-  },9000);
+
+  window.addEventListener('devicemotion',function(ev){
+    var acc=ev.accelerationIncludingGravity;
+    if(!acc)return;
+    if(wActive)return; // workout tracks its own steps via GPS
+
+    var x=acc.x||0, y=acc.y||0, z=acc.z||0;
+    var mag=Math.sqrt(x*x + y*y + z*z);
+
+    // Low-pass filter to remove noise
+    smoothed=smoothed + SMOOTHING*(mag - smoothed);
+
+    var now=Date.now();
+    var aboveNow=smoothed>THRESHOLD;
+
+    // Count a step on rising edge only (below→above), with min stride time
+    if(aboveNow && !wasAbove && (now - lastStepT)>=MIN_STRIDE_MS){
+      S.pedSteps++;
+      lastStepT=now;
+      save();
+      refreshDash();
+    }
+    wasAbove=aboveNow;
+  });
 }
 
 // ════════════════════════════════════════════════
@@ -723,18 +751,16 @@ function pickType(el,type){
 
 function beginWorkout(){
   wActive=true;wPaused=false;wSec=0;
-  wData={dist:0,steps:0,cals:0,speed:0};
+  wData={dist:0,steps:0,cals:0,speed:0,speedSamples:[]};
   lastPos=null;
   document.getElementById('trackBar').classList.add('on');
   document.getElementById('sWkSel').classList.remove('active');
   document.getElementById('sWk').classList.add('active');
   document.getElementById('elWkType').textContent=selType;
-  // Set correct map margin (tracking bar is now visible = 46px)
   document.getElementById('elMapWrap').style.marginTop='58px';
-  // Update the mid stat label for cycling vs others
   syncMidLabel();
   startGPS();
-  wTimerId=setInterval(function(){if(!wPaused){wSec++;updTimer()}},1000);
+  wTimerId=setInterval(function(){if(!wPaused){wSec++;updTimer();updCalories()}},1000);
 }
 
 function syncMidLabel(){
@@ -745,6 +771,24 @@ function syncMidLabel(){
     document.getElementById('elWMidL').textContent='Steps';
     document.getElementById('elWMid').textContent=wData.steps.toLocaleString();
   }
+}
+
+// ── Calorie calculation using MET values ──
+// Formula: Cals = MET × weight_kg × time_hours
+// MET values are well-established metabolic equivalents from exercise science.
+// We use moderate-intensity defaults: Walking=3.5, Running=8.0, Cycling=6.8, Hiking=5.5
+// Default user weight: 70 kg (154 lbs) — a reasonable baseline.
+// Calories are recalculated every second from total elapsed active time,
+// so they stay accurate regardless of GPS polling rate.
+var METS={Walking:3.5, Running:8.0, Cycling:6.8, Hiking:5.5};
+var USER_WEIGHT_KG=70;
+
+function updCalories(){
+  // wSec = total seconds the timer has been running (excludes paused time)
+  var activeHours=wSec/3600;
+  var met=METS[selType]||4.0;
+  wData.cals=Math.round(met * USER_WEIGHT_KG * activeHours);
+  document.getElementById('elWCal').textContent=wData.cals;
 }
 
 function startGPS(){
@@ -766,14 +810,32 @@ function trackPos(){
     var lat=p.coords.latitude,lng=p.coords.longitude,now=Date.now();
     if(lastPos){
       var dKm=haversine(lastPos.lat,lastPos.lng,lat,lng);
-      wData.dist+=dKm;
-      var rates={Walking:{spm:1315,cpm:65},Running:{spm:1570,cpm:100},Cycling:{spm:0,cpm:50},Hiking:{spm:1400,cpm:80}};
-      var r=rates[selType];
-      wData.steps+=Math.round(dKm*r.spm);
-      wData.cals+=Math.round(dKm*r.cpm);
-      // Speed in MPH: distance in km / time in hours * 0.621371
+      var dMeters=dKm*1000;
       var dtHrs=(now-lastPos.t)/3600000;
-      if(dtHrs>0){wData.speed=Math.min((dKm/dtHrs)*0.621371,999)}
+
+      if(dMeters>=3){
+        // Real movement detected — accumulate distance and steps
+        wData.dist+=dKm;
+
+        var stepsPerKm={Walking:1315, Running:1570, Cycling:0, Hiking:1400};
+        wData.steps+=Math.round(dKm * (stepsPerKm[selType]||1315));
+
+        // Speed sample for this tick (km/h → mph)
+        var sampleMph=(dtHrs>0) ? (dKm/dtHrs)*0.621371 : 0;
+        wData.speedSamples.push(sampleMph);
+      } else {
+        // No real movement — push 0 so the rolling window decays toward zero.
+        // This is what makes the speedometer drop back down when you stop.
+        wData.speedSamples.push(0);
+      }
+
+      // Rolling window: keep last 5 samples regardless of movement
+      if(wData.speedSamples.length>5) wData.speedSamples.shift();
+
+      // Average the window → displayed speed
+      var sum=0;
+      for(var i=0;i<wData.speedSamples.length;i++) sum+=wData.speedSamples[i];
+      wData.speed=sum/wData.speedSamples.length;
     }
     lastPos={lat:lat,lng:lng,t:now};
     updMap(lat,lng);
@@ -794,10 +856,8 @@ function updTimer(){
 function pad2(n){return n<10?'0'+n:''+n}
 
 function updWorkoutUI(){
-  // Distance always in miles
   document.getElementById('elWDist').textContent=(wData.dist*0.621371).toFixed(2);
-  document.getElementById('elWCal').textContent=wData.cals;
-  // Mid stat: speed for cycling, steps for others
+  // Calories are updated every second by updCalories(), not here.
   syncMidLabel();
 }
 
